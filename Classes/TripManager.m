@@ -451,6 +451,18 @@
     }
 }
 
+- (void)saveTookBikeRental {
+    /* Note if user took Indego bike rental by appending |took_indego to
+     end of notes field */
+    if (trip) {
+        NSString *tripNote = @"|took_indego";
+        if (trip.notes) {
+            tripNote = [trip.notes stringByAppendingString:tripNote];
+        }
+        [trip setNotes:tripNote];
+    }
+}
+
 - (void)saveNotes:(NSString*)notes
 {
 	if ( trip && notes ) {
@@ -618,7 +630,7 @@
 							  nil];
     
     // Firebase upload - testing
-    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://cyclephilly.firebaseio.com/trips/"];
+    Firebase *ref = [[[Firebase alloc] initWithUrl:@"https://cyclephilly.firebaseio.com/trips/"] autorelease];
     Firebase *post1Ref = [ref childByAutoId];
     [post1Ref setValue:postVars withCompletionBlock:^(NSError *error, Firebase *ref) {
         if(error){

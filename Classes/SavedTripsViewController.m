@@ -250,20 +250,15 @@
 	[super viewWillAppear:animated];
 }
 
-/*
- - (void)viewDidAppear:(BOOL)animated {
- [super viewDidAppear:animated];
- }
- */
-/*
- - (void)viewWillDisappear:(BOOL)animated {
- [super viewWillDisappear:animated];
- }
- */
 
  - (void)viewDidDisappear:(BOOL)animated
 { 
 	[super viewDidDisappear:animated];
+}
+
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
 }
 
 
@@ -737,7 +732,7 @@
                                                    //initWithPurpose:[tripManager getPurposeIndex]];
                                                    initWithNibName:@"TripPurposePicker" bundle:nil];
     [tripPurposePickerView setDelegate:self];
-    [self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
+    [self.navigationController presentViewController:tripPurposePickerView animated:YES completion:nil];
     [tripPurposePickerView release];
 }
 
@@ -798,6 +793,7 @@
     // load map view of saved trip
     MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
     [[self navigationController] pushViewController:mvc animated:YES];
+    
     [mvc release];
 }
 
@@ -1027,7 +1023,7 @@
 
 - (void)didCancelNote
 {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)didEnterTripDetails:(NSString *)details{
@@ -1040,6 +1036,11 @@
     NSLog(@"Noted rider took public transit in SavedTripsViewController.");
 }
 
+- (void)didTakeBikeRental {
+    [tripManager saveTookBikeRental];
+    NSLog(@"Noted rider took bike rental in SavedTripsViewController.");
+}
+
 - (void)saveTrip{
     [tripManager saveTrip];
     NSLog(@"Save trip");
@@ -1047,6 +1048,7 @@
 
 
 - (void)dealloc {
+
     self.trips = nil;
     self.managedObjectContext = nil;
     self.delegate = nil;

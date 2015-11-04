@@ -49,14 +49,14 @@
 
 
 #import "constants.h"
+#import "IndegoStationStrings.h"
+#import "MKPointAnnotation+IndegoPointAnnotation.h"
 #import "MapViewController.h"
-#import "NoteViewController.h"
 #import "PersonalInfoViewController.h"
 #import "PickerViewController.h"
 #import "RecordTripViewController.h"
 #import "ReminderManager.h"
 #import "TripManager.h"
-#import "NoteManager.h"
 #import "Trip.h"
 #import "User.h"
 @import CoreLocation;
@@ -69,8 +69,7 @@
 @implementation RecordTripViewController
 
 @synthesize tripManager;// reminderManager;
-@synthesize noteManager;
-@synthesize infoButton, saveButton, startButton, noteButton, parentView;
+@synthesize infoButton, saveButton, startButton, parentView;
 @synthesize timer, timeCounter, distCounter;
 @synthesize recording, shouldUpdateCounter, userInfoSaved;
 @synthesize appDelegate;
@@ -86,7 +85,7 @@
     
 }
 
-- (UIButton *)createSaveButton {
+- (UIButton *)newSaveButton {
     return [[UIButton alloc] init];
 }
 
@@ -96,10 +95,11 @@
         return appDelegate.locationManager;
     }
 	
-    appDelegate.locationManager = [[[CLLocationManager alloc] init] autorelease];
+    appDelegate.locationManager = [[CLLocationManager alloc] init];
     appDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     appDelegate.locationManager.delegate = self;
+    mapView.delegate = self;
     
     return appDelegate.locationManager;
 }
@@ -128,8 +128,8 @@
 		didUpdateUserLocation = YES;
 	}
 	
-	// only update map if deltaDistance is at least some epsilon 
-	else if ( deltaDistance > 1.0 )
+	// only update map if recording and deltaDistance is at least some epsilon 
+	else if ( recording && deltaDistance > 1.0 )
 	{
 		//NSLog(@"center map to current user location");
 		[mapView setCenterCoordinate:newLocation.coordinate animated:YES];
@@ -164,13 +164,6 @@
 	manager.dirty			= YES;
 	self.tripManager		= manager;
     manager.parent          = self;
-}
-
-
-- (void)initNoteManager:(NoteManager*)manager
-{
-	self.noteManager = manager;
-    manager.parent = self;
 }
 
 
@@ -246,17 +239,19 @@
 	NSLog(@"RecordTripViewController viewDidLoad");
     NSLog(@"Bundle ID: %@", [[NSBundle mainBundle] bundleIdentifier]);
     [super viewDidLoad];
-	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
+	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.navigationController.navigationBarHidden = YES;
-    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager = [[[CLLocationManager alloc] init] autorelease];
     self.locationManager.delegate = self;
+    self->mapView.delegate = self;
     // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [self.locationManager requestAlwaysAuthorization];
     }
     self->mapView.showsUserLocation = YES;
+    
     [self.locationManager startUpdatingLocation];
     
     // init map region to Philadelphia
@@ -267,9 +262,8 @@
 	infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
 	infoButton.showsTouchWhenHighlighted = YES;
 	
-	// Set up the buttons.
+	// Set up the button.
 	[self.view addSubview:[self createStartButton]];
-    [self.view addSubview:[self createNoteButton]];
 	
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = NO;
@@ -281,11 +275,10 @@
 	// Start the location manager.
 	[[self getLocationManager] startUpdatingLocation];
     
-    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    NSLog(@"Going to load Indego station data");
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://api.phila.gov/bike-share-stations/v1"]];
+    [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
     
-    // setup the noteManager
-    [self initNoteManager:[[[NoteManager alloc] initWithManagedObjectContext:context]autorelease]];
-
 	// check if any user data has already been saved and pre-select personal info cell accordingly
 	if ( [self hasUserInfoBeenSaved] )
 		[self setSaved:YES];
@@ -296,30 +289,122 @@
 	NSLog(@"save");
 }
 
-
-- (UIButton *)createNoteButton
-{
-    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"]
-                            resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
-    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"]
-                                     resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+// Got Indego station status response; go add markers to map
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    //NSLog(@"Got station data");
     
-    [noteButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [noteButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-    [noteButton setTitleColor:[[[UIColor alloc] initWithRed:185.0 / 255 green:91.0 / 255 blue:47.0 / 255 alpha:1.0 ] autorelease] forState:UIControlStateHighlighted];
+    // to debug log the response as a string
+    //NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    //NSLog(response);
     
-//    noteButton.backgroundColor = [UIColor clearColor];
-    noteButton.enabled = YES;
+    NSError *jsonError;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
     
-    [noteButton setTitle:@"Note this..." forState:UIControlStateNormal];
-
-//    noteButton.titleLabel.font = [UIFont boldSystemFontOfSize: 24];
-    [noteButton addTarget:self action:@selector(notethis:) forControlEvents:UIControlEventTouchUpInside];
+    NSArray *features = [json objectForKey:@"features"];
     
-	return noteButton;
+    NSDictionary *stationStatusDictionary = [IndegoStationStrings getStatusDictionary];
+    
+    for (NSDictionary *feature in features) {
+        NSDictionary *geom = [feature objectForKey:@"geometry"];
+        NSDictionary *props = [feature objectForKey:@"properties"];
+        
+        NSArray *coords = [geom objectForKey:@"coordinates"];
+        NSNumber *lon = [coords objectAtIndex:0];
+        NSNumber *lat = [coords objectAtIndex:1];
+        
+        NSString *stationName = [props objectForKey:@"name"];
+        NSString *status = [props objectForKey:@"kioskPublicStatus"];
+        NSNumber *specialEvent = [props objectForKey:@"isEventBased"];
+        NSNumber *bikesAvailable = [props objectForKey:@"bikesAvailable"];
+        NSNumber *docksAvailable = [props objectForKey:@"docksAvailable"];
+        
+        NSMutableString *subtitle = [[[NSMutableString alloc] init] autorelease];
+        
+        // this is to test another station status
+        //if ([stationName isEqual: @"Pennsylvania Convention Center"]) {
+        //    status = @"Unavailable";
+        //}
+        
+        BOOL showBikesDocks = true;
+        if ([specialEvent integerValue] == YES) {
+            // show start/end times for special events
+            status = @"SpecialEvent";
+            [subtitle appendString:[stationStatusDictionary valueForKey:status]];
+            [subtitle appendString:@" "];
+            NSString *eventStart = [props objectForKey:@"eventStart"];
+            NSString *eventEnd = [props objectForKey:@"eventEnd"];
+            [subtitle appendString:kEventStart];
+            [subtitle appendString:eventStart];
+            [subtitle appendString:@" "];
+            [subtitle appendString:kEventEnd];
+            [subtitle appendString:eventEnd];
+            [subtitle appendString:@" "];
+        } else if ([status isEqualToString:@"PartialService"]) {
+            // show status to warn of partial service, but still show bikes/docks counts
+            [subtitle appendString:[stationStatusDictionary valueForKey:status]];
+            [subtitle appendString:@" "];
+        } else if (![status isEqualToString:@"Active"]) {
+            // not in service; just show station status description
+            [subtitle appendString:[stationStatusDictionary valueForKey:status]];
+            showBikesDocks = false;
+        }
+        
+        if (showBikesDocks) {
+            [subtitle appendString:kBikesAvailable];
+            [subtitle appendString:[bikesAvailable stringValue]];
+            [subtitle appendString:@" "];
+            [subtitle appendString:kDocksAvailable];
+            [subtitle appendString:[docksAvailable stringValue]];
+        }
+        
+        CLLocationCoordinate2D stationLocation;
+        stationLocation.latitude = [lat doubleValue];
+        stationLocation.longitude = [lon doubleValue];
+        
+        MKPointAnnotation *stationPoint = [[[MKPointAnnotation alloc] init] autorelease];
+        [stationPoint setCoordinate:stationLocation];
+        [stationPoint setTitle:stationName];
+        stationPoint.stationStatus = status;
+        
+        [stationPoint setSubtitle:subtitle];
+        
+        [mapView addAnnotation:stationPoint];
+    }
     
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)map viewForAnnotation:(id <MKAnnotation>)annotation {
+    
+    MKAnnotationView *annotationView = nil;
+    
+    // return null to use the system user location icon
+    if (![[annotation class] isSubclassOfClass:[MKPointAnnotation class]]) {
+        return nil;
+    }
+    
+    // create or reuse an Indego annotation
+    static NSString *viewId = @"IndegoAnnotationView";
+
+    [self->mapView dequeueReusableAnnotationViewWithIdentifier:viewId];
+    if (annotationView == nil) {
+        annotationView = [[[MKAnnotationView alloc]
+                           initWithAnnotation:annotation reuseIdentifier:viewId] autorelease];
+        
+        MKPointAnnotation *stationPoint = (MKPointAnnotation *)annotation;
+        // marker images are named in pattern ingego(Status).png
+        NSString *imagePath = [NSString stringWithFormat:@"%@%@%@", @"indego", stationPoint.stationStatus, @".png"];
+        //NSString *imagePath = [@"indego" stringByAppendingString:[stationPoint.stationStatus stringByAppendingString:@".png"]];
+        annotationView.image = [UIImage imageNamed:imagePath];
+        annotationView.canShowCallout = true;
+    }
+    
+    return annotationView;
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSString *msg = [@"Indego station request failed with error: " stringByAppendingString:error.description];
+    NSLog(@"%@", msg);
+}
 
 // instantiate start button
 - (UIButton *)createStartButton
@@ -355,15 +440,14 @@
     // Create a reference to a Firebase location
     NSDateFormatter *formatter;
     NSString        *today;
-    formatter = [[NSDateFormatter alloc] init];
+    formatter = [[[NSDateFormatter alloc] init] autorelease];
     [formatter setDateFormat:@"yyyy/MM/dd/"];
     today = [formatter stringFromDate:[NSDate date]];
-    NSMutableString *fireURLC = [[NSMutableString alloc] initWithString:kFireDomain];
+    NSMutableString *fireURLC = [[[NSMutableString alloc] initWithString:kFireDomain] autorelease];
     [fireURLC appendString:@"trips-completed/"];
     [fireURLC appendString:today];
     
-    Firebase* fEnd = [[Firebase alloc] initWithUrl:fireURLC];
-    Firebase* completed = [fEnd childByAutoId];
+    Firebase *completed = [[[[Firebase alloc] initWithUrl:fireURLC] autorelease] childByAutoId];
     NSTimeInterval timeS = [[NSDate date] timeIntervalSince1970] * 1000;
     // NSTimeInterval is defined as double
     NSString *totalPoints = [NSString stringWithFormat: @"%d", (int)trip.coords.count];
@@ -373,18 +457,6 @@
     MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
     [[self navigationController] pushViewController:mvc animated:YES];
     NSLog(@"displayUploadedTripMap");
-    [mvc release];
-}
-
-
-- (void)displayUploadedNote
-{
-    Note *note = noteManager.note;
-    
-    // load map view of note
-    NoteViewController *mvc = [[NoteViewController alloc] initWithNote:note];
-    [[self navigationController] pushViewController:mvc animated:YES];
-    NSLog(@"displayUploadedNote");
     [mvc release];
 }
 
@@ -581,15 +653,14 @@
         // Create a reference to a Firebase location
         NSDateFormatter *formatter;
         NSString        *today;
-        formatter = [[NSDateFormatter alloc] init];
+        formatter = [[[NSDateFormatter alloc] init] autorelease];
         [formatter setDateFormat:@"yyyy/MM/dd/"];
         today = [formatter stringFromDate:[NSDate date]];
-        NSMutableString *fireURL = [[NSMutableString alloc] initWithString:kFireDomain];
+        NSMutableString *fireURL = [[[NSMutableString alloc] initWithString:kFireDomain] autorelease];
         [fireURL appendString:@"trips-started/"];
         [fireURL appendString:today];
-        
-        Firebase* fStart = [[Firebase alloc] initWithUrl:fireURL];
-        Firebase* timeStart = [fStart childByAutoId];
+
+        Firebase *timeStart = [[[[Firebase alloc] initWithUrl:fireURL] autorelease] childByAutoId];
         //NSLog(@"%@",fireURL);
         NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970] * 1000;
         // NSTimeInterval is defined as double
@@ -641,7 +712,7 @@
 													  initWithNibName:@"TripPurposePicker" bundle:nil];
 		[tripPurposePickerView setDelegate:self];
 		//[[self navigationController] pushViewController:pickerViewController animated:YES];
-		[self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
+        [self.navigationController presentViewController:tripPurposePickerView animated:YES completion:nil];
 		[tripPurposePickerView release];
 	}
 	
@@ -674,68 +745,6 @@
 	}
     
 }
-
-
--(IBAction)notethis:(id)sender{
-    [[NSUserDefaults standardUserDefaults] setInteger:3 forKey: @"pickerCategory"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    NSLog(@"Note This");
-    
-    [noteManager createNote];
-    
-    if (myLocation){
-        [noteManager addLocation:myLocation];
-    }
-	
-	// go directly to TripPurpose, user can cancel from there
-	if ( YES )
-	{
-		// Trip Purpose
-		NSLog(@"INIT + PUSH");
-        
-        
-		PickerViewController *notePickerView = [[PickerViewController alloc]
-                                                       //initWithPurpose:[tripManager getPurposeIndex]];
-                                                       initWithNibName:@"TripPurposePicker" bundle:nil];
-		[notePickerView setDelegate:self];
-		//[[self navigationController] pushViewController:pickerViewController animated:YES];
-		[self.navigationController presentModalViewController:notePickerView animated:YES];
-        
-        //add location information
-        
-		[notePickerView release];
-	}
-	
-	// prompt to confirm first
-	else
-	{
-		// pause updating the counter
-		shouldUpdateCounter = NO;
-		
-		// construct purpose confirmation string
-		NSString *purpose = nil;
-		if ( tripManager != nil )
-			purpose = [self getPurposeString:[tripManager getPurposeIndex]];
-		
-		NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
-		
-		// present action sheet
-		UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
-																 delegate:self
-														cancelButtonTitle:@"Cancel"
-												   destructiveButtonTitle:nil
-														otherButtonTitles:@"Save", nil];
-		
-		actionSheet.actionSheetStyle		= UIActionSheetStyleBlackTranslucent;
-		UIViewController *pvc = self.parentViewController;
-		UITabBarController *tbc = (UITabBarController *)pvc.parentViewController;
-		
-		[actionSheet showFromTabBar:tbc.tabBar];
-		[actionSheet release];
-	}
-}
-
 
 - (void)resetCounter
 {
@@ -809,6 +818,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.locationManager stopUpdatingLocation];
+}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -827,6 +841,11 @@
 - (void)keyboardWillHide:(NSNotification *)aNotification
 {
 	NSLog(@"keyboardWillHide");
+}
+
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
 }
 
 
@@ -920,7 +939,7 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelPurpose
 {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:NO completion:nil];
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = YES;
 	recording = YES;
@@ -932,7 +951,7 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelNote
 {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:NO completion:nil];
     appDelegate = [[UIApplication sharedApplication] delegate];
 }
 
@@ -964,44 +983,21 @@ shouldSelectViewController:(UIViewController *)viewController
     NSLog(@"Noted rider took public transit in RecordTripViewController.");
 }
 
+- (void)didTakeBikeRental {
+    [tripManager saveTookBikeRental];
+    NSLog(@"Noted rider took bike rental in RecordTripViewController.");
+}
+
 - (void)saveTrip{
     [tripManager saveTrip];
     NSLog(@"Save trip");
 }
 
-- (void)didPickNoteType:(NSNumber *)index
-{	
-	[noteManager.note setNote_type:index];
-    NSLog(@"Added note type: %d", [noteManager.note.note_type intValue]);
-    //do something here: may change to be the save as a separate view. Not prompt.
-}
-
-- (void)didEnterNoteDetails:(NSString *)details{
-    [noteManager.note setDetails:details];
-    NSLog(@"Note Added details: %@", noteManager.note.details);
-}
-
-- (void)didSaveImage:(NSData *)imgData{
-    [noteManager.note setImage_data:imgData];
-    NSLog(@"Added image, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
-    [imgData release];
-}
 
 - (void)getTripThumbnail:(NSData *)imgData{
     [tripManager.trip setThumbnail:imgData];
     NSLog(@"Trip Thumbnail, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
 }
-
-- (void)getNoteThumbnail:(NSData *)imgData{
-    [noteManager.note setThumbnail:imgData];
-    NSLog(@"Note Thumbnail, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
-}
-
-- (void)saveNote{
-    [noteManager saveNote];
-    NSLog(@"Save note");
-}
-
 
 
 
@@ -1023,7 +1019,6 @@ shouldSelectViewController:(UIViewController *)viewController
     self.startButton = nil;
     self.infoButton = nil;
     self.saveButton = nil;
-    self.noteButton = nil;
     self.timeCounter = nil;
     self.distCounter = nil;
     self.saveActionSheet = nil;
@@ -1033,16 +1028,13 @@ shouldSelectViewController:(UIViewController *)viewController
     self.shouldUpdateCounter = nil;
     self.userInfoSaved = nil;
     self.tripManager = nil;
-    self.noteManager = nil;
     self.appDelegate = nil;
     speedCounter = nil;
     
-//    [appDelegate.locationManager release];
     [appDelegate release];
     [infoButton release];
     [saveButton release];
     [startButton release];
-    [noteButton release];
     [timeCounter release];
     [distCounter release];
     [speedCounter release];
@@ -1051,7 +1043,6 @@ shouldSelectViewController:(UIViewController *)viewController
     [opacityMask release];
     [parentView release];
     [tripManager release];
-    [noteManager release];
     [myLocation release];
     
     [managedObjectContext release];
