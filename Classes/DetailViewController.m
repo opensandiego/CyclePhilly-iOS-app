@@ -30,6 +30,7 @@
 
 #import "DetailViewController.h"
 #import <MobileCoreServices/UTCoreTypes.h>
+#import "NoteManager.h"
 #import "ImageResize.h"
 
 @interface DetailViewController ()
@@ -97,9 +98,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size);
 	[super viewDidDisappear:animated];
 }
 
-- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
-    return UIBarPositionTopAttached;
-}
 
 -(IBAction)skip:(id)sender{
     NSLog(@"Skip");
@@ -163,12 +161,12 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSLog(@"Size of Image(bytes):%lu",(unsigned long)[imageData length]);
     self.image = thumbnail;
-    [picker dismissViewControllerAnimated:NO completion:nil];
+    [picker dismissModalViewControllerAnimated:YES];
     [picker release];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:NO completion:nil];
+    [picker dismissModalViewControllerAnimated:YES];
     [picker release];
 }
 
@@ -207,7 +205,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         //picker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
         picker.delegate = self;
         picker.sourceType = sourceType;
-        [self presentViewController:picker animated:YES completion:nil];
+        [self presentModalViewController:picker animated:YES];
 //        [picker release];
     } else {
         UIAlertView *alert = [[UIAlertView alloc]

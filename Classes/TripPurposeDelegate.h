@@ -66,6 +66,10 @@
 #define kTripPurposeErrandIcon		@"errands.png"
 #define kTripPurposeOtherIcon		@"other.png"
 
+#define kNoteThisAsset              @"noteAssetPicker.png"
+#define kNoteThisIssue              @"noteIssuePicker.png"
+#define kNoteBlank                  @"noteBlankPicker.png"
+
 #define kTripPurposeCommuteString	@"Commute"
 #define kTripPurposeSchoolString	@"School"
 #define kTripPurposeWorkString		@"Work-Related"
@@ -85,7 +89,6 @@
 
 @optional
 - (void)didTakeTransit;
-- (void)didTakeBikeRental;
 - (void)didCancelPurpose;
 - (void)didCancelNote;
 - (void)didPickPurpose:(long)index;

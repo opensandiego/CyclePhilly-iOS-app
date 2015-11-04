@@ -7,6 +7,7 @@
 //
 
 #import "User.h"
+#import "Note.h"
 #import "Trip.h"
 
 
@@ -23,6 +24,7 @@
 @dynamic workZIP;
 @dynamic gender;
 @dynamic email;
+@dynamic notes;
 @dynamic trips;
 
 @end

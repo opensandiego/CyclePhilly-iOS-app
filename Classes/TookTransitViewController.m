@@ -15,8 +15,7 @@
 @implementation TookTransitViewController
 
 @synthesize tookTransitView;
-@synthesize tookPublicTransit, transitText, answerTransitYesNo;
-@synthesize tookRental, rentalText, answerRentalYesNo;
+@synthesize tookPublicTransit, descriptionText, answerYesNo;
 @synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -42,23 +41,11 @@
 
 -(IBAction)answerChanged:(UISwitch *)sender {
     NSLog(@"Switch moved");
-    if (sender == self.tookPublicTransit) {
-        if (self.tookPublicTransit.on) {
-            self.answerTransitYesNo.text = @"Yes";
-        } else {
-            self.answerTransitYesNo.text = @"No";
-        }
-    } else if (sender == self.tookRental) {
-        if (self.tookRental.on) {
-            self.answerRentalYesNo.text = @"Yes";
-        } else {
-            self.answerRentalYesNo.text = @"No";
-        }
+    if (self.tookPublicTransit.on) {
+        self.answerYesNo.text = @"Yes";
     } else {
-        NSLog(@"Unrecognized switch in TookTransitViewController");
+        self.answerYesNo.text = @"No";
     }
-    
-    
 }
 
 -(IBAction)cancel:(id)sender{
@@ -76,15 +63,10 @@
         [delegate didTakeTransit];
     }
     
-    if (self.tookRental.on) {
-        NSLog(@"Noted took bike rental in TookTransitViewController");
-        [delegate didTakeBikeRental];
-    }
-    
     TripDetailViewController *tripDetailViewController = [[TripDetailViewController alloc] initWithNibName:@"TripDetailViewController" bundle:nil];
     tripDetailViewController.delegate = self.delegate;
     
-    [self presentViewController:tripDetailViewController animated:YES completion:nil];
+    [self presentModalViewController:tripDetailViewController animated:YES];
     
 }
 
@@ -92,14 +74,10 @@
     self.delegate = nil;
     self.tookTransitView = nil;
     self.tookPublicTransit = nil;
-    self.tookRental = nil;
-    self.transitText = nil;
-    self.rentalText = nil;
+    self.descriptionText = nil;
     
-    [transitText release];
-    [rentalText release];
+    [descriptionText release];
     [tookPublicTransit release];
-    [tookRental release];
     [delegate release];
     
     [navBarItself release];
