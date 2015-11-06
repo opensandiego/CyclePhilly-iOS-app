@@ -1,14 +1,9 @@
-Cycle Philly, 2013 Code for Philly
+WeBikeSD, 2015 Open San Diego
 -----------
 
-[![Join the chat at https://gitter.im/opensandiego/WeBikeSD-iOS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/opensandiego/WeBikeSD-iOS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-Philadelphia, PA. USA
+[![Join the chat at https://gitter.im/opensandiego/WeBikeSD-iOS](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/opensandiego/WeBikeSD-iOS?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 
- Contact: Corey Acri <acri.corey@gmail.com>
-             Lloyd Emelle <lemelle@codeforamerica.org>
-
-Updated/Modified for Philadelphia's app deployment. Based on the
-CycleTracks codebase for SFCTA.
+Inspired by CyclePhilly, based on the CycleTracks codebase for SFCTA.
 
 
 CycleTracks
@@ -21,16 +16,16 @@ Copyright 2013 Code for Philly
 
 Code primarily written by Matt Paul, with some mods by Billy Charlton.
 
-CyclePhilly Modifications written by Lloyd Emelle, Kathryn Killebrew, and Kevin Clough.
+CyclePhilly Modifications written by Lloyd Emelle, Kathryn Killebrew, and Kevin Clough.  
 
-CyclePhilly and CycleTracks is released under the GNU General Public License, version 3.
+WeBikeSD, CyclePhilly and CycleTracks is released under the GNU General Public License, version 3.
 See 'COPYING' for a detailed description of the GNU GPL.
 
 -----------
 
 Installation Notes
 -----------
-CyclePhilly is setup to use Firebase for realtime updates. Please follow the instructions
+WeBikeSD is setup to use Firebase for realtime updates. Please follow the instructions
 at https://www.firebase.com/docs/ios-quickstart.html to setup Firebase and its dependencies.
 
 In the constants.h file, change the kFireDomain variable to your firebase url.
