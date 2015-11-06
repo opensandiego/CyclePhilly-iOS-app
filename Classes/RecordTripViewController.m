@@ -920,7 +920,7 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelPurpose
 {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:YES completion:nil];
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = YES;
 	recording = YES;
@@ -932,7 +932,7 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelNote
 {
-	[self.navigationController dismissModalViewControllerAnimated:YES];
+	[self.navigationController dismissViewControllerAnimated:YES completion:nil];
     appDelegate = [[UIApplication sharedApplication] delegate];
 }
 

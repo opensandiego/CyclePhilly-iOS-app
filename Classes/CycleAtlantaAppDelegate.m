@@ -105,7 +105,7 @@
     NSMutableString *fireURLC = [[NSMutableString alloc] initWithString:kFireDomain];
     [fireURLC appendString:@"trips-completed/"];
     [fireURLC appendString:today];
-    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://cyclephilly.firebaseio.com"];
+    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://blazing-torch-4795.firebaseio.com/	"];
     
     
     [ref authAnonymouslyWithCompletionBlock:^(NSError *error, FAuthData *authData) {
