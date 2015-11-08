@@ -105,7 +105,7 @@
 
 #define kSaveURL			@"http://www.cyclephilly.org/post/"
 
-#define kFireDomain			@"https://cyclephilly.firebaseio.com/"
+#define kFireDomain			@"https://blazing-torch-4795.firebaseio.com/"
 //#define kSaveURL			@""
 
 #define kTripNotesPlaceholder	@"Comments"
