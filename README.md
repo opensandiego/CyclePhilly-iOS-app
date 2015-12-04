@@ -28,7 +28,7 @@ Installation Notes
 WeBikeSD is setup to use Firebase for realtime updates. Please follow the instructions
 at https://www.firebase.com/docs/ios-quickstart.html to setup Firebase and its dependencies.  
 
-In the constants.h file, change the kFireDomain variable to your firebase url.
+In the constants.h file, change the kFireDomain variable to your Firebase url.
   
 -----------
 
