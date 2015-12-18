@@ -366,8 +366,8 @@
 		}
 		else
 		{
-			// init map region to Philadelphia City Hall
-			MKCoordinateRegion region = { { 39.952707, -75.164133 }, { 0.10825, 0.10825 } };
+			// init map region to Petco Park.
+			MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
 			[mapView setRegion:region animated:NO];
 		}
         free(routePath);
@@ -375,7 +375,7 @@
 	else
 	{
 		// error: init map region
-		MKCoordinateRegion region = { { 39.952707, -75.164133 }, { 0.10825, 0.10825 } };
+		MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
 		[mapView setRegion:region animated:NO];
 	}
     
