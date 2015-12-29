@@ -44,7 +44,7 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/10/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 
@@ -55,73 +55,79 @@
 #import "RecordingInProgressDelegate.h"
 #import "TripPurposeDelegate.h"
 #import "CycleAtlantaAppDelegate.h"
+#import "Note.h"
 #import <Firebase/Firebase.h>
 
 
 @class ReminderManager;
 @class TripManager;
+@class NoteManager;
 //@class CycleTracksAppDelegate;
 
-//@interface RecordTripViewController : UITableViewController 
-@interface RecordTripViewController : UIViewController 
-	<CLLocationManagerDelegate,
-	MKMapViewDelegate,
-	UINavigationControllerDelegate, 
-	UITabBarControllerDelegate, 
-	PersonalInfoDelegate,
-	RecordingInProgressDelegate,
-	TripPurposeDelegate,
-	UIActionSheetDelegate,
-	UIAlertViewDelegate,
-	UITextViewDelegate>
+//@interface RecordTripViewController : UITableViewController
+@interface RecordTripViewController : UIViewController
+<CLLocationManagerDelegate,
+MKMapViewDelegate,
+UINavigationControllerDelegate,
+UITabBarControllerDelegate,
+PersonalInfoDelegate,
+RecordingInProgressDelegate,
+TripPurposeDelegate,
+UIActionSheetDelegate,
+UIAlertViewDelegate,
+UITextViewDelegate>
 {
     NSManagedObjectContext *managedObjectContext;
-	CycleAtlantaAppDelegate *appDelegate;
-//    CLLocationManager *locationManager;
-	/*
-	UITableViewCell *tripPurposeCell;
-	UITableViewCell *personalInfoCell;
-	*/
-	BOOL				didUpdateUserLocation;
-	IBOutlet MKMapView	*mapView;
-	
-	IBOutlet UIButton *infoButton;
-	IBOutlet UIButton *saveButton;
-	IBOutlet UIButton *startButton;
-	
-	IBOutlet UILabel *timeCounter;
-	IBOutlet UILabel *distCounter;
-	IBOutlet UILabel *speedCounter;
+    CycleAtlantaAppDelegate *appDelegate;
+    //    CLLocationManager *locationManager;
+    /*
+     UITableViewCell *tripPurposeCell;
+     UITableViewCell *personalInfoCell;
+     */
+    BOOL				didUpdateUserLocation;
+    IBOutlet MKMapView	*mapView;
+    
+    IBOutlet UIButton *infoButton;
+    IBOutlet UIButton *saveButton;
+    IBOutlet UIButton *startButton;
+    IBOutlet UIButton *noteButton;
+    
+    IBOutlet UILabel *timeCounter;
+    IBOutlet UILabel *distCounter;
+    IBOutlet UILabel *speedCounter;
     UIActionSheet *saveActionSheet;
-
-
-	NSTimer *timer;
-	
-	// pointer to opacity mask, TabBar view
-	UIView *opacityMask;
-	UIView *parentView;
-	
-	BOOL recording;
-	BOOL shouldUpdateCounter;
-	BOOL userInfoSaved;
+    
+    
+    NSTimer *timer;
+    
+    // pointer to opacity mask, TabBar view
+    UIView *opacityMask;
+    UIView *parentView;
+    
+    BOOL recording;
+    BOOL shouldUpdateCounter;
+    BOOL userInfoSaved;
     NSInteger pickerCategory;
-	
-	TripManager		*tripManager;
+    
+    TripManager		*tripManager;
+    NoteManager *noteManager;
+    
     
     CLLocation *myLocation;
-//	ReminderManager *reminderManager;
+    //	ReminderManager *reminderManager;
 }
 
 //@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 //@property (nonatomic, retain) CLLocationManager *locationManager;
 /*
-@property (nonatomic, retain) UITableViewCell	*tripPurposeCell;
-@property (nonatomic, retain) UITableViewCell	*personalInfoCell;
-*/
+ @property (nonatomic, retain) UITableViewCell	*tripPurposeCell;
+ @property (nonatomic, retain) UITableViewCell	*personalInfoCell;
+ */
 @property (nonatomic, retain) UIButton *infoButton;
 @property (nonatomic, retain) UIButton *saveButton;
 @property (nonatomic, retain) UIButton *startButton;
+@property (nonatomic, retain) UIButton *noteButton;
 
 @property (nonatomic, retain) UILabel *timeCounter;
 @property (nonatomic, retain) UILabel *distCounter;
@@ -140,9 +146,13 @@
 //@property (nonatomic, retain) ReminderManager *reminderManager;
 @property (nonatomic, retain) TripManager *tripManager;
 
+@property (nonatomic, retain) NoteManager *noteManager;
+
 @property (nonatomic, retain) CycleAtlantaAppDelegate *appDelegate;
 
 - (void)initTripManager:(TripManager*)manager;
+
+- (void)initNoteManager:(NoteManager*)manager;
 
 // DEPRECATED
 //- (id)initWithManagedObjectContext:(NSManagedObjectContext*)context;
@@ -154,6 +164,9 @@
 
 - (IBAction)start:(UIButton *)sender;
 
+-(IBAction)notethis:(id)sender;
+
+
 // timer methods
 - (void)start:(UIButton *)sender;
 - (void)createCounter;
@@ -161,9 +174,11 @@
 - (void)setCounterTimeSince:(NSDate *)startDate distance:(CLLocationDistance)distance;
 - (void)updateCounter:(NSTimer *)theTimer;
 
-- (UIButton *)newSaveButton;
+- (UIButton *)createSaveButton;
 - (UIButton *)createStartButton;
+- (UIButton *)createNoteButton;
 
 - (void)displayUploadedTripMap;
+- (void)displayUploadedNote;
 
 @end

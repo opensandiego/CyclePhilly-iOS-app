@@ -44,19 +44,19 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/10/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 
 #import "constants.h"
-#import "IndegoStationStrings.h"
-#import "MKPointAnnotation+IndegoPointAnnotation.h"
 #import "MapViewController.h"
+#import "NoteViewController.h"
 #import "PersonalInfoViewController.h"
 #import "PickerViewController.h"
 #import "RecordTripViewController.h"
 #import "ReminderManager.h"
 #import "TripManager.h"
+#import "NoteManager.h"
 #import "Trip.h"
 #import "User.h"
 @import CoreLocation;
@@ -69,7 +69,8 @@
 @implementation RecordTripViewController
 
 @synthesize tripManager;// reminderManager;
-@synthesize infoButton, saveButton, startButton, parentView;
+@synthesize noteManager;
+@synthesize infoButton, saveButton, startButton, noteButton, parentView;
 @synthesize timer, timeCounter, distCounter;
 @synthesize recording, shouldUpdateCounter, userInfoSaved;
 @synthesize appDelegate;
@@ -85,21 +86,20 @@
     
 }
 
-- (UIButton *)newSaveButton {
+- (UIButton *)createSaveButton {
     return [[UIButton alloc] init];
 }
 
 - (CLLocationManager *)getLocationManager {
-	appDelegate = [[UIApplication sharedApplication] delegate];
+    appDelegate = [[UIApplication sharedApplication] delegate];
     if (appDelegate.locationManager != nil) {
         return appDelegate.locationManager;
     }
-	
-    appDelegate.locationManager = [[CLLocationManager alloc] init];
+    
+    appDelegate.locationManager = [[[CLLocationManager alloc] init] autorelease];
     appDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     appDelegate.locationManager.delegate = self;
-    mapView.delegate = self;
     
     return appDelegate.locationManager;
 }
@@ -109,7 +109,7 @@
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation
 {
-	CLLocationDistance deltaDistance = [newLocation distanceFromLocation:oldLocation];
+    CLLocationDistance deltaDistance = [newLocation distanceFromLocation:oldLocation];
     
     if (!myLocation) {
         myLocation = [newLocation retain];
@@ -119,41 +119,41 @@
         myLocation = [newLocation retain];
     }
     
-	if ( !didUpdateUserLocation )
-	{
-		NSLog(@"zooming to current user location");
-		MKCoordinateRegion region = { newLocation.coordinate, { 0.0078, 0.0068 } };
-		[mapView setRegion:region animated:YES];
-
-		didUpdateUserLocation = YES;
-	}
-	
-	// only update map if recording and deltaDistance is at least some epsilon 
-	else if ( recording && deltaDistance > 1.0 )
-	{
-		//NSLog(@"center map to current user location");
-		[mapView setCenterCoordinate:newLocation.coordinate animated:YES];
-	}
-
-	if ( recording )
-	{
-		// add to CoreData store
-		CLLocationDistance distance = [tripManager addCoord:newLocation];
-		self.distCounter.text = [NSString stringWithFormat:@"%.1f mi", distance / 1609.344];
-	}
-	
-	// 	double mph = ( [trip.distance doubleValue] / 1609.344 ) / ( [trip.duration doubleValue] / 3600. );
-	if ( newLocation.speed >= 0. )
-		speedCounter.text = [NSString stringWithFormat:@"%.1f mph", newLocation.speed * 3600 / 1609.344];
-	else
-		speedCounter.text = @"0.0 mph";
+    if ( !didUpdateUserLocation )
+    {
+        NSLog(@"zooming to current user location");
+        MKCoordinateRegion region = { newLocation.coordinate, { 0.0078, 0.0068 } };
+        [mapView setRegion:region animated:YES];
+        
+        didUpdateUserLocation = YES;
+    }
+    
+    // only update map if deltaDistance is at least some epsilon
+    else if ( deltaDistance > 1.0 )
+    {
+        //NSLog(@"center map to current user location");
+        [mapView setCenterCoordinate:newLocation.coordinate animated:YES];
+    }
+    
+    if ( recording )
+    {
+        // add to CoreData store
+        CLLocationDistance distance = [tripManager addCoord:newLocation];
+        self.distCounter.text = [NSString stringWithFormat:@"%.1f mi", distance / 1609.344];
+    }
+    
+    // 	double mph = ( [trip.distance doubleValue] / 1609.344 ) / ( [trip.duration doubleValue] / 3600. );
+    if ( newLocation.speed >= 0. )
+        speedCounter.text = [NSString stringWithFormat:@"%.1f mph", newLocation.speed * 3600 / 1609.344];
+    else
+        speedCounter.text = @"0.0 mph";
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error
 {
-	NSLog(@"locationManager didFailWithError: %@", error );
+    NSLog(@"locationManager didFailWithError: %@", error );
 }
 
 
@@ -161,250 +161,165 @@
 
 - (void)initTripManager:(TripManager*)manager
 {
-	manager.dirty			= YES;
-	self.tripManager		= manager;
+    manager.dirty			= YES;
+    self.tripManager		= manager;
     manager.parent          = self;
+}
+
+
+- (void)initNoteManager:(NoteManager*)manager
+{
+    self.noteManager = manager;
+    manager.parent = self;
 }
 
 
 - (BOOL)hasUserInfoBeenSaved
 {
-	BOOL					response = NO;
-	NSManagedObjectContext	*context = tripManager.managedObjectContext;
-	NSFetchRequest			*request = [[NSFetchRequest alloc] init];
-	NSEntityDescription		*entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:context];
-	[request setEntity:entity];
-	
-	NSError *error;
-	NSInteger count = [context countForFetchRequest:request error:&error];
-	//NSLog(@"saved user count  = %d", count);
-	if ( count )
-	{	
-		NSArray *fetchResults = [context executeFetchRequest:request error:&error];
-		if ( fetchResults != nil )
-		{
-			User *user = (User*)[fetchResults objectAtIndex:0];
-			if (user			!= nil &&
-				(user.age		!= nil ||
-				 user.gender	!= nil ||
-				 user.email		!= nil ||
-				 user.homeZIP	!= nil ||
-				 user.workZIP	!= nil ||
-				 user.schoolZIP	!= nil ||
-				 ([user.cyclingFreq intValue] < 4 )))
-			{
-				NSLog(@"found saved user info");
-				self.userInfoSaved = YES;
-				response = YES;
-			}
-			else
-				NSLog(@"no saved user info");
-		}
-		else
-		{
-			// Handle the error.
-			NSLog(@"no saved user");
-			if ( error != nil )
-				NSLog(@"PersonalInfo viewDidLoad fetch error %@, %@", error, [error localizedDescription]);
-		}
-	}
-	else
-		NSLog(@"no saved user");
-	
-	[request release];
-	return response;
+    BOOL					response = NO;
+    NSManagedObjectContext	*context = tripManager.managedObjectContext;
+    NSFetchRequest			*request = [[NSFetchRequest alloc] init];
+    NSEntityDescription		*entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:context];
+    [request setEntity:entity];
+    
+    NSError *error;
+    NSInteger count = [context countForFetchRequest:request error:&error];
+    //NSLog(@"saved user count  = %d", count);
+    if ( count )
+    {
+        NSArray *fetchResults = [context executeFetchRequest:request error:&error];
+        if ( fetchResults != nil )
+        {
+            User *user = (User*)[fetchResults objectAtIndex:0];
+            if (user			!= nil &&
+                (user.age		!= nil ||
+                 user.gender	!= nil ||
+                 user.email		!= nil ||
+                 user.homeZIP	!= nil ||
+                 user.workZIP	!= nil ||
+                 user.schoolZIP	!= nil ||
+                 ([user.cyclingFreq intValue] < 4 )))
+            {
+                NSLog(@"found saved user info");
+                self.userInfoSaved = YES;
+                response = YES;
+            }
+            else
+                NSLog(@"no saved user info");
+        }
+        else
+        {
+            // Handle the error.
+            NSLog(@"no saved user");
+            if ( error != nil )
+                NSLog(@"PersonalInfo viewDidLoad fetch error %@, %@", error, [error localizedDescription]);
+        }
+    }
+    else
+        NSLog(@"no saved user");
+    
+    [request release];
+    return response;
 }
 
 
 - (void)hasRecordingBeenInterrupted
 {
-	if ( [tripManager countUnSavedTrips] )
-	{        
+    if ( [tripManager countUnSavedTrips] )
+    {
         [self resetRecordingInProgress];
-	}
-	else
-		NSLog(@"no unsaved trips found");
+    }
+    else
+        NSLog(@"no unsaved trips found");
 }
 
 
 - (void)infoAction:(id)sender
 {
-	if ( !recording )
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString: kInfoURL]];
+    if ( !recording )
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString: kInfoURL]];
 }
 
 
 - (void)viewDidLoad
 {
-	NSLog(@"RecordTripViewController viewDidLoad");
+    NSLog(@"RecordTripViewController viewDidLoad");
     NSLog(@"Bundle ID: %@", [[NSBundle mainBundle] bundleIdentifier]);
     [super viewDidLoad];
-	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-	
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.navigationController.navigationBarHidden = YES;
-    self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+    self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    self->mapView.delegate = self;
     // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
     if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [self.locationManager requestAlwaysAuthorization];
     }
     self->mapView.showsUserLocation = YES;
-    
     [self.locationManager startUpdatingLocation];
     
     // init map region to Philadelphia
-	MKCoordinateRegion region = { { 39.954491, -75.163758 }, { 0.0078, 0.0068 } };
-	[mapView setRegion:region animated:NO];
-	
-	// setup info button used when showing recorded trips
-	infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-	infoButton.showsTouchWhenHighlighted = YES;
-	
-	// Set up the button.
-	[self.view addSubview:[self createStartButton]];
-	
+    MKCoordinateRegion region = { { 39.954491, -75.163758 }, { 0.0078, 0.0068 } };
+    [mapView setRegion:region animated:NO];
+    
+    // setup info button used when showing recorded trips
+    infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    infoButton.showsTouchWhenHighlighted = YES;
+    
+    // Set up the buttons.
+    [self.view addSubview:[self createStartButton]];
+    [self.view addSubview:[self createNoteButton]];
+    
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = NO;
-	self.recording = NO;
+    self.recording = NO;
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey: @"recording"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-	self.shouldUpdateCounter = NO;
-	
-	// Start the location manager.
-	[[self getLocationManager] startUpdatingLocation];
+    self.shouldUpdateCounter = NO;
     
-    NSLog(@"Going to load Indego station data");
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://api.phila.gov/bike-share-stations/v1"]];
-    [[[NSURLConnection alloc] initWithRequest:request delegate:self] autorelease];
+    // Start the location manager.
+    [[self getLocationManager] startUpdatingLocation];
     
-	// check if any user data has already been saved and pre-select personal info cell accordingly
-	if ( [self hasUserInfoBeenSaved] )
-		[self setSaved:YES];
-	
-	// check for any unsaved trips / interrupted recordings
-	[self hasRecordingBeenInterrupted];
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
-	NSLog(@"save");
+    // setup the noteManager
+    [self initNoteManager:[[[NoteManager alloc] initWithManagedObjectContext:context]autorelease]];
+    
+    // check if any user data has already been saved and pre-select personal info cell accordingly
+    if ( [self hasUserInfoBeenSaved] )
+        [self setSaved:YES];
+    
+    // check for any unsaved trips / interrupted recordings
+    [self hasRecordingBeenInterrupted];
+    
+    NSLog(@"save");
 }
 
-// Got Indego station status response; go add markers to map
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    //NSLog(@"Got station data");
+
+- (UIButton *)createNoteButton
+{
+    UIImage *buttonImage = [[UIImage imageNamed:@"whiteButton.png"]
+                            resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
+    UIImage *buttonImageHighlight = [[UIImage imageNamed:@"whiteButtonHighlight.png"]
+                                     resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     
-    // to debug log the response as a string
-    //NSString *response = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //NSLog(response);
+    [noteButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [noteButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
+    [noteButton setTitleColor:[[[UIColor alloc] initWithRed:185.0 / 255 green:91.0 / 255 blue:47.0 / 255 alpha:1.0 ] autorelease] forState:UIControlStateHighlighted];
     
-    NSError *jsonError;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+    //    noteButton.backgroundColor = [UIColor clearColor];
+    noteButton.enabled = YES;
     
-    NSArray *features = [json objectForKey:@"features"];
+    [noteButton setTitle:@"Note this..." forState:UIControlStateNormal];
     
-    NSDictionary *stationStatusDictionary = [IndegoStationStrings getStatusDictionary];
+    //    noteButton.titleLabel.font = [UIFont boldSystemFontOfSize: 24];
+    [noteButton addTarget:self action:@selector(notethis:) forControlEvents:UIControlEventTouchUpInside];
     
-    for (NSDictionary *feature in features) {
-        NSDictionary *geom = [feature objectForKey:@"geometry"];
-        NSDictionary *props = [feature objectForKey:@"properties"];
-        
-        NSArray *coords = [geom objectForKey:@"coordinates"];
-        NSNumber *lon = [coords objectAtIndex:0];
-        NSNumber *lat = [coords objectAtIndex:1];
-        
-        NSString *stationName = [props objectForKey:@"name"];
-        NSString *status = [props objectForKey:@"kioskPublicStatus"];
-        NSNumber *specialEvent = [props objectForKey:@"isEventBased"];
-        NSNumber *bikesAvailable = [props objectForKey:@"bikesAvailable"];
-        NSNumber *docksAvailable = [props objectForKey:@"docksAvailable"];
-        
-        NSMutableString *subtitle = [[[NSMutableString alloc] init] autorelease];
-        
-        // this is to test another station status
-        //if ([stationName isEqual: @"Pennsylvania Convention Center"]) {
-        //    status = @"Unavailable";
-        //}
-        
-        BOOL showBikesDocks = true;
-        if ([specialEvent integerValue] == YES) {
-            // show start/end times for special events
-            status = @"SpecialEvent";
-            [subtitle appendString:[stationStatusDictionary valueForKey:status]];
-            [subtitle appendString:@" "];
-            NSString *eventStart = [props objectForKey:@"eventStart"];
-            NSString *eventEnd = [props objectForKey:@"eventEnd"];
-            [subtitle appendString:kEventStart];
-            [subtitle appendString:eventStart];
-            [subtitle appendString:@" "];
-            [subtitle appendString:kEventEnd];
-            [subtitle appendString:eventEnd];
-            [subtitle appendString:@" "];
-        } else if ([status isEqualToString:@"PartialService"]) {
-            // show status to warn of partial service, but still show bikes/docks counts
-            [subtitle appendString:[stationStatusDictionary valueForKey:status]];
-            [subtitle appendString:@" "];
-        } else if (![status isEqualToString:@"Active"]) {
-            // not in service; just show station status description
-            [subtitle appendString:[stationStatusDictionary valueForKey:status]];
-            showBikesDocks = false;
-        }
-        
-        if (showBikesDocks) {
-            [subtitle appendString:kBikesAvailable];
-            [subtitle appendString:[bikesAvailable stringValue]];
-            [subtitle appendString:@" "];
-            [subtitle appendString:kDocksAvailable];
-            [subtitle appendString:[docksAvailable stringValue]];
-        }
-        
-        CLLocationCoordinate2D stationLocation;
-        stationLocation.latitude = [lat doubleValue];
-        stationLocation.longitude = [lon doubleValue];
-        
-        MKPointAnnotation *stationPoint = [[[MKPointAnnotation alloc] init] autorelease];
-        [stationPoint setCoordinate:stationLocation];
-        [stationPoint setTitle:stationName];
-        stationPoint.stationStatus = status;
-        
-        [stationPoint setSubtitle:subtitle];
-        
-        [mapView addAnnotation:stationPoint];
-    }
+    return noteButton;
     
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)map viewForAnnotation:(id <MKAnnotation>)annotation {
-    
-    MKAnnotationView *annotationView = nil;
-    
-    // return null to use the system user location icon
-    if (![[annotation class] isSubclassOfClass:[MKPointAnnotation class]]) {
-        return nil;
-    }
-    
-    // create or reuse an Indego annotation
-    static NSString *viewId = @"IndegoAnnotationView";
-
-    [self->mapView dequeueReusableAnnotationViewWithIdentifier:viewId];
-    if (annotationView == nil) {
-        annotationView = [[[MKAnnotationView alloc]
-                           initWithAnnotation:annotation reuseIdentifier:viewId] autorelease];
-        
-        MKPointAnnotation *stationPoint = (MKPointAnnotation *)annotation;
-        // marker images are named in pattern ingego(Status).png
-        NSString *imagePath = [NSString stringWithFormat:@"%@%@%@", @"indego", stationPoint.stationStatus, @".png"];
-        //NSString *imagePath = [@"indego" stringByAppendingString:[stationPoint.stationStatus stringByAppendingString:@".png"]];
-        annotationView.image = [UIImage imageNamed:imagePath];
-        annotationView.canShowCallout = true;
-    }
-    
-    return annotationView;
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSString *msg = [@"Indego station request failed with error: " stringByAppendingString:error.description];
-    NSLog(@"%@", msg);
-}
 
 // instantiate start button
 - (UIButton *)createStartButton
@@ -427,7 +342,7 @@
     startButton.titleLabel.textColor = [UIColor whiteColor];
     [startButton addTarget:self action:@selector(start:) forControlEvents:UIControlEventTouchUpInside];
     
-	return startButton;
+    return startButton;
 }
 
 
@@ -440,14 +355,15 @@
     // Create a reference to a Firebase location
     NSDateFormatter *formatter;
     NSString        *today;
-    formatter = [[[NSDateFormatter alloc] init] autorelease];
+    formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy/MM/dd/"];
     today = [formatter stringFromDate:[NSDate date]];
-    NSMutableString *fireURLC = [[[NSMutableString alloc] initWithString:kFireDomain] autorelease];
+    NSMutableString *fireURLC = [[NSMutableString alloc] initWithString:kFireDomain];
     [fireURLC appendString:@"trips-completed/"];
     [fireURLC appendString:today];
     
-    Firebase *completed = [[[[Firebase alloc] initWithUrl:fireURLC] autorelease] childByAutoId];
+    Firebase* fEnd = [[Firebase alloc] initWithUrl:fireURLC];
+    Firebase* completed = [fEnd childByAutoId];
     NSTimeInterval timeS = [[NSDate date] timeIntervalSince1970] * 1000;
     // NSTimeInterval is defined as double
     NSString *totalPoints = [NSString stringWithFormat: @"%d", (int)trip.coords.count];
@@ -461,27 +377,39 @@
 }
 
 
+- (void)displayUploadedNote
+{
+    Note *note = noteManager.note;
+    
+    // load map view of note
+    NoteViewController *mvc = [[NoteViewController alloc] initWithNote:note];
+    [[self navigationController] pushViewController:mvc animated:YES];
+    NSLog(@"displayUploadedNote");
+    [mvc release];
+}
+
+
 - (void)resetTimer
-{	
-	// invalidate timer
-	if ( timer )
-	{
-		[timer invalidate];
-		//[timer release];
-		timer = nil;
-	}
+{
+    // invalidate timer
+    if ( timer )
+    {
+        [timer invalidate];
+        //[timer release];
+        timer = nil;
+    }
 }
 
 
 - (void)resetRecordingInProgress
 {
-	// reset button states
+    // reset button states
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = NO;
-	recording = NO;
+    recording = NO;
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey: @"recording"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-	startButton.enabled = YES;
+    startButton.enabled = YES;
     UIImage *buttonImage = [[UIImage imageNamed:@"greenButton.png"]
                             resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 18)];
     UIImage *buttonImageHighlight = [[UIImage imageNamed:@"greenButtonHighlight.png"]
@@ -490,15 +418,15 @@
     [startButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [startButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
     [startButton setTitle:@"Start" forState:UIControlStateNormal];
-	
-	// reset trip, reminder managers
+    
+    // reset trip, reminder managers
     [tripManager release];
-	NSManagedObjectContext *context = tripManager.managedObjectContext;
-	[self initTripManager:[[[TripManager alloc] initWithManagedObjectContext:context] autorelease]];
-	tripManager.dirty = YES;
-
-	[self resetCounter];
-	[self resetTimer];
+    NSManagedObjectContext *context = tripManager.managedObjectContext;
+    [self initTripManager:[[[TripManager alloc] initWithManagedObjectContext:context] autorelease]];
+    tripManager.dirty = YES;
+    
+    [self resetCounter];
+    [self resetTimer];
 }
 
 
@@ -509,38 +437,38 @@
 //- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
-	switch ( buttonIndex )
-	{			
-           case 0:
-           {
-               NSLog(@"Discard!!!!");
-               
-               // actually discard the trip
-               [self.tripManager discardTrip];
-
-               [self resetRecordingInProgress];
-               
-               break;
-           }
+    NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
+    switch ( buttonIndex )
+    {
+        case 0:
+        {
+            NSLog(@"Discard!!!!");
+            
+            // actually discard the trip
+            [self.tripManager discardTrip];
+            
+            [self resetRecordingInProgress];
+            
+            break;
+        }
         case 1:{
             [self save];
             break;
         }
-		default:{
-			NSLog(@"Cancel");
-			// re-enable counter updates
-			shouldUpdateCounter = YES;
-			break;
+        default:{
+            NSLog(@"Cancel");
+            // re-enable counter updates
+            shouldUpdateCounter = YES;
+            break;
         }
-	}
+    }
 }
 
 
 // called if the system cancels the action sheet (e.g. homescreen button has been pressed)
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet
 {
-	NSLog(@"actionSheetCancel");
+    NSLog(@"actionSheetCancel");
 }
 
 
@@ -550,30 +478,30 @@
 // NOTE: method called upon closing save error / success alert
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	switch (alertView.tag) {
-		case 101:
-		{
-			NSLog(@"recording interrupted didDismissWithButtonIndex: %ld", (long)buttonIndex);
-			switch (buttonIndex) {
-				case 0:
-					// new trip => do nothing
-					break;
-				case 1:
-				default:
-					// continue => load most recent unsaved trip
-					[tripManager loadMostRecentUnSavedTrip];
-					
-					// update UI to reflect trip once loading has completed
-					[self setCounterTimeSince:tripManager.trip.start
-									 distance:[tripManager getDistanceEstimate]];
-
-					startButton.enabled = YES;
-
+    switch (alertView.tag) {
+        case 101:
+        {
+            NSLog(@"recording interrupted didDismissWithButtonIndex: %ld", (long)buttonIndex);
+            switch (buttonIndex) {
+                case 0:
+                    // new trip => do nothing
+                    break;
+                case 1:
+                default:
+                    // continue => load most recent unsaved trip
+                    [tripManager loadMostRecentUnSavedTrip];
+                    
+                    // update UI to reflect trip once loading has completed
+                    [self setCounterTimeSince:tripManager.trip.start
+                                     distance:[tripManager getDistanceEstimate]];
+                    
+                    startButton.enabled = YES;
+                    
                     [startButton setTitle:@"Continue" forState:UIControlStateNormal];
-					break;
-			}
-		}
-			break;
+                    break;
+            }
+        }
+            break;
         case 201:
         {
             NSLog(@"save cancelled because no co-ordinates in trip");
@@ -582,28 +510,28 @@
             [self resetRecordingInProgress];
         }
             break;
-		default:
-		{
-			NSLog(@"saving didDismissWithButtonIndex: %ld", (long)buttonIndex);
-			
-			// keep a pointer to our trip to pass to map view below
-			Trip *trip = tripManager.trip;
-			[self resetRecordingInProgress];
-			
-			// load map view of saved trip
-			MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
-			[[self navigationController] pushViewController:mvc animated:YES];
-			[mvc release];
-		}
-			break;
-	}
+        default:
+        {
+            NSLog(@"saving didDismissWithButtonIndex: %ld", (long)buttonIndex);
+            
+            // keep a pointer to our trip to pass to map view below
+            Trip *trip = tripManager.trip;
+            [self resetRecordingInProgress];
+            
+            // load map view of saved trip
+            MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
+            [[self navigationController] pushViewController:mvc animated:YES];
+            [mvc release];
+        }
+            break;
+    }
 }
 
 
 - (NSDictionary *)newTripTimerUserInfo
 {
     return [[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], @"StartDate",
-			tripManager, @"TripManager", nil ] retain ];
+             tripManager, @"TripManager", nil ] retain ];
 }
 
 
@@ -616,7 +544,7 @@
 //		NSLog(@"WARNING: tried to continue trip timer but failed to get trip.start date");
 //		return [self newTripTimerUserInfo];
 //	}
-//	
+//
 //}
 
 
@@ -631,10 +559,10 @@
         // start the timer if needed
         if ( timer == nil )
         {
-			[self resetCounter];
-			timer = [NSTimer scheduledTimerWithTimeInterval:kCounterTimeInterval
-													 target:self selector:@selector(updateCounter:)
-												   userInfo:[[self newTripTimerUserInfo] autorelease] repeats:YES];
+            [self resetCounter];
+            timer = [NSTimer scheduledTimerWithTimeInterval:kCounterTimeInterval
+                                                     target:self selector:@selector(updateCounter:)
+                                                   userInfo:[[self newTripTimerUserInfo] autorelease] repeats:YES];
         }
         
         UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
@@ -644,7 +572,7 @@
         [startButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
         [startButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
         [startButton setTitle:@"Save" forState:UIControlStateNormal];
-
+        
         // set recording flag so future location updates will be added as coords
         appDelegate = [[UIApplication sharedApplication] delegate];
         appDelegate.isRecording = YES;
@@ -653,14 +581,15 @@
         // Create a reference to a Firebase location
         NSDateFormatter *formatter;
         NSString        *today;
-        formatter = [[[NSDateFormatter alloc] init] autorelease];
+        formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy/MM/dd/"];
         today = [formatter stringFromDate:[NSDate date]];
-        NSMutableString *fireURL = [[[NSMutableString alloc] initWithString:kFireDomain] autorelease];
+        NSMutableString *fireURL = [[NSMutableString alloc] initWithString:kFireDomain];
         [fireURL appendString:@"trips-started/"];
         [fireURL appendString:today];
-
-        Firebase *timeStart = [[[[Firebase alloc] initWithUrl:fireURL] autorelease] childByAutoId];
+        
+        Firebase* fStart = [[Firebase alloc] initWithUrl:fireURL];
+        Firebase* timeStart = [fStart childByAutoId];
         //NSLog(@"%@",fireURL);
         NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970] * 1000;
         // NSTimeInterval is defined as double
@@ -696,133 +625,190 @@
         //[saveActionSheet showInView:self.view];
         [saveActionSheet showInView:[UIApplication sharedApplication].keyWindow];
     }
-	
+    
 }
 - (void)save
 {
-	[[NSUserDefaults standardUserDefaults] setInteger:0 forKey: @"pickerCategory"];
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey: @"pickerCategory"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-	// go directly to TripPurpose, user can cancel from there
-	if ( YES )
-	{
-		// Trip Purpose
-		NSLog(@"INIT + PUSH");
-		PickerViewController *tripPurposePickerView = [[PickerViewController alloc]
-													  //initWithPurpose:[tripManager getPurposeIndex]];
-													  initWithNibName:@"TripPurposePicker" bundle:nil];
-		[tripPurposePickerView setDelegate:self];
-		//[[self navigationController] pushViewController:pickerViewController animated:YES];
-        [self.navigationController presentViewController:tripPurposePickerView animated:YES completion:nil];
-		[tripPurposePickerView release];
-	}
-	
-	// prompt to confirm first
-	else
-	{
-		// pause updating the counter
-		shouldUpdateCounter = NO;
-		
-		// construct purpose confirmation string
-		NSString *purpose = nil;
-		if ( tripManager != nil )
-			purpose = [self getPurposeString:[tripManager getPurposeIndex]];
-		
-		NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
-		
-		// present action sheet
-		UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
-																 delegate:self
-														cancelButtonTitle:@"Cancel"
-												   destructiveButtonTitle:nil
-														otherButtonTitles:@"Save", nil];
-		
-		actionSheet.actionSheetStyle		= UIActionSheetStyleBlackTranslucent;
-		UIViewController *pvc = self.parentViewController;
-		UITabBarController *tbc = (UITabBarController *)pvc.parentViewController;
-		
-		[actionSheet showFromTabBar:tbc.tabBar];
-		[actionSheet release];
-	}
+    // go directly to TripPurpose, user can cancel from there
+    if ( YES )
+    {
+        // Trip Purpose
+        NSLog(@"INIT + PUSH");
+        PickerViewController *tripPurposePickerView = [[PickerViewController alloc]
+                                                       //initWithPurpose:[tripManager getPurposeIndex]];
+                                                       initWithNibName:@"TripPurposePicker" bundle:nil];
+        [tripPurposePickerView setDelegate:self];
+        //[[self navigationController] pushViewController:pickerViewController animated:YES];
+        [self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
+        [tripPurposePickerView release];
+    }
+    
+    // prompt to confirm first
+    else
+    {
+        // pause updating the counter
+        shouldUpdateCounter = NO;
+        
+        // construct purpose confirmation string
+        NSString *purpose = nil;
+        if ( tripManager != nil )
+            purpose = [self getPurposeString:[tripManager getPurposeIndex]];
+        
+        NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
+        
+        // present action sheet
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Save", nil];
+        
+        actionSheet.actionSheetStyle		= UIActionSheetStyleBlackTranslucent;
+        UIViewController *pvc = self.parentViewController;
+        UITabBarController *tbc = (UITabBarController *)pvc.parentViewController;
+        
+        [actionSheet showFromTabBar:tbc.tabBar];
+        [actionSheet release];
+    }
     
 }
 
+
+-(IBAction)notethis:(id)sender{
+    [[NSUserDefaults standardUserDefaults] setInteger:3 forKey: @"pickerCategory"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSLog(@"Note This");
+    
+    [noteManager createNote];
+    
+    if (myLocation){
+        [noteManager addLocation:myLocation];
+    }
+    
+    // go directly to TripPurpose, user can cancel from there
+    if ( YES )
+    {
+        // Trip Purpose
+        NSLog(@"INIT + PUSH");
+        
+        
+        PickerViewController *notePickerView = [[PickerViewController alloc]
+                                                //initWithPurpose:[tripManager getPurposeIndex]];
+                                                initWithNibName:@"TripPurposePicker" bundle:nil];
+        [notePickerView setDelegate:self];
+        //[[self navigationController] pushViewController:pickerViewController animated:YES];
+        [self.navigationController presentModalViewController:notePickerView animated:YES];
+        
+        //add location information
+        
+        [notePickerView release];
+    }
+    
+    // prompt to confirm first
+    else
+    {
+        // pause updating the counter
+        shouldUpdateCounter = NO;
+        
+        // construct purpose confirmation string
+        NSString *purpose = nil;
+        if ( tripManager != nil )
+            purpose = [self getPurposeString:[tripManager getPurposeIndex]];
+        
+        NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
+        
+        // present action sheet
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
+                                                                 delegate:self
+                                                        cancelButtonTitle:@"Cancel"
+                                                   destructiveButtonTitle:nil
+                                                        otherButtonTitles:@"Save", nil];
+        
+        actionSheet.actionSheetStyle		= UIActionSheetStyleBlackTranslucent;
+        UIViewController *pvc = self.parentViewController;
+        UITabBarController *tbc = (UITabBarController *)pvc.parentViewController;
+        
+        [actionSheet showFromTabBar:tbc.tabBar];
+        [actionSheet release];
+    }
+}
+
+
 - (void)resetCounter
 {
-	if ( timeCounter != nil )
-		timeCounter.text = @"00:00:00";
-	
-	if ( distCounter != nil )
-		distCounter.text = @"0 mi";
+    if ( timeCounter != nil )
+        timeCounter.text = @"00:00:00";
+    
+    if ( distCounter != nil )
+        distCounter.text = @"0 mi";
 }
 
 
 - (void)setCounterTimeSince:(NSDate *)startDate distance:(CLLocationDistance)distance
 {
-	if ( timeCounter != nil )
-	{
-		NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
-		
-		static NSDateFormatter *inputFormatter = nil;
-		if ( inputFormatter == nil )
-			inputFormatter = [[[NSDateFormatter alloc] init] autorelease];
-		
-		[inputFormatter setDateFormat:@"HH:mm:ss"];
-		NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
-		[inputFormatter setDateFormat:@"HH:mm:ss"];
-		NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
-		
-		timeCounter.text = [inputFormatter stringFromDate:outputDate];
-	}
-	
-	if ( distCounter != nil )
-		distCounter.text = [NSString stringWithFormat:@"%.1f mi", distance / 1609.344];
-;
+    if ( timeCounter != nil )
+    {
+        NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
+        
+        static NSDateFormatter *inputFormatter = nil;
+        if ( inputFormatter == nil )
+            inputFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        
+        [inputFormatter setDateFormat:@"HH:mm:ss"];
+        NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
+        [inputFormatter setDateFormat:@"HH:mm:ss"];
+        NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
+        
+        timeCounter.text = [inputFormatter stringFromDate:outputDate];
+    }
+    
+    if ( distCounter != nil )
+        distCounter.text = [NSString stringWithFormat:@"%.1f mi", distance / 1609.344];
+    ;
 }
 
 
 // handle start button action
 - (void)updateCounter:(NSTimer *)theTimer
 {
-	//NSLog(@"updateCounter");
-	if ( shouldUpdateCounter )
-	{
-		NSDate *startDate = [[theTimer userInfo] objectForKey:@"StartDate"];
-		NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
-
-		static NSDateFormatter *inputFormatter = nil;
-		if ( inputFormatter == nil )
-			inputFormatter = [[NSDateFormatter alloc] init];
-		
-		[inputFormatter setDateFormat:@"HH:mm:ss"];
-		NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
-		[inputFormatter setDateFormat:@"HH:mm:ss"];
-		NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
-		
-		//NSLog(@"Timer started on %@", startDate);
-		//NSLog(@"Timer started %f seconds ago", interval);
-		//NSLog(@"elapsed time: %@", [inputFormatter stringFromDate:outputDate] );
-		
-		//self.timeCounter.text = [NSString stringWithFormat:@"%.1f sec", interval];
-		self.timeCounter.text = [inputFormatter stringFromDate:outputDate];
-	}
-
+    //NSLog(@"updateCounter");
+    if ( shouldUpdateCounter )
+    {
+        NSDate *startDate = [[theTimer userInfo] objectForKey:@"StartDate"];
+        NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
+        
+        static NSDateFormatter *inputFormatter = nil;
+        if ( inputFormatter == nil )
+            inputFormatter = [[NSDateFormatter alloc] init];
+        
+        [inputFormatter setDateFormat:@"HH:mm:ss"];
+        NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
+        [inputFormatter setDateFormat:@"HH:mm:ss"];
+        NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
+        
+        //NSLog(@"Timer started on %@", startDate);
+        //NSLog(@"Timer started %f seconds ago", interval);
+        //NSLog(@"elapsed time: %@", [inputFormatter stringFromDate:outputDate] );
+        
+        //self.timeCounter.text = [NSString stringWithFormat:@"%.1f sec", interval];
+        self.timeCounter.text = [inputFormatter stringFromDate:outputDate];
+    }
+    
 }
 
 
-- (void)viewWillAppear:(BOOL)animated 
+- (void)viewWillAppear:(BOOL)animated
 {
     // listen for keyboard hide/show notifications so we can properly adjust the table's height
-	[super viewWillAppear:animated];
+    [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
--(void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.locationManager stopUpdatingLocation];
-}
 
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -834,75 +820,70 @@
 
 - (void)keyboardWillShow:(NSNotification *)aNotification
 {
-	NSLog(@"keyboardWillShow");
+    NSLog(@"keyboardWillShow");
 }
 
 
 - (void)keyboardWillHide:(NSNotification *)aNotification
 {
-	NSLog(@"keyboardWillHide");
-}
-
-
-- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
-    return UIBarPositionTopAttached;
+    NSLog(@"keyboardWillHide");
 }
 
 
 - (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
+    
+    // Release any cached data, images, etc that aren't in use.
 }
 
 
 - (NSString *)updatePurposeWithString:(NSString *)purpose
-{	
-	// only enable start button if we don't already have a pending trip
-	if ( timer == nil )
-		startButton.enabled = YES;
-	
-	startButton.hidden = NO;
-	
-	return purpose;
+{
+    // only enable start button if we don't already have a pending trip
+    if ( timer == nil )
+        startButton.enabled = YES;
+    
+    startButton.hidden = NO;
+    
+    return purpose;
 }
 
 
 - (NSString *)updatePurposeWithIndex:(unsigned int)index
 {
-	return [self updatePurposeWithString:[tripManager getPurposeString:index]];
+    return [self updatePurposeWithString:[tripManager getPurposeString:index]];
 }
 
 
 #pragma mark UINavigationController
 
 
-- (void)navigationController:(UINavigationController *)navigationController 
-	   willShowViewController:(UIViewController *)viewController 
-					animated:(BOOL)animated
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
 {
-	if ( viewController == self )
-	{
-		//NSLog(@"willShowViewController:self");
-		self.title = @"Record New Trip";
-	}
-	else
-	{
-		//NSLog(@"willShowViewController:else");
-		self.title = @"Back";
-		self.tabBarItem.title = @"Record New Trip"; // important to maintain the same tab item title
-	}
+    if ( viewController == self )
+    {
+        //NSLog(@"willShowViewController:self");
+        self.title = @"Record New Trip";
+    }
+    else
+    {
+        //NSLog(@"willShowViewController:else");
+        self.title = @"Back";
+        self.tabBarItem.title = @"Record New Trip"; // important to maintain the same tab item title
+    }
 }
 
 
 #pragma mark UITabBarControllerDelegate
 
 
-- (BOOL)tabBarController:(UITabBarController *)tabBarController 
+- (BOOL)tabBarController:(UITabBarController *)tabBarController
 shouldSelectViewController:(UIViewController *)viewController
 {
-		return YES;		
+    return YES;
 }
 
 
@@ -911,9 +892,9 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)setSaved:(BOOL)value
 {
-	NSLog(@"setSaved");
-	// no-op
-
+    NSLog(@"setSaved");
+    // no-op
+    
 }
 
 
@@ -922,54 +903,54 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (NSString *)setPurpose:(long)index
 {
-	NSString *purpose = [tripManager setPurpose:index];
-	NSLog(@"setPurpose: %@", purpose);
-
-	//[self.navigationController popViewControllerAnimated:YES];
-	
-	return [self updatePurposeWithString:purpose];
+    NSString *purpose = [tripManager setPurpose:index];
+    NSLog(@"setPurpose: %@", purpose);
+    
+    //[self.navigationController popViewControllerAnimated:YES];
+    
+    return [self updatePurposeWithString:purpose];
 }
 
 
 - (NSString *)getPurposeString:(long)index
 {
-	return [tripManager getPurposeString:index];
+    return [tripManager getPurposeString:index];
 }
 
 
 - (void)didCancelPurpose
 {
-	[self.navigationController dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = YES;
-	recording = YES;
+    recording = YES;
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey: @"recording"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-	shouldUpdateCounter = YES;
+    shouldUpdateCounter = YES;
 }
 
 
 - (void)didCancelNote
 {
-	[self.navigationController dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
     appDelegate = [[UIApplication sharedApplication] delegate];
 }
 
 
 - (void)didPickPurpose:(long)index
 {
-	//[self.navigationController dismissModalViewControllerAnimated:YES];
-	// update UI
+    //[self.navigationController dismissModalViewControllerAnimated:YES];
+    // update UI
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = NO;
-	recording = NO;
+    recording = NO;
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey: @"recording"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-	startButton.enabled = YES;
-	[self resetTimer];
-	
-	[tripManager setPurpose:index];
-	//[tripManager promptForTripNotes];
+    startButton.enabled = YES;
+    [self resetTimer];
+    
+    [tripManager setPurpose:index];
+    //[tripManager promptForTripNotes];
     //do something here: may change to be the save as a separate view. Not prompt.
 }
 
@@ -983,21 +964,44 @@ shouldSelectViewController:(UIViewController *)viewController
     NSLog(@"Noted rider took public transit in RecordTripViewController.");
 }
 
-- (void)didTakeBikeRental {
-    [tripManager saveTookBikeRental];
-    NSLog(@"Noted rider took bike rental in RecordTripViewController.");
-}
-
 - (void)saveTrip{
     [tripManager saveTrip];
     NSLog(@"Save trip");
 }
 
+- (void)didPickNoteType:(NSNumber *)index
+{	
+    [noteManager.note setNote_type:index];
+    NSLog(@"Added note type: %d", [noteManager.note.note_type intValue]);
+    //do something here: may change to be the save as a separate view. Not prompt.
+}
+
+- (void)didEnterNoteDetails:(NSString *)details{
+    [noteManager.note setDetails:details];
+    NSLog(@"Note Added details: %@", noteManager.note.details);
+}
+
+- (void)didSaveImage:(NSData *)imgData{
+    [noteManager.note setImage_data:imgData];
+    NSLog(@"Added image, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
+    [imgData release];
+}
 
 - (void)getTripThumbnail:(NSData *)imgData{
     [tripManager.trip setThumbnail:imgData];
     NSLog(@"Trip Thumbnail, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
 }
+
+- (void)getNoteThumbnail:(NSData *)imgData{
+    [noteManager.note setThumbnail:imgData];
+    NSLog(@"Note Thumbnail, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
+}
+
+- (void)saveNote{
+    [noteManager saveNote];
+    NSLog(@"Save note");
+}
+
 
 
 
@@ -1006,10 +1010,10 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (Trip *)getRecordingInProgress
 {
-	if ( recording )
-		return tripManager.trip;
-	else
-		return nil;
+    if ( recording )
+        return tripManager.trip;
+    else
+        return nil;
 }
 
 
@@ -1019,6 +1023,7 @@ shouldSelectViewController:(UIViewController *)viewController
     self.startButton = nil;
     self.infoButton = nil;
     self.saveButton = nil;
+    self.noteButton = nil;
     self.timeCounter = nil;
     self.distCounter = nil;
     self.saveActionSheet = nil;
@@ -1028,13 +1033,16 @@ shouldSelectViewController:(UIViewController *)viewController
     self.shouldUpdateCounter = nil;
     self.userInfoSaved = nil;
     self.tripManager = nil;
+    self.noteManager = nil;
     self.appDelegate = nil;
     speedCounter = nil;
     
+    //    [appDelegate.locationManager release];
     [appDelegate release];
     [infoButton release];
     [saveButton release];
     [startButton release];
+    [noteButton release];
     [timeCounter release];
     [distCounter release];
     [speedCounter release];
@@ -1043,6 +1051,7 @@ shouldSelectViewController:(UIViewController *)viewController
     [opacityMask release];
     [parentView release];
     [tripManager release];
+    [noteManager release];
     [myLocation release];
     
     [managedObjectContext release];
