@@ -364,24 +364,24 @@
                     lonDelta } };
 			[mapView setRegion:region animated:NO];
 		}
-		else
-		{
-			// init map region to Atlanta
-			MKCoordinateRegion region = { { 39.952707, -75.164133 }, { 0.10825, 0.10825 } };
-			[mapView setRegion:region animated:NO];
-		}
+        else
+        {
+            // init map region to Petco Park.
+            MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
+            [mapView setRegion:region animated:NO];
+        }
         free(routePath);
-	}
-	else
-	{
-		// error: init map region
-		MKCoordinateRegion region = { { 39.952707, -75.164133 }, { 0.10825, 0.10825 } };
-		[mapView setRegion:region animated:NO];
-	}
+    }
+    else
+    {
+        // error: init map region
+        MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
+        [mapView setRegion:region animated:NO];
+    }
     
     LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:909];
-	//NSLog(@"loading: %@", loading);
-	[loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
+    //NSLog(@"loading: %@", loading);
+    [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
