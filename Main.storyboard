@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="FuN-7M-3IU">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <scenes>
+        <!--My Trips-->
+        <scene sceneID="Wh4-iO-cgN">
+            <objects>
+                <viewController title="My Trips" id="h9n-iZ-Nso" customClass="TripDetailViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rPM-nQ-Okn"/>
+                        <viewControllerLayoutGuide type="bottom" id="zTw-4Z-kRq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="agy-Rs-Rrv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Trips" image="tabbar_view.png" id="vxa-uo-e2L"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P3a-qH-JpT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="284" y="845"/>
+        </scene>
+        <!--My Notes-->
+        <scene sceneID="YcN-Kp-l9U">
+            <objects>
+                <viewController id="ycP-j1-e8D" customClass="NoteViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pWe-5O-TcI"/>
+                        <viewControllerLayoutGuide type="bottom" id="6KX-Jj-5hk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GbY-ED-q8A">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Notes" image="tabbar_notes.png" id="Xs9-Qx-AhS"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1dJ-bB-54q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="276" y="1589"/>
+        </scene>
+        <!--My Info-->
+        <scene sceneID="yaM-X0-zBp">
+            <objects>
+                <viewController id="8d8-mn-Vsy" customClass="PersonalInfoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8tf-Zu-fQ4"/>
+                        <viewControllerLayoutGuide type="bottom" id="OwB-hs-JLT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tjj-Vl-kmj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Info" image="tabbar_settings.png" id="6RC-xs-Ysf"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nKW-IJ-NAV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="262" y="2379"/>
+        </scene>
+        <!--Record-->
+        <scene sceneID="6lN-NK-txx">
+            <objects>
+                <viewController title="Record" id="QTw-mo-Feh" customClass="RecordTripViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="j36-IK-Cmx"/>
+                        <viewControllerLayoutGuide type="bottom" id="yr7-Zn-cHb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JEc-uC-s2q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="am3-eL-TOh">
+                                <rect key="frame" x="0.0" y="45" width="600" height="506"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DZw-T4-kBZ">
+                                <rect key="frame" x="8" y="20" width="115" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Elapse Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZs-Hj-Zht">
+                                <rect key="frame" x="8" y="-1" width="110" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0.0 mi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQC-Aa-Uc1">
+                                <rect key="frame" x="153" y="20" width="94" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Distance:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihJ-J0-X3h">
+                                <rect key="frame" x="153" y="-1" width="94" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0.0 mph" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L1b-CO-ayn">
+                                <rect key="frame" x="314" y="20" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Speed:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zqa-Em-A8X">
+                                <rect key="frame" x="314" y="-1" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uvl-h8-Bjq">
+                                <rect key="frame" x="20" y="64" width="103" height="34"/>
+                                <state key="normal" title="Note This:"/>
+                                <connections>
+                                    <action selector="notethis:" destination="QTw-mo-Feh" eventType="touchUpInside" id="DEz-l3-V7l"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jhe-PS-5RX">
+                                <rect key="frame" x="255" y="504" width="90" height="30"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="start:" destination="QTw-mo-Feh" eventType="touchUpInside" id="3ra-9Y-K9F"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Record" image="tabbar_record.png" id="ziB-DG-ZSt" userLabel="Record"/>
+                    <connections>
+                        <outlet property="distCounter" destination="aQC-Aa-Uc1" id="By0-03-hsz"/>
+                        <outlet property="speedCounter" destination="L1b-CO-ayn" id="phg-an-yen"/>
+                        <outlet property="timeCounter" destination="DZw-T4-kBZ" id="d4m-w7-euQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Qe-XG-8Qg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="284" y="184"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="vCX-af-T3K">
+            <objects>
+                <tabBarController title="Main" id="FuN-7M-3IU" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="UeF-iS-N1j">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="QTw-mo-Feh" kind="relationship" relationship="viewControllers" id="1Zr-Rq-CWM"/>
+                        <segue destination="h9n-iZ-Nso" kind="relationship" relationship="viewControllers" id="PgD-Ne-TUk"/>
+                        <segue destination="ycP-j1-e8D" kind="relationship" relationship="viewControllers" id="nhA-sm-o95"/>
+                        <segue destination="8d8-mn-Vsy" kind="relationship" relationship="viewControllers" id="Hzs-EL-Zfc"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="luJ-Yg-CBe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-840" y="789"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="tabbar_notes.png" width="30" height="30"/>
+        <image name="tabbar_record.png" width="30" height="30"/>
+        <image name="tabbar_settings.png" width="30" height="30"/>
+        <image name="tabbar_view.png" width="30" height="30"/>
+    </resources>
+</document>

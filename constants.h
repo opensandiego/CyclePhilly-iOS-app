@@ -1,7 +1,7 @@
 /** Cycle Philly, Code For Philly
  *                                    Philadelphia, PA. USA
  *
- *   
+ *
  *   @author Corey Acri <acri.corey@gmail.com>
  *   @author Lloyd Emelle <lemelle@codeforamerica.org>
  *
@@ -44,7 +44,7 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/25/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 
@@ -101,10 +101,10 @@
 
 //	updated references for posting to Cycle Philly site for Cycle Philly adaptation for questions email Corey Acri acri.corey@gmail.com
 
-#define kInfoURL			@"http://www.cyclephilly.org/#about"
-#define kInstructionsURL	@"mailto:support@cyclephilly.org"
+#define kInfoURL			@"http://www.webikesd.org"
+#define kInstructionsURL	@"mailto:support@webikesd.org"
 
-#define kSaveURL			@"http://www.cyclephilly.org/post/"
+#define kSaveURL			@"http://www.webikesd.org/post/"
 
 #define kFireDomain			@"https://blazing-torch-4795.firebaseio.com/"
 //#define kSaveURL			@""

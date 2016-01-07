@@ -83,10 +83,10 @@
 - (id)initWithTrip:(Trip *)_trip
 {
     //if (self = [super init]) {
-	if (self = [super initWithNibName:@"MapViewController" bundle:nil]) {
-		NSLog(@"MapViewController initWithTrip");
-		self.trip = _trip;
-		mapView.delegate = self;
+    if (self = [super initWithNibName:@"MapViewController" bundle:nil]) {
+        NSLog(@"MapViewController initWithTrip");
+        self.trip = _trip;
+        mapView.delegate = self;
     }
     return self;
 }
@@ -101,52 +101,52 @@
 
 - (void)infoAction:(UIButton*)sender
 {
-	NSLog(@"infoAction");
-	[UIView setAnimationDelegate:self];
-	[UIView setAnimationDidStopSelector:@selector(animationDidStop:animationIDfinished:finished:context:)];
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.75];
-	
-	[UIView setAnimationTransition:([infoView superview] ?
-									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
-						   forView:self.view cache:YES];
-	
-	if ([infoView superview])
-		[infoView removeFromSuperview];
-	else
-		[self.view addSubview:infoView];
-	
-	[UIView commitAnimations];
-	
-	// adjust our done/info buttons accordingly
-	if ([infoView superview] == self.view)
-		self.navigationItem.rightBarButtonItem = doneButton;
-	else
-		self.navigationItem.rightBarButtonItem = flipButton;
+    NSLog(@"infoAction");
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationDidStop:animationIDfinished:finished:context:)];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.75];
+    
+    [UIView setAnimationTransition:([infoView superview] ?
+                                    UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
+                           forView:self.view cache:YES];
+    
+    if ([infoView superview])
+        [infoView removeFromSuperview];
+    else
+        [self.view addSubview:infoView];
+    
+    [UIView commitAnimations];
+    
+    // adjust our done/info buttons accordingly
+    if ([infoView superview] == self.view)
+        self.navigationItem.rightBarButtonItem = doneButton;
+    else
+        self.navigationItem.rightBarButtonItem = flipButton;
 }
 
 
 - (void)initInfoView
 {
-	infoView					= [[UIView alloc] initWithFrame:CGRectMake(0,0,320,560)];
-	infoView.alpha				= kInfoViewAlpha;
-	infoView.backgroundColor	= [UIColor blackColor];
-	
-	UILabel *notesHeader		= [[[UILabel alloc] initWithFrame:CGRectMake(9,85,160,25)] autorelease];
-	notesHeader.backgroundColor = [UIColor clearColor];
-	notesHeader.font			= [UIFont boldSystemFontOfSize:18.0];
-	notesHeader.opaque			= NO;
-	notesHeader.text			= @"Trip Notes";
-	notesHeader.textColor		= [UIColor whiteColor];
-	[infoView addSubview:notesHeader];
-	
-	UITextView *notesText		= [[[UITextView alloc] initWithFrame:CGRectMake(0,110,320,200)] autorelease];
-	notesText.backgroundColor	= [UIColor clearColor];
-	notesText.editable			= NO;
-	notesText.font				= [UIFont systemFontOfSize:16.0];
-	notesText.text				= trip.notes;
-	notesText.textColor			= [UIColor whiteColor];
-	[infoView addSubview:notesText];
+    infoView					= [[UIView alloc] initWithFrame:CGRectMake(0,0,320,560)];
+    infoView.alpha				= kInfoViewAlpha;
+    infoView.backgroundColor	= [UIColor blackColor];
+    
+    UILabel *notesHeader		= [[[UILabel alloc] initWithFrame:CGRectMake(9,85,160,25)] autorelease];
+    notesHeader.backgroundColor = [UIColor clearColor];
+    notesHeader.font			= [UIFont boldSystemFontOfSize:18.0];
+    notesHeader.opaque			= NO;
+    notesHeader.text			= @"Trip Notes";
+    notesHeader.textColor		= [UIColor whiteColor];
+    [infoView addSubview:notesHeader];
+    
+    UITextView *notesText		= [[[UITextView alloc] initWithFrame:CGRectMake(0,110,320,200)] autorelease];
+    notesText.backgroundColor	= [UIColor clearColor];
+    notesText.editable			= NO;
+    notesText.font				= [UIFont systemFontOfSize:16.0];
+    notesText.text				= trip.notes;
+    notesText.textColor			= [UIColor whiteColor];
+    [infoView addSubview:notesText];
     
 }
 
@@ -155,7 +155,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.navigationController.navigationBarHidden = NO;
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
@@ -167,137 +167,137 @@
     [self.locationManager startUpdatingLocation];
     
     if ( trip )
-	{
-		// format date as a string
-		static NSDateFormatter *dateFormatter = nil;
-		if (dateFormatter == nil) {
-			dateFormatter = [[NSDateFormatter alloc] init];
-			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-			[dateFormatter setDateStyle:NSDateFormatterLongStyle];
-		}
-		
-		// display duration, distance as navbar prompt
-		static NSDateFormatter *inputFormatter = nil;
-		if ( inputFormatter == nil )
-			inputFormatter = [[NSDateFormatter alloc] init];
-		
-		[inputFormatter setDateFormat:@"HH:mm:ss"];
-		NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
-		[inputFormatter setDateFormat:@"HH:mm:ss"];
-		NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:(NSTimeInterval)[trip.duration doubleValue] sinceDate:fauxDate] autorelease];
+    {
+        // format date as a string
+        static NSDateFormatter *dateFormatter = nil;
+        if (dateFormatter == nil) {
+            dateFormatter = [[NSDateFormatter alloc] init];
+            [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+            [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+        }
         
-		double mph = ( [trip.distance doubleValue] / 1609.344 ) / ( [trip.duration doubleValue] / 3600. );
-		
-		self.navigationItem.prompt = [NSString stringWithFormat:@"elapsed: %@ ~ %@",
- 									  [inputFormatter stringFromDate:outputDate],
-									  [dateFormatter stringFromDate:[trip start]]];
+        // display duration, distance as navbar prompt
+        static NSDateFormatter *inputFormatter = nil;
+        if ( inputFormatter == nil )
+            inputFormatter = [[NSDateFormatter alloc] init];
         
-		self.title = [NSString stringWithFormat:@"%.1f mi ~ %.1f mph",
-					  [trip.distance doubleValue] / 1609.344,
-					  mph ];
-		
-		//self.title = trip.purpose;
-		
-		// only add info view for trips with non-null notes
-		if ( ![trip.notes isEqualToString: @""] && trip.notes != NULL)
-		{
-			doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(infoAction:)];
-			
-			UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-			infoButton.showsTouchWhenHighlighted = YES;
-			[infoButton addTarget:self action:@selector(infoAction:) forControlEvents:UIControlEventTouchUpInside];
-			flipButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
-			self.navigationItem.rightBarButtonItem = flipButton;
-			
-			[self initInfoView];
-		}
+        [inputFormatter setDateFormat:@"HH:mm:ss"];
+        NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
+        [inputFormatter setDateFormat:@"HH:mm:ss"];
+        NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:(NSTimeInterval)[trip.duration doubleValue] sinceDate:fauxDate] autorelease];
         
-		// sort coords by recorded date
-		/*
+        double mph = ( [trip.distance doubleValue] / 1609.344 ) / ( [trip.duration doubleValue] / 3600. );
+        
+        self.navigationItem.prompt = [NSString stringWithFormat:@"elapsed: %@ ~ %@",
+                                      [inputFormatter stringFromDate:outputDate],
+                                      [dateFormatter stringFromDate:[trip start]]];
+        
+        self.title = [NSString stringWithFormat:@"%.1f mi ~ %.1f mph",
+                      [trip.distance doubleValue] / 1609.344,
+                      mph ];
+        
+        //self.title = trip.purpose;
+        
+        // only add info view for trips with non-null notes
+        if ( ![trip.notes isEqualToString: @""] && trip.notes != NULL)
+        {
+            doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(infoAction:)];
+            
+            UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+            infoButton.showsTouchWhenHighlighted = YES;
+            [infoButton addTarget:self action:@selector(infoAction:) forControlEvents:UIControlEventTouchUpInside];
+            flipButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+            self.navigationItem.rightBarButtonItem = flipButton;
+            
+            [self initInfoView];
+        }
+        
+        // sort coords by recorded date
+        /*
          NSSortDescriptor *dateDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"recorded"
          ascending:YES] autorelease];
          NSArray *sortDescriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
          NSArray *sortedCoords = [[trip.coords allObjects] sortedArrayUsingDescriptors:sortDescriptors];
          */
-		
-		// filter coords by hAccuracy
-		NSPredicate *filterByAccuracy	= [NSPredicate predicateWithFormat:@"hAccuracy < 100.0"];
-		NSArray		*filteredCoords		= [[trip.coords allObjects] filteredArrayUsingPredicate:filterByAccuracy];
-		NSLog(@"count of filtered coords = %lu", (unsigned long)[filteredCoords count]);
-		
-		// sort filtered coords by recorded date
-		NSSortDescriptor *sortByDate	= [[[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:YES] autorelease];
-		NSArray		*sortDescriptors	= [NSArray arrayWithObjects:sortByDate, nil];
-		NSArray		*sortedCoords		= [filteredCoords sortedArrayUsingDescriptors:sortDescriptors];
-		
-		// add coords as annotations to map
-		BOOL first = YES;
-		Coord *last = nil;
-		MapCoord *pin = nil;
-		int count = 0;
-		
-		// calculate min/max values for lat, lon
-		NSNumber *minLat = [NSNumber numberWithDouble:0.0];
-		NSNumber *maxLat = [NSNumber numberWithDouble:0.0];
-		NSNumber *minLon = [NSNumber numberWithDouble:0.0];
-		NSNumber *maxLon = [NSNumber numberWithDouble:0.0];
+        
+        // filter coords by hAccuracy
+        NSPredicate *filterByAccuracy	= [NSPredicate predicateWithFormat:@"hAccuracy < 100.0"];
+        NSArray		*filteredCoords		= [[trip.coords allObjects] filteredArrayUsingPredicate:filterByAccuracy];
+        NSLog(@"count of filtered coords = %lu", (unsigned long)[filteredCoords count]);
+        
+        // sort filtered coords by recorded date
+        NSSortDescriptor *sortByDate	= [[[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:YES] autorelease];
+        NSArray		*sortDescriptors	= [NSArray arrayWithObjects:sortByDate, nil];
+        NSArray		*sortedCoords		= [filteredCoords sortedArrayUsingDescriptors:sortDescriptors];
+        
+        // add coords as annotations to map
+        BOOL first = YES;
+        Coord *last = nil;
+        MapCoord *pin = nil;
+        int count = 0;
+        
+        // calculate min/max values for lat, lon
+        NSNumber *minLat = [NSNumber numberWithDouble:0.0];
+        NSNumber *maxLat = [NSNumber numberWithDouble:0.0];
+        NSNumber *minLon = [NSNumber numberWithDouble:0.0];
+        NSNumber *maxLon = [NSNumber numberWithDouble:0.0];
         
         NSMutableArray *routeCoords = [[[NSMutableArray alloc]init] autorelease];
         
-		for ( Coord *coord in sortedCoords )
-		{
-			// only plot unique coordinates to our map for performance reasons
-			if ( !last ||
-				(![coord.latitude  isEqualToNumber:last.latitude] &&
-				 ![coord.longitude isEqualToNumber:last.longitude] ) )
-			{
+        for ( Coord *coord in sortedCoords )
+        {
+            // only plot unique coordinates to our map for performance reasons
+            if ( !last ||
+                (![coord.latitude  isEqualToNumber:last.latitude] &&
+                 ![coord.longitude isEqualToNumber:last.longitude] ) )
+            {
                 CLLocationCoordinate2D coordinate;
-				coordinate.latitude  = [coord.latitude doubleValue];
-				coordinate.longitude = [coord.longitude doubleValue];
+                coordinate.latitude  = [coord.latitude doubleValue];
+                coordinate.longitude = [coord.longitude doubleValue];
                 
                 CLLocation *routePoint = [[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] autorelease];
-				[routeCoords addObject:routePoint];
+                [routeCoords addObject:routePoint];
                 
-				//pin = [[MapCoord alloc] init];
-				//pin.coordinate = coordinate;
-				
-				if ( first )
-				{
-					// add start point as a pin annotation
-					first = NO;
-					//pin.first = YES;
-					//pin.title = @"Start";
-					//pin.subtitle = [dateFormatter stringFromDate:coord.recorded];
-					
-					// initialize min/max values to the first coord
-					minLat = coord.latitude;
-					maxLat = coord.latitude;
-					minLon = coord.longitude;
-					maxLon = coord.longitude;
-				}
-				else
-				{
-					// update min/max values
-					if ( [minLat compare:coord.latitude] == NSOrderedDescending )
-						minLat = coord.latitude;
-					
-					if ( [maxLat compare:coord.latitude] == NSOrderedAscending )
-						maxLat = coord.latitude;
-					
-					if ( [minLon compare:coord.longitude] == NSOrderedDescending )
-						minLon = coord.longitude;
-					
-					if ( [maxLon compare:coord.longitude] == NSOrderedAscending )
-						maxLon = coord.longitude;
-				}
-				
-				//[mapView addAnnotation:pin];
-				count++;
-			}
-			
-			// update last coord pointer so we can cull redundant coords above
-			last = coord;
-		}
+                //pin = [[MapCoord alloc] init];
+                //pin.coordinate = coordinate;
+                
+                if ( first )
+                {
+                    // add start point as a pin annotation
+                    first = NO;
+                    //pin.first = YES;
+                    //pin.title = @"Start";
+                    //pin.subtitle = [dateFormatter stringFromDate:coord.recorded];
+                    
+                    // initialize min/max values to the first coord
+                    minLat = coord.latitude;
+                    maxLat = coord.latitude;
+                    minLon = coord.longitude;
+                    maxLon = coord.longitude;
+                }
+                else
+                {
+                    // update min/max values
+                    if ( [minLat compare:coord.latitude] == NSOrderedDescending )
+                        minLat = coord.latitude;
+                    
+                    if ( [maxLat compare:coord.latitude] == NSOrderedAscending )
+                        maxLat = coord.latitude;
+                    
+                    if ( [minLon compare:coord.longitude] == NSOrderedDescending )
+                        minLon = coord.longitude;
+                    
+                    if ( [maxLon compare:coord.longitude] == NSOrderedAscending )
+                        maxLon = coord.longitude;
+                }
+                
+                //[mapView addAnnotation:pin];
+                count++;
+            }
+            
+            // update last coord pointer so we can cull redundant coords above
+            last = coord;
+        }
         NSLog(@"routeCoords array is this long: %lu@", (unsigned long)[routeCoords count]);
         
         NSUInteger numPoints = [routeCoords count];
@@ -322,38 +322,38 @@
         
         
         //free(routePath);
-		
-		NSLog(@"added %d unique GPS coordinates of %lu to map", count, (unsigned long)[sortedCoords count]);
-		
-		// add end point as a pin annotation
-		if ( last == [sortedCoords lastObject] )
-		{
-			pin.last = YES;
-			pin.title = @"End";
-			pin.subtitle = [dateFormatter stringFromDate:last.recorded];
-		}
-		
-		// if we had at least 1 coord
-		if ( count )
-		{
-			// calculate region from coords min/max lat/lon
-			/*
+        
+        NSLog(@"added %d unique GPS coordinates of %lu to map", count, (unsigned long)[sortedCoords count]);
+        
+        // add end point as a pin annotation
+        if ( last == [sortedCoords lastObject] )
+        {
+            pin.last = YES;
+            pin.title = @"End";
+            pin.subtitle = [dateFormatter stringFromDate:last.recorded];
+        }
+        
+        // if we had at least 1 coord
+        if ( count )
+        {
+            // calculate region from coords min/max lat/lon
+            /*
              NSLog(@"minLat = %f", [minLat doubleValue]);
              NSLog(@"maxLat = %f", [maxLat doubleValue]);
              NSLog(@"minLon = %f", [minLon doubleValue]);
              NSLog(@"maxLon = %f", [maxLon doubleValue]);
              */
-			
-			// add a small fudge factor to ensure
-			// North-most pins are visible
-			double latDelta = kFudgeFactor * ( [maxLat doubleValue] - [minLat doubleValue] );
-			if ( latDelta < kMinLatDelta )
-				latDelta = kMinLatDelta;
-			
-			double lonDelta = [maxLon doubleValue] - [minLon doubleValue];
-			if ( lonDelta < kMinLonDelta )
-				lonDelta = kMinLonDelta;
-			
+            
+            // add a small fudge factor to ensure
+            // North-most pins are visible
+            double latDelta = kFudgeFactor * ( [maxLat doubleValue] - [minLat doubleValue] );
+            if ( latDelta < kMinLatDelta )
+                latDelta = kMinLatDelta;
+            
+            double lonDelta = [maxLon doubleValue] - [minLon doubleValue];
+            if ( lonDelta < kMinLonDelta )
+                lonDelta = kMinLonDelta;
+            
             //			MKCoordinateRegion region = { { [minLat doubleValue] + latDelta / 2,
             //											[minLon doubleValue] + lonDelta / 2 },
             //										  { latDelta,
@@ -362,33 +362,119 @@
                 (routePath[0].longitude + routePath[numPoints-1].longitude) / 2 },
                 { latDelta,
                     lonDelta } };
-			[mapView setRegion:region animated:NO];
-		}
-		else
-		{
-			// init map region to Petco Park.
-			MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
-			[mapView setRegion:region animated:NO];
-		}
+            [mapView setRegion:region animated:NO];
+        }
+        else
+        {
+            // init map region to Petco Park.
+            MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
+            [mapView setRegion:region animated:NO];
+        }
         free(routePath);
-	}
-	else
-	{
-		// error: init map region
-		MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
-		[mapView setRegion:region animated:NO];
-	}
+    }
+    else
+    {
+        // error: init map region
+        MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 } };
+        [mapView setRegion:region animated:NO];
+    }
     
     LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:909];
-	//NSLog(@"loading: %@", loading);
-	[loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
+    //NSLog(@"loading: %@", loading);
+    [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.locationManager stopUpdatingLocation];
-    [delegate release];
+- (void)viewWillDisappear:(BOOL)animated{
+    UIImage *thumbnailOriginal;
+    thumbnailOriginal = [self screenshot];
+    
+    CGRect clippedRect  = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+160, self.view.frame.size.width, self.view.frame.size.height);
+    CGImageRef imageRef = CGImageCreateWithImageInRect([thumbnailOriginal CGImage], clippedRect);
+    UIImage *newImage   = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    
+    CGSize size;
+    size.height = 72;
+    size.width = 72;
+    
+    UIImage *thumbnail;
+    thumbnail = shrinkImage(newImage, size);
+    
+    NSData *thumbnailData = [[[NSData alloc] initWithData:UIImageJPEGRepresentation(thumbnail, 0)] autorelease];
+    NSLog(@"Size of Thumbnail Image(bytes):%lu",(unsigned long)[thumbnailData length]);
+    NSLog(@"Size: %f, %f", thumbnail.size.height, thumbnail.size.width);
+    
+    [delegate getTripThumbnail:thumbnailData];
 }
+
+
+UIImage *shrinkImage(UIImage *original, CGSize size) {
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    
+    CGContextRef context = CGBitmapContextCreate(NULL, size.width * scale,
+                                                 size.height * scale, 8, 0, colorSpace, kCGImageAlphaPremultipliedFirst);
+    CGContextDrawImage(context,
+                       CGRectMake(0, 0, size.width * scale, size.height * scale),
+                       original.CGImage);
+    CGImageRef shrunken = CGBitmapContextCreateImage(context);
+    UIImage *final = [UIImage imageWithCGImage:shrunken];
+    
+    CGContextRelease(context);
+    CGImageRelease(shrunken);
+    CGColorSpaceRelease(colorSpace);
+    return final;
+}
+
+
+- (UIImage*)screenshot
+{
+    NSLog(@"Screen Shoot");
+    // Create a graphics context with the target size
+    // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
+    // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
+    CGSize imageSize = [[UIScreen mainScreen] bounds].size;
+    if (NULL != UIGraphicsBeginImageContextWithOptions)
+        UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
+    else
+        UIGraphicsBeginImageContext(imageSize);
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    // Iterate over every window from back to front
+    for (UIWindow *window in [[UIApplication sharedApplication] windows])
+    {
+        if (![window respondsToSelector:@selector(screen)] || [window screen] == [UIScreen mainScreen])
+        {
+            // -renderInContext: renders in the coordinate space of the layer,
+            // so we must first apply the layer's geometry to the graphics context
+            CGContextSaveGState(context);
+            // Center the context around the window's anchor point
+            CGContextTranslateCTM(context, [window center].x, [window center].y);
+            // Apply the window's transform about the anchor point
+            CGContextConcatCTM(context, [window transform]);
+            // Offset by the portion of the bounds left of and above the anchor point
+            CGContextTranslateCTM(context,
+                                  -[window bounds].size.width * [[window layer] anchorPoint].x,
+                                  -[window bounds].size.height * [[window layer] anchorPoint].y+50);
+            
+            // Render the layer hierarchy to the current context
+            [[window layer] renderInContext:context];
+            
+            // Restore the context
+            CGContextRestoreGState(context);
+        }
+    }
+    
+    // Retrieve the screenshot image
+    UIImage *screenImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return screenImage;
+}
+
+
 
 /*
  // Override to allow orientations other than the default portrait orientation.
@@ -399,10 +485,10 @@
  */
 
 - (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
+    
+    // Release any cached data, images, etc that aren't in use.
 }
 
 
@@ -411,102 +497,102 @@
 
 - (void)mapViewWillStartLoadingMap:(MKMapView *)mapView
 {
-	//NSLog(@"mapViewWillStartLoadingMap");
+    //NSLog(@"mapViewWillStartLoadingMap");
 }
 
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error
 {
-	NSLog(@"mapViewDidFailLoadingMap:withError: %@", [error localizedDescription]);
+    NSLog(@"mapViewDidFailLoadingMap:withError: %@", [error localizedDescription]);
 }
 
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)_mapView
 {
-	//NSLog(@"mapViewDidFinishLoadingMap");
-	LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:909];
-	//NSLog(@"loading: %@", loading);
-	[loading removeView];
+    //NSLog(@"mapViewDidFinishLoadingMap");
+    LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:909];
+    //NSLog(@"loading: %@", loading);
+    [loading removeView];
 }
 
 
 - (MKAnnotationView *)mapView:(MKMapView *)_mapView
-			viewForAnnotation:(id <MKAnnotation>)annotation
+            viewForAnnotation:(id <MKAnnotation>)annotation
 {
-	//NSLog(@"viewForAnnotation");
-	
+    //NSLog(@"viewForAnnotation");
+    
     // If it's the user location, just return nil.
     if ([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
-	
+    
     // Handle any custom annotations.
     if ([annotation isKindOfClass:[MapCoord class]])
     {
-		MKAnnotationView* annotationView = nil;
-		
-		if ( [(MapCoord*)annotation first] )
-		{
-			// Try to dequeue an existing pin view first.
-			MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
-																  dequeueReusableAnnotationViewWithIdentifier:@"FirstCoord"];
-			
-			if ( !pinView )
-			{
-				// If an existing pin view was not available, create one
-				pinView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"FirstCoord"]
-						   autorelease];
+        MKAnnotationView* annotationView = nil;
+        
+        if ( [(MapCoord*)annotation first] )
+        {
+            // Try to dequeue an existing pin view first.
+            MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
+                                                                  dequeueReusableAnnotationViewWithIdentifier:@"FirstCoord"];
+            
+            if ( !pinView )
+            {
+                // If an existing pin view was not available, create one
+                pinView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"FirstCoord"]
+                           autorelease];
                 pinView.image = [UIImage imageNamed:@"tripStart.png"];
                 NSLog(@"START GLYPH");
-			}
-			
-			annotationView = pinView;
-		}
-		else if ( [(MapCoord*)annotation last] )
-		{
-			// Try to dequeue an existing pin view first.
-			MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
-																  dequeueReusableAnnotationViewWithIdentifier:@"LastCoord"];
-			
-			if ( !pinView )
-			{
-				// If an existing pin view was not available, create one
-				pinView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"LastCoord"]
-						   autorelease];
+            }
+            
+            annotationView = pinView;
+        }
+        else if ( [(MapCoord*)annotation last] )
+        {
+            // Try to dequeue an existing pin view first.
+            MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
+                                                                  dequeueReusableAnnotationViewWithIdentifier:@"LastCoord"];
+            
+            if ( !pinView )
+            {
+                // If an existing pin view was not available, create one
+                pinView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"LastCoord"]
+                           autorelease];
                 pinView.image = [UIImage imageNamed:@"tripEnd.png"];
                 NSLog(@"STOP GLYPH");
-			}
-			
-			annotationView = pinView;
-		}
-		else
-		{
-			// Try to dequeue an existing pin view first.
-			annotationView = (MKAnnotationView*)[mapView
-												 dequeueReusableAnnotationViewWithIdentifier:@"MapCoord"];
-			
-			if (!annotationView)
-			{
-				// If an existing pin view was not available, create one
-				annotationView = [[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapCoord"]
-								  autorelease];
-				
-				annotationView.image = [UIImage imageNamed:@"MapCoord.png"];
-				
-				/*
-				 pinView.pinColor = MKPinAnnotationColorPurple;
-				 pinView.animatesDrop = YES;
-				 pinView.canShowCallout = YES;
-				 */
-				
-				/*
-				 // Add a detail disclosure button to the callout.
-				 UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-				 [rightButton addTarget:self action:@selector(myShowDetailsMethod:) forControlEvents:UIControlEventTouchUpInside];
-				 pinView.rightCalloutAccessoryView = rightButton;
-				 */
-			}
-		}
-		
+            }
+            
+            annotationView = pinView;
+        }
+        else
+        {
+            // Try to dequeue an existing pin view first.
+            annotationView = (MKAnnotationView*)[mapView
+                                                 dequeueReusableAnnotationViewWithIdentifier:@"MapCoord"];
+            
+            if (!annotationView)
+            {
+                // If an existing pin view was not available, create one
+                annotationView = [[[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapCoord"]
+                                  autorelease];
+                
+                annotationView.image = [UIImage imageNamed:@"MapCoord.png"];
+                
+                /*
+                 pinView.pinColor = MKPinAnnotationColorPurple;
+                 pinView.animatesDrop = YES;
+                 pinView.canShowCallout = YES;
+                 */
+                
+                /*
+                 // Add a detail disclosure button to the callout.
+                 UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+                 [rightButton addTarget:self action:@selector(myShowDetailsMethod:) forControlEvents:UIControlEventTouchUpInside];
+                 pinView.rightCalloutAccessoryView = rightButton;
+                 */
+            }
+        }
+        
         return annotationView;
     } else {
         //handle 'normal' pins
@@ -523,7 +609,7 @@
             return annView;
         }
     }
-	
+    
     return nil;
 }
 
@@ -536,17 +622,23 @@
 }
 
 - (void)dealloc {
-    
-    [super dealloc];
+    self.trip = nil;
+    self.doneButton = nil;
+    self.flipButton = nil;
+    self.infoView = nil;
+    self.routeLine = nil;
+    self.delegate = nil;
     
     [delegate release];
-	[doneButton release];
-	[flipButton release];
-	[trip release];
+    [doneButton release];
+    [flipButton release];
+    [trip release];
     [infoView release];
     [routeLine release];
     
     [mapView release];
+    
+    [super dealloc];
 }
 
 

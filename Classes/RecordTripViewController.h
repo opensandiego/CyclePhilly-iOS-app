@@ -59,6 +59,8 @@
 #import <Firebase/Firebase.h>
 
 
+
+
 @class ReminderManager;
 @class TripManager;
 @class NoteManager;
@@ -66,6 +68,7 @@
 
 //@interface RecordTripViewController : UITableViewController
 @interface RecordTripViewController : UIViewController
+
 <CLLocationManagerDelegate,
 MKMapViewDelegate,
 UINavigationControllerDelegate,
@@ -77,6 +80,7 @@ UIActionSheetDelegate,
 UIAlertViewDelegate,
 UITextViewDelegate>
 {
+    UIWindow *window;
     NSManagedObjectContext *managedObjectContext;
     CycleAtlantaAppDelegate *appDelegate;
     //    CLLocationManager *locationManager;
@@ -166,6 +170,9 @@ UITextViewDelegate>
 
 -(IBAction)notethis:(id)sender;
 
+
+//Must add UIWindow in order to use storyboards:
+@property (nonatomic, retain) IBOutlet UIWindow *window;
 
 // timer methods
 - (void)start:(UIButton *)sender;

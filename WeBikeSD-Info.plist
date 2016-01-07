@@ -50,12 +50,12 @@
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string></string>
-	<key>NSMainNibFile</key>
-	<string>MainWindow</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
 	</array>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -63,6 +63,8 @@
 		<string>location-services</string>
 		<string>gps</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<false/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackTranslucent</string>
 	<key>UISupportedInterfaceOrientations</key>

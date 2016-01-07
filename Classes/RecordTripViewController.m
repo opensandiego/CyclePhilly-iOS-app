@@ -75,6 +75,7 @@
 @synthesize recording, shouldUpdateCounter, userInfoSaved;
 @synthesize appDelegate;
 @synthesize saveActionSheet;
+@synthesize window;
 
 #pragma mark CLLocationManagerDelegate methods
 

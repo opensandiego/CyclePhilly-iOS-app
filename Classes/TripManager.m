@@ -321,12 +321,11 @@
 		//NSLog(@"duration = %.0fs", duration);
 		[trip setDuration:[NSNumber numberWithDouble:duration]];
 		
-		/*
-		Coord *prev = [coords objectAtIndex:0];
+		
 		CLLocation *prevLoc = [[CLLocation alloc] initWithLatitude:[prev.latitude doubleValue] 
 														 longitude:[prev.longitude doubleValue]];
 
-		CLLocationDistance	deltaDist = [location getDistanceFrom:prevLoc];
+		CLLocationDistance	deltaDist = [location distanceFromLocation:prevLoc];
 		NSTimeInterval		deltaTime = [location.timestamp timeIntervalSinceDate:prev.recorded];
 		
 		NSLog(@"deltaDist = %f", deltaDist);
@@ -357,7 +356,7 @@
 		}
 		else
 			NSLog(@"WARNING accuracy exceeds epsilon: %f", location.horizontalAccuracy);
-		 */
+		 
 	}
 	
 	NSError *error;
