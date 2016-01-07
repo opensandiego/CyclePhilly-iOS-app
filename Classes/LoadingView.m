@@ -157,9 +157,9 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	loadingView.loadingLabel.text = message;
 	loadingView.loadingLabel.textColor = [UIColor whiteColor];
     loadingView.loadingLabel.numberOfLines = 3;
-    loadingView.loadingLabel.lineBreakMode = UILineBreakModeWordWrap;
+    loadingView.loadingLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    loadingView.loadingLabel.textAlignment = NSTextAlignmentCenter;
 	loadingView.loadingLabel.backgroundColor = [UIColor clearColor];
-	loadingView.loadingLabel.textAlignment = UITextAlignmentCenter;
 	loadingView.loadingLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
 	loadingView.loadingLabel.autoresizingMask =
 		UIViewAutoresizingFlexibleLeftMargin |
@@ -212,9 +212,15 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 //	labelFrame.origin.x = floor(0.5 * (self.frame.size.width - DEFAULT_LABEL_WIDTH));
 //	labelFrame.origin.y = floor(0.5 * (self.frame.size.height - totalHeight));
     
-    CGSize maxLabelSize = CGSizeMake(DEFAULT_LABEL_WIDTH, 400);
-    CGSize labelSize = [self.loadingLabel.text sizeWithFont:self.loadingLabel.font constrainedToSize:maxLabelSize lineBreakMode:self.loadingLabel.lineBreakMode];
     
+    CGSize maxLabelSize = CGSizeMake(DEFAULT_LABEL_WIDTH, 400);
+    CGSize labelSize = maxLabelSize;
+    
+    /*
+     removed deprecated sizeWithFont (1/4/16 tr)
+    CGSize labelSize = [self.loadingLabel.text sizeWithFont:self.loadingLabel.font constrainedToSize:maxLabelSize lineBreakMode:self.loadingLabel.lineBreakMode];
+    */
+     
     CGRect newFrame = self.loadingLabel.frame;
     newFrame.size.height = labelSize.height;
     

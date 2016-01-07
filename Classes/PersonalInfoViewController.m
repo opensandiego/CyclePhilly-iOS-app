@@ -185,10 +185,10 @@
     pickerView.dataSource = self;
     pickerView.delegate = self;
     
-    actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
+    alertController = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
     
-    [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-    [actionSheet setActionSheetStyle:UIActionSheetStyleAutomatic];
+    [alertController setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [alertController setActionSheetStyle:UIActionSheetStyleAutomatic];
 
     
     
@@ -303,10 +303,10 @@
     
     if(myTextField == gender || myTextField == age || myTextField == ethnicity || myTextField == income || myTextField == cyclingFreq || myTextField == riderType || myTextField == riderHistory){
         [myTextField resignFirstResponder];
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
+        alertController = [[UIAlertController alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
         
-        [actionSheet setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-        [actionSheet setActionSheetStyle:UIActionSheetStyleAutomatic];
+        [alertController setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+        [alertController setActionSheetStyle:UIActionSheetStyleAutomatic];
         // actionSheet.release;
 //        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
 //
@@ -341,32 +341,32 @@
         // Iterate over fields and populate uiactionsheet
         if(myTextField == gender){
             for(NSString *title in genderArray){
-                [actionSheet addButtonWithTitle:title];
+                [alertController addAction:title];
             }
         }else if (myTextField == age){
             for(NSString *title in ageArray){
-                [actionSheet addButtonWithTitle:title];
+                [alertController addButtonWithTitle:title];
             }
             selectedItem = [user.age integerValue];
         }else if (myTextField == ethnicity){
             for(NSString *title in ethnicityArray){
-                [actionSheet addButtonWithTitle:title];
+                [alertController addButtonWithTitle:title];
             }
         }else if (myTextField == income){
             for(NSString *title in incomeArray){
-                [actionSheet addButtonWithTitle:title];
+                [alertController addButtonWithTitle:title];
             }
         }else if (myTextField == cyclingFreq){
             for(NSString *title in cyclingFreqArray){
-                [actionSheet addButtonWithTitle:title];
+                [alertController addButtonWithTitle:title];
             }
         }else if (myTextField == riderType){
             for(NSString *title in riderTypeArray){
-                [actionSheet addButtonWithTitle:title];
+                [alertController addButtonWithTitle:title];
             }
         }else if (myTextField == riderHistory){
             for(NSString *title in riderHistoryArray){
-                [actionSheet addButtonWithTitle:title];
+                [alertController addButtonWithTitle:title];
             }
             
         }
@@ -378,8 +378,8 @@
 //
 //        [actionSheet addSubview:pickerView];
 //
-        [actionSheet showInView:self.view];
-        [actionSheet release];
+        [alertController showInView:self.view];
+        [alertController release];
 //
 //        [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
 
@@ -1050,7 +1050,7 @@
     return 1;
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertController:(UIAlertController *)alertController clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(currentTextField == gender){
         currentTextField.text = [genderArray objectAtIndex:buttonIndex];
         genderSelectedRow = buttonIndex;
@@ -1206,11 +1206,11 @@
         NSString *riderHistorySelect = [riderHistoryArray objectAtIndex:selectedRow];
         riderHistory.text = riderHistorySelect;
     }
-    [actionSheet dismissWithClickedButtonIndex:1 animated:YES];
+    [alertController dismissWithClickedButtonIndex:1 animated:YES];
 }
 
 - (void)cancelButtonPressed:(id)sender{
-    [actionSheet dismissWithClickedButtonIndex:1 animated:YES];
+    [alertController dismissWithClickedButtonIndex:1 animated:YES];
 }
 
 - (void)dealloc {
@@ -1253,7 +1253,7 @@
     [riderHistory release];
     
     [doneToolbar release];
-    [actionSheet release];
+    [alertController release];
     [pickerView release];
     [currentTextField release];
     [genderArray release];

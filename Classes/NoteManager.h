@@ -48,6 +48,7 @@
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 
+
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 #import "ActivityIndicatorDelegate.h"
@@ -59,14 +60,14 @@
 
 @interface NoteManager : NSObject <ActivityIndicatorDelegate, UIAlertViewDelegate, UITextViewDelegate>
 {
-	Note *note;
-
+    Note *note;
+    
     NSManagedObjectContext *managedObjectContext;
     
-	NSMutableData *receivedDataNoted;
-	
-	//NSMutableArray *unSavedNote;
-	//NSMutableArray *unSyncedNote;
+    NSMutableData *receivedDataNoted;
+    
+    //NSMutableArray *unSavedNote;
+    //NSMutableArray *unSyncedNote;
     NSString *deviceUniqueIdHash1;
 }
 
@@ -78,7 +79,7 @@
 
 @property (nonatomic, retain) LoadingView *uploadingView;
 
-@property (nonatomic, retain) UIViewController *parent; 
+@property (nonatomic, retain) UIViewController *parent;
 
 @property (assign) BOOL dirty;
 @property (nonatomic, retain) Note *note;
@@ -101,5 +102,6 @@
 - (BOOL)loadNote:(Note *)note;
 
 @end
+
 
 

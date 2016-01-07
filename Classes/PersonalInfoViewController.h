@@ -73,7 +73,7 @@
     UITextField *riderType;
     UITextField *riderHistory;
     UIToolbar *doneToolbar;
-    UIActionSheet *actionSheet;
+    UIAlertController *alertController;
     UIPickerView *pickerView;
     UITextField *currentTextField;
     

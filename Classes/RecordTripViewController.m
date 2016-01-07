@@ -246,7 +246,7 @@
 	NSLog(@"RecordTripViewController viewDidLoad");
     NSLog(@"Bundle ID: %@", [[NSBundle mainBundle] bundleIdentifier]);
     [super viewDidLoad];
-	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
+	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.navigationController.navigationBarHidden = YES;
@@ -259,8 +259,8 @@
     self->mapView.showsUserLocation = YES;
     [self.locationManager startUpdatingLocation];
     
-    // init map region to Philadelphia
-	MKCoordinateRegion region = { { 39.954491, -75.163758 }, { 0.0078, 0.0068 } };
+    // init map region to Petco Park.
+	MKCoordinateRegion region = { { 32.7073, -117.1566 }, { 0.10825, 0.10825 }  };
 	[mapView setRegion:region animated:NO];
 	
 	// setup info button used when showing recorded trips

@@ -75,7 +75,7 @@
 
 - (void)setDirty
 {
-	[self setNeedsDisplay];
+    [self setNeedsDisplay];
 }
 
 @end
@@ -99,74 +99,74 @@
 - (id)initWithManagedObjectContext:(NSManagedObjectContext*)context
 {
     if (self = [super init]) {
-		self.managedObjectContext = context;
+        self.managedObjectContext = context;
         
-		// Set the title NOTE: important for tab bar tab item to set title here before view loads
-		self.title = @"View Saved Notes";
+        // Set the title NOTE: important for tab bar tab item to set title here before view loads
+        self.title = @"View Saved Notes";
     }
     return self;
 }
 
 - (void)initNoteManager:(NoteManager*)manager
 {
-	self.noteManager = manager;
+    self.noteManager = manager;
 }
 
 - (id)initWithNoteManager:(NoteManager*)manager
 {
     if (self = [super init]) {
-		//NSLog(@"SavedTripsViewController::initWithTripManager");
-		self.noteManager = manager;
-		
-		// Set the title NOTE: important for tab bar tab item to set title here before view loads
-		self.title = @"View Saved Notes";
+        //NSLog(@"SavedTripsViewController::initWithTripManager");
+        self.noteManager = manager;
+        
+        // Set the title NOTE: important for tab bar tab item to set title here before view loads
+        self.title = @"View Saved Notes";
     }
     return self;
 }
 
 - (void)refreshTableView
 {
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:noteManager.managedObjectContext];
-	[request setEntity:entity];
-
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Note" inManagedObjectContext:noteManager.managedObjectContext];
+    [request setEntity:entity];
+    
     [request setReturnsDistinctResults:YES];
     [request setPropertiesToFetch:[NSArray arrayWithObjects:@"note_type",@"recorded",nil]];
-
-	// configure sort order
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:NO];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
-	[request setSortDescriptors:sortDescriptors];
-	[sortDescriptors release];
-	[sortDescriptor release];
-	
-	NSError *error;
-	NSInteger count = [noteManager.managedObjectContext countForFetchRequest:request error:&error];
-	NSLog(@"count = %ld", (long)count);
-	
-	NSMutableArray *mutableFetchResults = [[noteManager.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-	if (mutableFetchResults == nil) {
-		// Handle the error.
-		NSLog(@"no saved notes");
-		if ( error != nil )
-			NSLog(@"Unresolved error2 %@, %@", error, [error userInfo]);
-	}
-	
-	[self setNotes:mutableFetchResults];
-	[self.tableView reloadData];
     
-	[mutableFetchResults release];
-	[request release];
+    // configure sort order
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:NO];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [request setSortDescriptors:sortDescriptors];
+    [sortDescriptors release];
+    [sortDescriptor release];
+    
+    NSError *error;
+    NSInteger count = [noteManager.managedObjectContext countForFetchRequest:request error:&error];
+    NSLog(@"count = %ld", (long)count);
+    
+    NSMutableArray *mutableFetchResults = [[noteManager.managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+    if (mutableFetchResults == nil) {
+        // Handle the error.
+        NSLog(@"no saved notes");
+        if ( error != nil )
+            NSLog(@"Unresolved error2 %@, %@", error, [error userInfo]);
+    }
+    
+    [self setNotes:mutableFetchResults];
+    [self.tableView reloadData];
+    
+    [mutableFetchResults release];
+    [request release];
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
@@ -184,16 +184,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	NSLog(@"SavedNotesViewController viewWillAppear");
-	
-	[self refreshTableView];
+    NSLog(@"SavedNotesViewController viewWillAppear");
     
-	[super viewWillAppear:animated];
+    [self refreshTableView];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-	[super viewDidDisappear:animated];
+    [super viewDidDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -218,39 +218,39 @@
 
 - (NoteCell *)getCellWithReuseIdentifier:(NSString *)reuseIdentifier
 {
-	NoteCell *cell = (NoteCell*)[self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-	if (cell == nil)
-	{
-		cell = [[[NoteCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier] autorelease];
-		cell.detailTextLabel.numberOfLines = 2;
+    NoteCell *cell = (NoteCell*)[self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    if (cell == nil)
+    {
+        cell = [[[NoteCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier] autorelease];
+        cell.detailTextLabel.numberOfLines = 2;
         if ( [reuseIdentifier isEqual: kCellReuseIdentifierExclamation] )
-		{
-			// add exclamation point
-			UIImage		*image		= [UIImage imageNamed:@"failedUpload.png"];
-			UIImageView *imageView	= [[[UIImageView alloc] initWithImage:image] autorelease];
-			imageView.frame = CGRectMake( kAccessoryViewX, kAccessoryViewY, image.size.width, image.size.height );
-			imageView.tag	= kTagImage;
-			cell.accessoryView = imageView;
-		}
-	}
-	else{
+        {
+            // add exclamation point
+            UIImage		*image		= [UIImage imageNamed:@"failedUpload.png"];
+            UIImageView *imageView	= [[[UIImageView alloc] initWithImage:image] autorelease];
+            imageView.frame = CGRectMake( kAccessoryViewX, kAccessoryViewY, image.size.width, image.size.height );
+            imageView.tag	= kTagImage;
+            cell.accessoryView = imageView;
+        }
+    }
+    else{
         [[cell.contentView viewWithTag:kTagImage] setNeedsDisplay];
     }
     
-	// slide accessory view out of the way during editing
-	cell.editingAccessoryView = cell.accessoryView;
+    // slide accessory view out of the way during editing
+    cell.editingAccessoryView = cell.accessoryView;
     
-	return cell;
+    return cell;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static NSString *CellIdentifier = @"Cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-//    if (cell == nil) {
-//        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-//    }
+    //    static NSString *CellIdentifier = @"Cell";
+    //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    //    if (cell == nil) {
+    //        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    //    }
     
     static NSDateFormatter *dateFormatter = nil;
     if (dateFormatter == nil) {
@@ -264,7 +264,7 @@
     }
     
     Note *note = (Note *)[notes objectAtIndex:indexPath.row];
-	NoteCell *cell = nil;
+    NoteCell *cell = nil;
     
     UIImage	*image;
     
@@ -293,14 +293,14 @@
         cell.accessoryView = imageView;
     }
     else
-	{
-		cell = [self getCellWithReuseIdentifier:kCellReuseIdentifierExclamation];
-		//tripStatus = @"(recording interrupted)";
-	}
+    {
+        cell = [self getCellWithReuseIdentifier:kCellReuseIdentifierExclamation];
+        //tripStatus = @"(recording interrupted)";
+    }
     
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\n(note saved & uploaded)", 
-//                                 [dateFormatter stringFromDate:[note recorded]]];
-//    noteStatus = @"(note saved & uploaded)";
+    //    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@\n(note saved & uploaded)",
+    //                                 [dateFormatter stringFromDate:[note recorded]]];
+    //    noteStatus = @"(note saved & uploaded)";
     
     cell.detailTextLabel.tag = kTagDetail;
     cell.textLabel.tag = kTagTitle;
@@ -358,7 +358,7 @@
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",title];
     
     cell.editingAccessoryView = cell.accessoryView;
-
+    
     //cell.textLabel.text			= [dateFormatter stringFromDate:[note recorded]];
     //cell.detailTextLabel.text = title;
     
@@ -370,61 +370,61 @@
     
     //[cell addSubview:purposeText];
     //[cell addSubview:timeText];
-
+    
     
     return cell;
 }
 
 - (void)promptToConfirmPurpose
 {
-	NSLog(@"promptToConfirmPurpose");
-	
-	NSString *confirm = [NSString stringWithFormat:@"This note has not yet been uploaded. Try now?"];
-	
-	// present action sheet
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
-															 delegate:self
-													cancelButtonTitle:@"Cancel"
-											   destructiveButtonTitle:nil
-													otherButtonTitles:@"Upload", nil];
-	
-	actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
-	[actionSheet showInView:self.tabBarController.view];
-	[actionSheet release];
+    NSLog(@"promptToConfirmPurpose");
+    
+    NSString *confirm = [NSString stringWithFormat:@"This note has not yet been uploaded. Try now?"];
+    
+    // present action sheet
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Upload", nil];
+    
+    actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
+    [actionSheet showInView:self.tabBarController.view];
+    [actionSheet release];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
-	switch ( buttonIndex )
-	{
-		case 0:
+    NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
+    switch ( buttonIndex )
+    {
+        case 0:
             [noteManager saveNote:noteManager.note];
-			break;
-		case 1:
-		default:
-			NSLog(@"Cancel");
-			[self displaySelectedNoteMap];
-			break;
-	}
+            break;
+        case 1:
+        default:
+            NSLog(@"Cancel");
+            [self displaySelectedNoteMap];
+            break;
+    }
 }
 
 - (void)actionSheetCancel:(UIActionSheet *)actionSheet
 {
-	NSLog(@"actionSheetCancel");
+    NSLog(@"actionSheetCancel");
 }
 
 - (void)displaySelectedNoteMap
 {
-	loading		= [[LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."] retain];
-	loading.tag = 999;
-	if ( selectedNote )
-	{
-		NoteViewController *mvc = [[NoteViewController alloc] initWithNote:selectedNote];
-		[[self navigationController] pushViewController:mvc animated:YES];
-		[mvc release];
-		selectedNote = nil;
-	}
+    loading		= [[LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."] retain];
+    loading.tag = 999;
+    if ( selectedNote )
+    {
+        NoteViewController *mvc = [[NoteViewController alloc] initWithNote:selectedNote];
+        [[self navigationController] pushViewController:mvc animated:YES];
+        [mvc release];
+        selectedNote = nil;
+    }
 }
 
 - (void)displayUploadedNote
@@ -451,43 +451,43 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
-	{
-		NSLog(@"Delete");
-		
+    {
+        NSLog(@"Delete");
+        
         // Delete the managed object at the given index path.
         NSManagedObject *noteToDelete = [notes objectAtIndex:indexPath.row];
         [noteManager.managedObjectContext deleteObject:noteToDelete];
-		
+        
         // Update the array and table view.
         [notes removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-		
+        
         // Commit the change.
         NSError *error;
         if (![noteManager.managedObjectContext save:&error]) {
             // Handle the error.
-			NSLog(@"Unresolved error %@", [error localizedDescription]);
+            NSLog(@"Unresolved error %@", [error localizedDescription]);
         }
     }
-	else if ( editingStyle == UITableViewCellEditingStyleInsert )
-		NSLog(@"INSERT");
+    else if ( editingStyle == UITableViewCellEditingStyleInsert )
+        NSLog(@"INSERT");
 }
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+ {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 #pragma mark - Table view delegate
 
@@ -498,7 +498,7 @@
     selectedNote = (Note *)[notes objectAtIndex:indexPath.row];
     
     loading		= [[LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."] retain];
-	loading.tag = 999;
+    loading.tag = 999;
     [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
     
     if (!selectedNote.uploaded) {
@@ -512,12 +512,12 @@
         [self promptToConfirmPurpose];
     }
     else if ( selectedNote )
-	{
-		NoteViewController *mvc = [[NoteViewController alloc] initWithNote:selectedNote];
-		[[self navigationController] pushViewController:mvc animated:YES];
-		[mvc release];
-		selectedNote = nil;
-	}
+    {
+        NoteViewController *mvc = [[NoteViewController alloc] initWithNote:selectedNote];
+        [[self navigationController] pushViewController:mvc animated:YES];
+        [mvc release];
+        selectedNote = nil;
+    }
 }
 
 
@@ -525,20 +525,20 @@
 
 
 - (void)navigationController:(UINavigationController *)navigationController
-	  willShowViewController:(UIViewController *)viewController
-					animated:(BOOL)animated
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated
 {
-	if ( viewController == self )
-	{
-		//NSLog(@"willShowViewController:self");
-		self.title = @"View Saved Notes";
-	}
-	else
-	{
-		//NSLog(@"willShowViewController:else");
-		self.title = @"Back";
-		self.tabBarItem.title = @"View Saved Notes"; // important to maintain the same tab item title
-	}
+    if ( viewController == self )
+    {
+        //NSLog(@"willShowViewController:self");
+        self.title = @"View Saved Notes";
+    }
+    else
+    {
+        //NSLog(@"willShowViewController:else");
+        self.title = @"Back";
+        self.tabBarItem.title = @"View Saved Notes"; // important to maintain the same tab item title
+    }
 }
 
 - (void)dealloc {

@@ -97,8 +97,8 @@
 - (id)initWithManagedObjectContext:(NSManagedObjectContext*)context
 {
     if ( self = [super init] )
-	{
-		self.managedObjectContext = context;
+    {
+        self.managedObjectContext = context;
         self.activityDelegate = self;
         if (!note) {
             self.note = nil;
@@ -110,19 +110,19 @@
 
 - (void)createNote
 {
-	NSLog(@"createNote");
-	
-	// Create and configure a new instance of the Note entity
+    NSLog(@"createNote");
+    
+    // Create and configure a new instance of the Note entity
     note = [(Note *)[NSEntityDescription insertNewObjectForEntityForName:@"Note" inManagedObjectContext:managedObjectContext] retain];
     
     [note setRecorded:[NSDate date]];
     NSLog(@"Date: %@", note.recorded);
     
-	NSError *error;
-	if (![managedObjectContext save:&error]) {
-		// Handle the error.
-		NSLog(@"createNote error %@, %@", error, [error localizedDescription]);
-	}
+    NSError *error;
+    if (![managedObjectContext save:&error]) {
+        // Handle the error.
+        NSLog(@"createNote error %@, %@", error, [error localizedDescription]);
+    }
 }
 
 
@@ -153,14 +153,14 @@
     [note setVAccuracy:[NSNumber numberWithDouble:locationNow.verticalAccuracy]];
     NSLog(@"VAccuracy: %f", [note.vAccuracy doubleValue]);
     
-//    [note setRecorded:locationNow.timestamp];
-//    NSLog(@"Date: %@", note.recorded);
-	
-	NSError *error;
-	if (![managedObjectContext save:&error]) {
-		// Handle the error.
-		NSLog(@"Note addLocation error %@, %@", error, [error localizedDescription]);
-	}
+    //    [note setRecorded:locationNow.timestamp];
+    //    NSLog(@"Date: %@", note.recorded);
+    
+    NSError *error;
+    if (![managedObjectContext save:&error]) {
+        // Handle the error.
+        NSLog(@"Note addLocation error %@, %@", error, [error localizedDescription]);
+    }
     
 }
 
@@ -168,15 +168,15 @@
 - (void)saveNote
 {
     NSMutableDictionary *noteDict;
-	
-	// format date as a string
-	NSDateFormatter *outputFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[outputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    // format date as a string
+    NSDateFormatter *outputFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDateFormatter *outputFormatterURL = [[[NSDateFormatter alloc] init] autorelease];
-	[outputFormatterURL setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+    [outputFormatterURL setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
     
     NSLog(@"saving using protocol version 4");
-	
+    
     // create a noteDict for each note
     noteDict = [[[NSMutableDictionary alloc] initWithCapacity:10] autorelease];
     [noteDict setValue:note.altitude  forKey:@"a"];  //altitude
@@ -225,7 +225,7 @@
     
     [noteDict setValue:note.image_url forKey:@"i"];  //image_url
     //[noteDict setValue:note.image_data forKey:@"g"];  //image_data
-        
+    
     // JSON encode user data and trip data, return to strings
     NSError *writeError = nil;
     
@@ -234,18 +234,18 @@
     
     NSString *noteJson = [[NSString alloc] initWithData:noteJsonData encoding:NSUTF8StringEncoding];
     
-	// NOTE: device hash added by SaveRequest initWithPostVars
-	NSDictionary *postVars = [NSDictionary dictionaryWithObjectsAndKeys: 
+    // NOTE: device hash added by SaveRequest initWithPostVars
+    NSDictionary *postVars = [NSDictionary dictionaryWithObjectsAndKeys:
                               noteJson, @"note",
-							  [NSString stringWithFormat:@"%d", kSaveNoteProtocolVersion], @"version",
-//                              [NSData dataWithData:note.image_data], @"image_data",
-							  nil];
-	// create save request
-	SaveRequest *saveRequest = [[SaveRequest alloc] initWithPostVars:postVars with:4 image:uploadData];
-	
-	// create the connection with the request and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:[saveRequest request] delegate:self];
-	
+                              [NSString stringWithFormat:@"%d", kSaveNoteProtocolVersion], @"version",
+                              //                              [NSData dataWithData:note.image_data], @"image_data",
+                              nil];
+    // create save request
+    SaveRequest *saveRequest = [[SaveRequest alloc] initWithPostVars:postVars with:4 image:uploadData];
+    
+    // create the connection with the request and start loading the data
+    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:[saveRequest request] delegate:self];
+    
     // create loading view to indicate trip is being uploaded
     uploadingView = [[LoadingView loadingViewInView:parent.parentViewController.view messageString:kSavingNoteTitle] retain];
     
@@ -281,15 +281,15 @@
 - (void)saveNote:(Note*)_note
 {
     NSMutableDictionary *noteDict;
-	
-	// format date as a string
-	NSDateFormatter *outputFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[outputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    // format date as a string
+    NSDateFormatter *outputFormatter = [[[NSDateFormatter alloc] init] autorelease];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSDateFormatter *outputFormatterURL = [[[NSDateFormatter alloc] init] autorelease];
-	[outputFormatterURL setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
+    [outputFormatterURL setDateFormat:@"yyyy-MM-dd-HH-mm-ss"];
     
     NSLog(@"saving using protocol version 4");
-	
+    
     // create a noteDict for each note
     noteDict = [[[NSMutableDictionary alloc] initWithCapacity:10] autorelease];
     [noteDict setValue:_note.altitude  forKey:@"a"];  //altitude
@@ -349,18 +349,18 @@
     
     NSString *noteJson = [[NSString alloc] initWithData:noteJsonData encoding:NSUTF8StringEncoding];
     
-	// NOTE: device hash added by SaveRequest initWithPostVars
-	NSDictionary *postVars = [NSDictionary dictionaryWithObjectsAndKeys:
+    // NOTE: device hash added by SaveRequest initWithPostVars
+    NSDictionary *postVars = [NSDictionary dictionaryWithObjectsAndKeys:
                               noteJson, @"note",
-							  [NSString stringWithFormat:@"%d", kSaveNoteProtocolVersion], @"version",
+                              [NSString stringWithFormat:@"%d", kSaveNoteProtocolVersion], @"version",
                               //                              [NSData dataWithData:note.image_data], @"image_data",
-							  nil];
-	// create save request
-	SaveRequest *saveRequest = [[SaveRequest alloc] initWithPostVars:postVars with:4 image:uploadData];
-	
-	// create the connection with the request and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:[saveRequest request] delegate:self];
-	
+                              nil];
+    // create save request
+    SaveRequest *saveRequest = [[SaveRequest alloc] initWithPostVars:postVars with:4 image:uploadData];
+    
+    // create the connection with the request and start loading the data
+    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:[saveRequest request] delegate:self];
+    
     // create loading view to indicate trip is being uploaded
     uploadingView = [[LoadingView loadingViewInView:parent.parentViewController.view messageString:kSavingNoteTitle] retain];
     
@@ -399,70 +399,70 @@
 - (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten
  totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
-	NSLog(@"%ld bytesWritten, %ld totalBytesWritten, %ld totalBytesExpectedToWrite",
-		  (long)bytesWritten, (long)totalBytesWritten, (long)totalBytesExpectedToWrite );
+    NSLog(@"%ld bytesWritten, %ld totalBytesWritten, %ld totalBytesExpectedToWrite",
+          (long)bytesWritten, (long)totalBytesWritten, (long)totalBytesExpectedToWrite );
 }
 
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-	// this method is called when the server has determined that it
+    // this method is called when the server has determined that it
     // has enough information to create the NSURLResponse
-	NSLog(@"didReceiveResponse: %@", response);
-	
-	NSHTTPURLResponse *httpResponse = nil;
-	if ( [response isKindOfClass:[NSHTTPURLResponse class]] &&
-		( httpResponse = (NSHTTPURLResponse*)response ) )
-	{
-		BOOL success = NO;
-		NSString *title   = nil;
-		NSString *message = nil;
-		switch ( [httpResponse statusCode] )
-		{
-			case 200:
-			case 201:
-				success = YES;
-				title	= kSuccessTitle;
-				message = kSaveSuccess;
-				break;
-			case 202:
-				success = YES;
-				title	= kSuccessTitle;
-				message = kSaveAccepted;
-				break;
-			case 500:
-			default:
-				title = @"Internal Server Error";
-				//message = [NSString stringWithFormat:@"%d", [httpResponse statusCode]];
-				message = kServerError;
-		}
-		
-		NSLog(@"%@: %@", title, message);
+    NSLog(@"didReceiveResponse: %@", response);
+    
+    NSHTTPURLResponse *httpResponse = nil;
+    if ( [response isKindOfClass:[NSHTTPURLResponse class]] &&
+        ( httpResponse = (NSHTTPURLResponse*)response ) )
+    {
+        BOOL success = NO;
+        NSString *title   = nil;
+        NSString *message = nil;
+        switch ( [httpResponse statusCode] )
+        {
+            case 200:
+            case 201:
+                success = YES;
+                title	= kSuccessTitle;
+                message = kSaveSuccess;
+                break;
+            case 202:
+                success = YES;
+                title	= kSuccessTitle;
+                message = kSaveAccepted;
+                break;
+            case 500:
+            default:
+                title = @"Internal Server Error";
+                //message = [NSString stringWithFormat:@"%d", [httpResponse statusCode]];
+                message = kServerError;
+        }
+        
+        NSLog(@"%@: %@", title, message);
         
         //
         // DEBUG
         NSLog(@"+++++++DEBUG didReceiveResponse %@: %@", [response URL],[(NSHTTPURLResponse*)response allHeaderFields]);
         
         if ( success )
-		{
+        {
             [note setUploaded:[NSDate date]];
-			
-			NSError *error;
-			if (![managedObjectContext save:&error]) {
-				// Handle the error.
-				NSLog(@"TripManager setUploaded error %@, %@", error, [error localizedDescription]);
-			}
+            
+            NSError *error;
+            if (![managedObjectContext save:&error]) {
+                // Handle the error.
+                NSLog(@"TripManager setUploaded error %@, %@", error, [error localizedDescription]);
+            }
             
             [uploadingView loadingComplete:kSuccessTitle delayInterval:.7];
-		} else {
+        } else {
             
             [uploadingView loadingComplete:kServerError delayInterval:1.5];
         }
-	}
-	
+    }
+    
     // it can be called multiple times, for example in the case of a
-	// redirect, so each time we reset the data.
-	
+    // redirect, so each time we reset the data.
+    
     // receivedData is declared as a method instance elsewhere
     [receivedDataNoted setLength:0];
 }
@@ -471,7 +471,7 @@
 {
     // append the new data to the receivedData
     // receivedData is declared as a method instance elsewhere
-	[receivedDataNoted appendData:data];
+    [receivedDataNoted appendData:data];
     //	[activityDelegate startAnimating];
 }
 
@@ -480,7 +480,7 @@
 {
     // release the connection, and the data object
     [connection release];
-	
+    
     // receivedData is declared as a method instance elsewhere
     [receivedDataNoted release];
     
@@ -505,9 +505,9 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-	// do something with the data
+    // do something with the data
     NSLog(@"+++++++DEBUG: Received %lu bytes of data", (unsigned long)[receivedDataNoted length]);
-	NSLog(@"%@", [[[NSString alloc] initWithData:receivedDataNoted encoding:NSUTF8StringEncoding] autorelease] );
+    NSLog(@"%@", [[[NSString alloc] initWithData:receivedDataNoted encoding:NSUTF8StringEncoding] autorelease] );
     
     // release the connection, and the data object
     [connection release];
@@ -517,9 +517,9 @@
 - (id)initWithNote:(Note *)_note
 {
     if ( self = [super init] )
-	{
-		self.activityDelegate = self;
-		[self loadNote:_note];
+    {
+        self.activityDelegate = self;
+        [self loadNote:_note];
     }
     return self;
 }
@@ -527,17 +527,17 @@
 - (BOOL)loadNote:(Note *)_note
 {
     if ( _note )
-	{
-		self.note					= _note;
-		self.managedObjectContext	= [_note managedObjectContext];
+    {
+        self.note					= _note;
+        self.managedObjectContext	= [_note managedObjectContext];
         
-		// save updated duration to CoreData
-		NSError *error;
-		if (![self.managedObjectContext save:&error]) {
-			// Handle the error.
-			NSLog(@"loadNote error %@, %@", error, [error localizedDescription]);
+        // save updated duration to CoreData
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            // Handle the error.
+            NSLog(@"loadNote error %@, %@", error, [error localizedDescription]);
             
-		}
+        }
     }
     return YES;
 }

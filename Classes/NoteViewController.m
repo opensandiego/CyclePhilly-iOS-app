@@ -60,46 +60,46 @@
 
 - (id)initWithNote:(Note *)_note
 {
-	if (self = [super initWithNibName:@"NoteViewController" bundle:nil]) {
-		NSLog(@"NoteViewController initWithNote");
-		self.note = _note;
-		noteView.delegate = self;
+    if (self = [super initWithNibName:@"NoteViewController" bundle:nil]) {
+        NSLog(@"NoteViewController initWithNote");
+        self.note = _note;
+        noteView.delegate = self;
     }
     return self;
 }
 
 - (void)infoAction:(UIButton*)sender
 {
-	NSLog(@"infoAction");
-	[UIView setAnimationDelegate:self];
-	[UIView setAnimationDidStopSelector:@selector(animationDidStop:animationIDfinished:finished:context:)];
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.75];
-	
-	[UIView setAnimationTransition:([infoView superview] ?
-									UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
-						   forView:self.view cache:YES];
-	
-	if ([infoView superview])
-		[infoView removeFromSuperview];
-	else
-		[self.view addSubview:infoView];
-	
-	[UIView commitAnimations];
-	
-	// adjust our done/info buttons accordingly
-	if ([infoView superview] == self.view)
-		self.navigationItem.rightBarButtonItem = doneButton;
-	else
-		self.navigationItem.rightBarButtonItem = flipButton;
+    NSLog(@"infoAction");
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationDidStop:animationIDfinished:finished:context:)];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.75];
+    
+    [UIView setAnimationTransition:([infoView superview] ?
+                                    UIViewAnimationTransitionFlipFromLeft : UIViewAnimationTransitionFlipFromRight)
+                           forView:self.view cache:YES];
+    
+    if ([infoView superview])
+        [infoView removeFromSuperview];
+    else
+        [self.view addSubview:infoView];
+    
+    [UIView commitAnimations];
+    
+    // adjust our done/info buttons accordingly
+    if ([infoView superview] == self.view)
+        self.navigationItem.rightBarButtonItem = doneButton;
+    else
+        self.navigationItem.rightBarButtonItem = flipButton;
 }
 
 - (void)initInfoView
 {
-	infoView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,560)];
+    infoView = [[UIView alloc] initWithFrame:CGRectMake(0,0,320,560)];
     NSInteger textLength = [note.details length];
     long row = 1+(textLength-1)/34;
-	if ([note.image_data length] != 0 && textLength != 0) {
+    if ([note.image_data length] != 0 && textLength != 0) {
         infoView.alpha = 1.0;
         infoView.backgroundColor = [UIColor blackColor];
         
@@ -110,11 +110,11 @@
         noteImageResize.image= [UIImage imageWithData:note.image_data];
         noteImageResize.contentMode = UIViewContentModeScaleAspectFill;
         
-//        [noteImageResize applyGestures];
+        //        [noteImageResize applyGestures];
         
-//        UIImageView *noteImage      = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 427)];
-//        noteImage.image= [UIImage imageWithData:note.image_data];
-//        noteImage.contentMode = UIViewContentModeScaleAspectFill;
+        //        UIImageView *noteImage      = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 427)];
+        //        noteImage.image= [UIImage imageWithData:note.image_data];
+        //        noteImage.contentMode = UIViewContentModeScaleAspectFill;
         
         [scrollView addSubview:noteImageResize];
         
@@ -186,12 +186,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     self.navigationController.navigationBarHidden = NO;
     
-	if ( note )
-	{
-		// format date as a string
+    if ( note )
+    {
+        // format date as a string
         NSDateFormatter *outputDateFormatter = [[[NSDateFormatter alloc] init] autorelease];
         [outputDateFormatter setDateStyle:kCFDateFormatterLongStyle];
         
@@ -200,8 +200,8 @@
         
         NSString *newDateString = [outputDateFormatter stringFromDate:note.recorded];
         NSString *newTimeString = [outputTimeFormatter stringFromDate:note.recorded];
-		
-		self.navigationItem.prompt = [NSString stringWithFormat:@"%@ at %@",newDateString,newTimeString];
+        
+        self.navigationItem.prompt = [NSString stringWithFormat:@"%@ at %@",newDateString,newTimeString];
         NSLog(@"NewDataString: %@", newDateString);
         NSLog(@"NewTimeString: %@", newTimeString);
         
@@ -246,21 +246,21 @@
             default:
                 break;
         }
-
-		self.title = title;
-		
-		if ( ![note.details isEqual: @""] || ([note.image_data length] != 0))
-		{
-			doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(infoAction:)];
-			
-			UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
-			infoButton.showsTouchWhenHighlighted = YES;
-			[infoButton addTarget:self action:@selector(infoAction:) forControlEvents:UIControlEventTouchUpInside];
-			flipButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
-			self.navigationItem.rightBarButtonItem = flipButton;
-			
-			[self initInfoView];
-		}
+        
+        self.title = title;
+        
+        if ( ![note.details isEqual: @""] || ([note.image_data length] != 0))
+        {
+            doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(infoAction:)];
+            
+            UIButton *infoButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+            infoButton.showsTouchWhenHighlighted = YES;
+            [infoButton addTarget:self action:@selector(infoAction:) forControlEvents:UIControlEventTouchUpInside];
+            flipButton = [[UIBarButtonItem alloc] initWithCustomView:infoButton];
+            self.navigationItem.rightBarButtonItem = flipButton;
+            
+            [self initInfoView];
+        }
         
         CLLocationCoordinate2D noteCoordinate;
         noteCoordinate.latitude = [note.latitude doubleValue];
@@ -279,12 +279,12 @@
     }
     else{
         MKCoordinateRegion region = { { 33.749038, -84.388068 }, { 0.10825, 0.10825 } };
-		[noteView setRegion:region animated:NO];
+        [noteView setRegion:region animated:NO];
     }
     
     LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:999];
-	//NSLog(@"loading: %@", loading);
-	[loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
+    //NSLog(@"loading: %@", loading);
+    [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
     
 }
 
@@ -381,23 +381,23 @@ UIImage *shrinkImage1(UIImage *original, CGSize size) {
 
 - (MKAnnotationView *) mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>) annotation
 {
-
-//    // Try to dequeue an existing pin view first.
-//    MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
-//                                                          dequeueReusableAnnotationViewWithIdentifier:@"LastCoord"];
-//    
-//    if ( !pinView )
-//    {
-//        // If an existing pin view was not available, create one
-//        pinView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"LastCoord"]
-//                   autorelease];
-//        
-//        pinView.animatesDrop = YES;
-//        pinView.canShowCallout = YES;
-//        pinView.pinColor = MKPinAnnotationColorRed;
-//    }
-//    
-//    annotationView = pinView;
+    
+    //    // Try to dequeue an existing pin view first.
+    //    MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
+    //                                                          dequeueReusableAnnotationViewWithIdentifier:@"LastCoord"];
+    //
+    //    if ( !pinView )
+    //    {
+    //        // If an existing pin view was not available, create one
+    //        pinView = [[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"LastCoord"]
+    //                   autorelease];
+    //
+    //        pinView.animatesDrop = YES;
+    //        pinView.canShowCallout = YES;
+    //        pinView.pinColor = MKPinAnnotationColorRed;
+    //    }
+    //
+    //    annotationView = pinView;
     
     
     
@@ -434,22 +434,22 @@ UIImage *shrinkImage1(UIImage *original, CGSize size) {
 
 - (void)mapViewWillStartLoadingMap:(MKMapView *)noteView
 {
-	//NSLog(@"mapViewWillStartLoadingMap");
+    //NSLog(@"mapViewWillStartLoadingMap");
 }
 
 
 - (void)mapViewDidFailLoadingMap:(MKMapView *)noteView withError:(NSError *)error
 {
-	NSLog(@"mapViewDidFailLoadingMap:withError: %@", [error localizedDescription]);
+    NSLog(@"mapViewDidFailLoadingMap:withError: %@", [error localizedDescription]);
 }
 
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)_noteView
 {
-	//NSLog(@"mapViewDidFinishLoadingMap");
-	LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:999];
-	//NSLog(@"loading: %@", loading);
-	[loading removeView];
+    //NSLog(@"mapViewDidFinishLoadingMap");
+    LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:999];
+    //NSLog(@"loading: %@", loading);
+    [loading removeView];
 }
 
 - (void)dealloc {
@@ -458,8 +458,8 @@ UIImage *shrinkImage1(UIImage *original, CGSize size) {
     self.flipButton = nil;
     self.infoView = nil;
     
-	[doneButton release];
-	[flipButton release];
+    [doneButton release];
+    [flipButton release];
     [infoView release];
     [note release];
     

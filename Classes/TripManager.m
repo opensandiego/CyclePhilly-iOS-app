@@ -225,7 +225,7 @@
 	NSTimeInterval		deltaTime	= [next.recorded timeIntervalSinceDate:prev.recorded];
 	CLLocationDistance	newDist		= 0.;
 	
-	/*
+	
 	 NSLog(@"prev.date = %@", prev.recorded);
 	 NSLog(@"deltaTime = %f", deltaTime);
 	 
@@ -236,7 +236,7 @@
 	 NSLog(@"est speed = %f", deltaDist / deltaTime);
 	 NSLog(@"rec speed = %f", [next.speed doubleValue]);
 	 }
-	 */
+	 
 	
 	// sanity check accuracy
 	if ( [prev.hAccuracy doubleValue] < kEpsilonAccuracy && 
