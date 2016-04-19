@@ -434,7 +434,7 @@ UIImage *shrinkImage(UIImage *original, CGSize size) {
     // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
     // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
     CGSize imageSize = [[UIScreen mainScreen] bounds].size;
-    if (NULL != UIGraphicsBeginImageContextWithOptions)
+    if (NULL != &UIGraphicsBeginImageContextWithOptions)
         UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
     else
         UIGraphicsBeginImageContext(imageSize);
@@ -613,9 +613,9 @@ UIImage *shrinkImage(UIImage *original, CGSize size) {
     return nil;
 }
 
-- (MKOverlayView*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
+- (MKPolylineRenderer*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
 {
-    MKPolylineView* lineView = [[[MKPolylineView alloc] initWithPolyline:self.routeLine] autorelease];
+    MKPolylineRenderer* lineView = [[[MKPolylineRenderer alloc] initWithPolyline:self.routeLine] autorelease];
     lineView.strokeColor = [UIColor blueColor];
     lineView.lineWidth = 5;
     return lineView;

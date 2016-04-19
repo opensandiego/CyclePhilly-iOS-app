@@ -95,7 +95,7 @@
 	CGRect frame = CGRectMake( 152, 7, 138, 29 );
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
 	textField.borderStyle = UITextBorderStyleRoundedRect;
-	textField.textAlignment = UITextAlignmentRight;
+	//textField.textAlignment = UITextAlignmentRight;
 	textField.placeholder = @"Choose one";
 	textField.delegate = self;
 	return textField;
@@ -106,7 +106,7 @@
 	CGRect frame = CGRectMake( 152, 7, 138, 29 );
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
 	textField.borderStyle = UITextBorderStyleRoundedRect;
-	textField.textAlignment = UITextAlignmentRight;
+	//textField.textAlignment = UITextAlignmentRight;
 	textField.placeholder = @"Choose one";
 	textField.delegate = self;
 	return textField;
@@ -119,7 +119,7 @@
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
 	textField.autocapitalizationType = UITextAutocapitalizationTypeNone,
 	textField.borderStyle = UITextBorderStyleRoundedRect;
-	textField.textAlignment = UITextAlignmentRight;
+	//textField.textAlignment = UITextAlignmentRight;
 	textField.placeholder = @"name@domain";
 	textField.keyboardType = UIKeyboardTypeEmailAddress;
 	textField.returnKeyType = UIReturnKeyDone;
@@ -133,7 +133,7 @@
 	CGRect frame = CGRectMake( 152, 7, 138, 29 );
 	UITextField *textField = [[UITextField alloc] initWithFrame:frame];
 	textField.borderStyle = UITextBorderStyleRoundedRect;
-	textField.textAlignment = UITextAlignmentRight;
+	//textField.textAlignment = UITextAlignmentRight;
 	textField.placeholder = @"12345";
 	textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 	textField.returnKeyType = UIReturnKeyDone;
@@ -185,10 +185,12 @@
     pickerView.dataSource = self;
     pickerView.delegate = self;
     
-    alertController = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
+    alertController = [UIAlertController alertControllerWithTitle:@""
+                                                          message:@"Rider info"
+                                                preferredStyle:UIAlertControllerStyleAlert]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
     
-    [alertController setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-    [alertController setActionSheetStyle:UIActionSheetStyleAutomatic];
+   // [alertController setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+   // [alertController setActionSheetStyle:UIActionSheetStyleAutomatic];
 
     
     
@@ -303,10 +305,13 @@
     
     if(myTextField == gender || myTextField == age || myTextField == ethnicity || myTextField == income || myTextField == cyclingFreq || myTextField == riderType || myTextField == riderHistory){
         [myTextField resignFirstResponder];
-        alertController = [[UIAlertController alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
+        alertController = [UIAlertController
+                           alertControllerWithTitle:nil
+                                           delegate:self
+                                  cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
         
-        [alertController setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
-        [alertController setActionSheetStyle:UIActionSheetStyleAutomatic];
+        //[alertController setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+        //[alertController setActionSheetStyle:UIActionSheetStyleAutomatic];
         // actionSheet.release;
 //        actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil]; //as we want to display a subview we won't be using the default buttons but rather we're need to create a toolbar to display the buttons on
 //
@@ -341,32 +346,60 @@
         // Iterate over fields and populate uiactionsheet
         if(myTextField == gender){
             for(NSString *title in genderArray){
-                [alertController addAction:title];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:title
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alertController addAction:defaultAction];
             }
         }else if (myTextField == age){
             for(NSString *title in ageArray){
-                [alertController addButtonWithTitle:title];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:title
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alertController addAction:defaultAction];
             }
             selectedItem = [user.age integerValue];
         }else if (myTextField == ethnicity){
-            for(NSString *title in ethnicityArray){
-                [alertController addButtonWithTitle:title];
+            for(NSString *title in ageArray){
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:title
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alertController addAction:defaultAction];
             }
         }else if (myTextField == income){
-            for(NSString *title in incomeArray){
-                [alertController addButtonWithTitle:title];
+            for(NSString *title in ageArray){
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:title
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alertController addAction:defaultAction];
             }
         }else if (myTextField == cyclingFreq){
-            for(NSString *title in cyclingFreqArray){
-                [alertController addButtonWithTitle:title];
+            for(NSString *title in ageArray){
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:title
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alertController addAction:defaultAction];
             }
         }else if (myTextField == riderType){
-            for(NSString *title in riderTypeArray){
-                [alertController addButtonWithTitle:title];
+            for(NSString *title in ageArray){
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:title
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alertController addAction:defaultAction];
             }
         }else if (myTextField == riderHistory){
-            for(NSString *title in riderHistoryArray){
-                [alertController addButtonWithTitle:title];
+            for(NSString *title in ageArray){
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:title
+                                                                        style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alertController addAction:defaultAction];
             }
             
         }
@@ -378,8 +411,7 @@
 //
 //        [actionSheet addSubview:pickerView];
 //
-        [alertController showInView:self.view];
-        [alertController release];
+        [self presentViewController:alertController animated:YES completion:nil];
 //
 //        [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
 

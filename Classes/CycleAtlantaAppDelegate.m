@@ -82,7 +82,7 @@
 	//[UIApplication sharedApplication].idleTimerDisabled = NO;
 	//[UIApplication sharedApplication].idleTimerDisabled = YES;
 	
-	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
+	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 	
     NSManagedObjectContext *context = [self managedObjectContext];
     if (!context) {
@@ -105,7 +105,7 @@
     NSMutableString *fireURLC = [[NSMutableString alloc] initWithString:kFireDomain];
     [fireURLC appendString:@"trips-completed/"];
     [fireURLC appendString:today];
-    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://blazing-torch-4795.firebaseio.com/	"];
+    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://blazing-torch-4795.firebaseio.com/"];
     
     
     [ref authAnonymouslyWithCompletionBlock:^(NSError *error, FAuthData *authData) {

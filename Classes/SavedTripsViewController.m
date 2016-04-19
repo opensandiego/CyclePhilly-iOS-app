@@ -702,21 +702,20 @@
 {
     NSLog(@"promptToConfirmRetryUpload");
     
-    NSString *confirm = [NSString stringWithFormat:@"This trip has not yet been uploaded. Try now?"];
     
     // present action sheet
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"This trip has not yet been uploaded. Try now?"
+                                                                         message:"Try now?"
                                                              delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Upload", nil];
+                                                    message:@"Cancel"];
     
-    actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
-    [actionSheet showInView:self.tabBarController.view];
-    [actionSheet release];
+    //[actionSheet showInView:self.tabBarController.view];
+    //[actionSheet release];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIAlertController *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
         [self promptToConfirmPurpose];
@@ -866,7 +865,7 @@
 
 // NOTE: implement didDismissWithButtonIndex to process after sheet has been dismissed
 //- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIAlertController *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
     switch ( buttonIndex )
@@ -942,7 +941,7 @@
 
 
 // called if the system cancels the action sheet (e.g. homescreen button has been pressed)
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+- (void)actionSheetCancel:(UIAlertController *)actionSheet
 {
     NSLog(@"actionSheetCancel");
 }
@@ -1036,12 +1035,13 @@
     [tripManager saveTookTransit];
     NSLog(@"Noted rider took public transit in SavedTripsViewController.");
 }
-
+/*
 - (void)didTakeBikeRental {
     [tripManager saveTookBikeRental];
     NSLog(@"Noted rider took bike rental in SavedTripsViewController.");
 }
-
+*/
+ 
 - (void)saveTrip{
     [tripManager saveTrip];
     NSLog(@"Save trip");

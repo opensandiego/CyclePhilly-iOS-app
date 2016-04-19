@@ -435,7 +435,7 @@
 
 // NOTE: implement didDismissWithButtonIndex to process after sheet has been dismissed
 //- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIAlertController *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
 	switch ( buttonIndex )
@@ -466,7 +466,7 @@
 
 
 // called if the system cancels the action sheet (e.g. homescreen button has been pressed)
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+- (void)actionSheetCancel:(UIAlertController *)actionSheet
 {
 	NSLog(@"actionSheetCancel");
 }
@@ -616,14 +616,16 @@
             return;
         }
         
-        saveActionSheet = [[UIActionSheet alloc]
-                           initWithTitle:@""
-                           delegate:self
-                           cancelButtonTitle:@"Continue"
-                           destructiveButtonTitle:@"Discard"
-                           otherButtonTitles:@"Save",nil];
+        UIAlertController *saveActionSheet = [UIAlertController alertControllerWithTitle:@""
+                                                                                  message:@"Continue"
+                                                                           preferredStyle:UIAlertControllerStyleAlert];
+                           
         //[saveActionSheet showInView:self.view];
-        [saveActionSheet showInView:[UIApplication sharedApplication].keyWindow];
+        //[saveActionSheet showInView:[UIApplication sharedApplication].keyWindow];
+        
+        self.saveActionSheet = saveActionSheet;
+        //[self presentViewController:saveActionSheet animated:YES completion:nil];
+        
     }
 	
 }
@@ -641,7 +643,7 @@
 													  initWithNibName:@"TripPurposePicker" bundle:nil];
 		[tripPurposePickerView setDelegate:self];
 		//[[self navigationController] pushViewController:pickerViewController animated:YES];
-		[self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
+		[self.navigationController presentViewController:tripPurposePickerView animated:YES completion:nil];
 		[tripPurposePickerView release];
 	}
 	
@@ -659,18 +661,21 @@
 		NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
 		
 		// present action sheet
-		UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
-																 delegate:self
-														cancelButtonTitle:@"Cancel"
-												   destructiveButtonTitle:nil
-														otherButtonTitles:@"Save", nil];
-		
-		actionSheet.actionSheetStyle		= UIActionSheetStyleBlackTranslucent;
-		UIViewController *pvc = self.parentViewController;
-		UITabBarController *tbc = (UITabBarController *)pvc.parentViewController;
-		
-		[actionSheet showFromTabBar:tbc.tabBar];
-		[actionSheet release];
+        // present action sheet
+        
+        UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle: confirm message:@"Try Now?" preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {NSLog(@"You pressed cancel");} ];
+        
+        UIAlertAction *upload = [UIAlertAction actionWithTitle:@"Upload" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {NSLog(@"You pressed upload");} ];
+        
+        [actionSheet addAction:cancel];
+        [actionSheet addAction:upload];
+        
+        [self presentViewController:actionSheet animated:YES completion:nil];
+        /* not sure about these last two lines but the seem to need to be there */
+        //[actionSheet showInView:self.tabBarController.view];
+        [actionSheet release];
 	}
     
 }
@@ -700,7 +705,7 @@
                                                        initWithNibName:@"TripPurposePicker" bundle:nil];
 		[notePickerView setDelegate:self];
 		//[[self navigationController] pushViewController:pickerViewController animated:YES];
-		[self.navigationController presentModalViewController:notePickerView animated:YES];
+		[self.navigationController presentViewController:notePickerView animated:YES completion:nil];
         
         //add location information
         
@@ -720,21 +725,48 @@
 		
 		NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
 		
-		// present action sheet
-		UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
-																 delegate:self
-														cancelButtonTitle:@"Cancel"
-												   destructiveButtonTitle:nil
-														otherButtonTitles:@"Save", nil];
-		
-		actionSheet.actionSheetStyle		= UIActionSheetStyleBlackTranslucent;
-		UIViewController *pvc = self.parentViewController;
-		UITabBarController *tbc = (UITabBarController *)pvc.parentViewController;
-		
-		[actionSheet showFromTabBar:tbc.tabBar];
-		[actionSheet release];
+        // present action sheet
+        
+        UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle: confirm message:@"Try Now?" preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {NSLog(@"You pressed cancel");} ];
+        
+        UIAlertAction *upload = [UIAlertAction actionWithTitle:@"Upload" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {NSLog(@"You pressed upload");} ];
+        
+        [actionSheet addAction:cancel];
+        [actionSheet addAction:upload];
+        
+        [self presentViewController:actionSheet animated:YES completion:nil];
+        /* not sure about these last two lines but the seem to need to be there */
+        [actionSheet showInView:self.tabBarController.view];
+        [actionSheet release];
 	}
 }
+
+
+- (void) promptToConfirmRetryUpload
+{
+    NSLog(@"promptToConfirmRetryUpload");
+    
+    NSString *confirm = [NSString stringWithFormat:@"This trip has not yet been uploaded."];
+    
+    // present action sheet
+    
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle: confirm message:@"Try Now?" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {NSLog(@"You pressed cancel");} ];
+    
+    UIAlertAction *upload = [UIAlertAction actionWithTitle:@"Upload" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {NSLog(@"You pressed upload");} ];
+    
+    [actionSheet addAction:cancel];
+    [actionSheet addAction:upload];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+    /* not sure about these last two lines but the seem to need to be there */
+    [actionSheet showInView:self.tabBarController.view];
+    [actionSheet release];
+}
+
 
 
 - (void)resetCounter

@@ -95,7 +95,7 @@
 	IBOutlet UILabel *timeCounter;
 	IBOutlet UILabel *distCounter;
 	IBOutlet UILabel *speedCounter;
-    UIActionSheet *saveActionSheet;
+    UIAlertController *saveActionSheet;
 
 
 	NSTimer *timer;
@@ -131,7 +131,7 @@
 
 @property (nonatomic, retain) UILabel *timeCounter;
 @property (nonatomic, retain) UILabel *distCounter;
-@property (nonatomic, retain) UIActionSheet *saveActionSheet;
+@property (nonatomic, retain) UIAlertController *saveActionSheet;
 
 
 @property (assign) NSTimer *timer;

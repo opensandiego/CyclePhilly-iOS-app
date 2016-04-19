@@ -377,23 +377,28 @@
 
 - (void)promptToConfirmPurpose
 {
-    NSLog(@"promptToConfirmPurpose");
+    NSLog(@"promptToConfirmRetryUpload");
     
-    NSString *confirm = [NSString stringWithFormat:@"This note has not yet been uploaded. Try now?"];
+    NSString *confirm = [NSString stringWithFormat:@"This trip has not yet been uploaded."];
     
     // present action sheet
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
-                                                             delegate:self
-                                                    cancelButtonTitle:@"Cancel"
-                                               destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Upload", nil];
     
-    actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle: confirm message:@"Try Now?" preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {NSLog(@"You pressed cancel");} ];
+    
+    UIAlertAction *upload = [UIAlertAction actionWithTitle:@"Upload" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {NSLog(@"You pressed upload");} ];
+    
+    [actionSheet addAction:cancel];
+    [actionSheet addAction:upload];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+    /* not sure about these last two lines but the seem to need to be there */
     [actionSheet showInView:self.tabBarController.view];
     [actionSheet release];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIAlertController *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
     switch ( buttonIndex )

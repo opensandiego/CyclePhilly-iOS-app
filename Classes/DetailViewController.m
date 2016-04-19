@@ -205,7 +205,7 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         //picker.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
         picker.delegate = self;
         picker.sourceType = sourceType;
-        [self presentModalViewController:picker animated:YES];
+        [self presentViewController:picker animated:YES completion:nil];
 //        [picker release];
     } else {
         UIAlertView *alert = [[UIAlertView alloc]
