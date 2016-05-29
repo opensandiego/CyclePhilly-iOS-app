@@ -240,7 +240,27 @@
                               [NSString stringWithFormat:@"%d", kSaveNoteProtocolVersion], @"version",
                               //                              [NSData dataWithData:note.image_data], @"image_data",
                               nil];
+    
+    
+    
+    // Firebase upload - testing
+    //changed from https://cyclephilly.firebaseio.com/trips/
+    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://project-3189448588169164345.firebaseio.com/notes"];
+    Firebase *post1Ref = [ref childByAutoId];
+    [post1Ref setValue:postVars withCompletionBlock:^(NSError *error, Firebase *ref) {
+        if(error){
+            // bad news
+            //            [uploadingView loadingComplete:kServerError delayInterval:1.5];
+            NSLog(@"Firebase fail");
+        } else{
+            // great!
+            //            [uploadingView loadingComplete:kSuccessTitle delayInterval:.7];
+            NSLog(@"Firebase success");
+        }
+    }];
+    
     // create save request
+    /*
     SaveRequest *saveRequest = [[SaveRequest alloc] initWithPostVars:postVars with:4 image:uploadData];
     
     // create the connection with the request and start loading the data
@@ -248,7 +268,7 @@
     
     // create loading view to indicate trip is being uploaded
     uploadingView = [[LoadingView loadingViewInView:parent.parentViewController.view messageString:kSavingNoteTitle] retain];
-    
+   
     //switch to map w/ trip view
     
     NSInteger recording = [[NSUserDefaults standardUserDefaults] integerForKey:@"recording"];
@@ -269,12 +289,12 @@
         // inform the user that the download could not be made
         
     }
-    
+     */
     [noteJson release];
     [noteJsonData release];
     [castedImage release];
     [uploadData release];
-    [saveRequest release];
+    //[saveRequest release];
 }
 
 

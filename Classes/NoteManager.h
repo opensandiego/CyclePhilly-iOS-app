@@ -66,8 +66,8 @@
     
     NSMutableData *receivedDataNoted;
     
-    //NSMutableArray *unSavedNote;
-    //NSMutableArray *unSyncedNote;
+    NSMutableArray *unSavedNote;
+    NSMutableArray *unSyncedNote;
     NSString *deviceUniqueIdHash1;
 }
 
