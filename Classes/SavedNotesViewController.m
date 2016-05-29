@@ -414,7 +414,7 @@
     }
 }
 
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+- (void)actionSheetCancel:(UIAlertController *)actionSheet
 {
     NSLog(@"actionSheetCancel");
 }

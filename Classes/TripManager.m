@@ -619,7 +619,7 @@
     
     // Firebase upload - testing
     //changed from https://cyclephilly.firebaseio.com/trips/
-    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://blazing-torch-4795.firebaseio.com/trips"];
+    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://project-3189448588169164345.firebaseio.com/trips"];
     Firebase *post1Ref = [ref childByAutoId];
     [post1Ref setValue:postVars withCompletionBlock:^(NSError *error, Firebase *ref) {
         if(error){

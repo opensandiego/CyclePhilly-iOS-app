@@ -104,11 +104,11 @@
 
 
 #define kInfoURL			@"http://www.webikesd.org/#about"
-#define kInstructionsURL	@"mailto:support@webikesd.org"
+#define kInstructionsURL	@"mailto:support@teamwebikesd.org"
 
 #define kSaveURL			@"https://www.phineasfen.com/teamwebikesd/app/WeBikeSD/php/post"
 
-#define kFireDomain			@"https://blazing-torch-4795.firebaseio.com/"
+#define kFireDomain			@"https://project-3189448588169164345.firebaseio.com/"
 //#define kSaveURL			@""
 
 #define kTripNotesPlaceholder	@"Comments"

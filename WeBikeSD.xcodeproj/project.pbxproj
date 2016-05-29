@@ -1065,6 +1065,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1075,7 +1076,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -1095,6 +1096,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1103,7 +1105,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -1121,6 +1123,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1141,6 +1144,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1149,7 +1153,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -1169,6 +1173,7 @@
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1191,6 +1196,7 @@
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1201,7 +1207,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -1219,6 +1225,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1240,6 +1247,7 @@
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1248,7 +1256,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
@@ -1266,6 +1274,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
@@ -1286,6 +1295,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

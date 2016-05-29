@@ -44,7 +44,7 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/23/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 #import <UIKit/UIKit.h>
@@ -57,23 +57,23 @@
 
 @interface PersonalInfoViewController : UITableViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate, UIWebViewDelegate>
 {
-	id <PersonalInfoDelegate> delegate;
-	NSManagedObjectContext *managedObjectContext;
-	User *user;
-
-	UITextField *age;
-	UITextField *email;
-	UITextField *gender;
+    id <PersonalInfoDelegate> delegate;
+    NSManagedObjectContext *managedObjectContext;
+    User *user;
+    
+    UITextField *age;
+    UITextField *email;
+    UITextField *gender;
     UITextField *ethnicity;
     UITextField *income;
-	UITextField *homeZIP;
-	UITextField *workZIP;
-	UITextField *schoolZIP;
+    UITextField *homeZIP;
+    UITextField *workZIP;
+    UITextField *schoolZIP;
     UITextField *cyclingFreq;
     UITextField *riderType;
     UITextField *riderHistory;
     UIToolbar *doneToolbar;
-    UIAlertController *alertController;
+    UIActionSheet *actionSheet;
     UIPickerView *pickerView;
     UITextField *currentTextField;
     
