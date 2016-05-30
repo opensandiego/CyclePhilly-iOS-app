@@ -375,30 +375,26 @@
     return cell;
 }
 
+
 - (void)promptToConfirmPurpose
 {
-    NSLog(@"promptToConfirmRetryUpload");
+    NSLog(@"promptToConfirmPurpose");
     
-    NSString *confirm = [NSString stringWithFormat:@"This trip has not yet been uploaded."];
+    NSString *confirm = [NSString stringWithFormat:@"This note has not yet been uploaded. Try now?"];
     
     // present action sheet
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
+                                                             delegate:self
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Upload", nil];
     
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle: confirm message:@"Try Now?" preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {NSLog(@"You pressed cancel");} ];
-    
-    UIAlertAction *upload = [UIAlertAction actionWithTitle:@"Upload" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {NSLog(@"You pressed upload");} ];
-    
-    [actionSheet addAction:cancel];
-    [actionSheet addAction:upload];
-    
-    [self presentViewController:actionSheet animated:YES completion:nil];
-    /* not sure about these last two lines but the seem to need to be there */
+    actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
     [actionSheet showInView:self.tabBarController.view];
     [actionSheet release];
 }
 
-- (void)actionSheet:(UIAlertController *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
     switch ( buttonIndex )
@@ -414,7 +410,7 @@
     }
 }
 
-- (void)actionSheetCancel:(UIAlertController *)actionSheet
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet
 {
     NSLog(@"actionSheetCancel");
 }
@@ -506,6 +502,11 @@
     loading.tag = 999;
     [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
     
+    NoteViewController *mvc = [[NoteViewController alloc] initWithNote:selectedNote];
+    [[self navigationController] pushViewController:mvc animated:YES];
+    [mvc release];
+    selectedNote = nil;
+    /*
     if (!selectedNote.uploaded) {
         if ( noteManager )
             [noteManager release];
@@ -523,6 +524,8 @@
         [mvc release];
         selectedNote = nil;
     }
+     
+     */
 }
 
 

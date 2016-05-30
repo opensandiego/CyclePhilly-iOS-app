@@ -44,8 +44,9 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/10/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
+
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "ActivityIndicatorDelegate.h"

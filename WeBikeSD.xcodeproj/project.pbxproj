@@ -845,7 +845,7 @@
 				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
-						DevelopmentTeam = JC38TD696S;
+						DevelopmentTeam = Z3W7W6ENN9;
 					};
 				};
 			};
@@ -1080,7 +1080,7 @@
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = org.opensandiego.cycle;
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
 				PRODUCT_NAME = WeBikeSD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1109,7 +1109,7 @@
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = org.opensandiego.cycle;
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
 				PRODUCT_NAME = WeBikeSD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1157,7 +1157,7 @@
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = org.opensandiego.cycle;
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
 				PRODUCT_NAME = WeBikeSD;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D7C7187-369B-42E2-9E58-20421916EBBA";
@@ -1211,7 +1211,7 @@
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = org.opensandiego.cycle;
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
 				PRODUCT_NAME = WeBikeSD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1260,7 +1260,7 @@
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = org.opensandiego.cycle;
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
 				PRODUCT_NAME = WeBikeSD;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;

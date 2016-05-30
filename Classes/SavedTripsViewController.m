@@ -1,4 +1,3 @@
-
 /** Cycle Philly, 2013 Code For Philly
  *                                    Philadelphia, PA. USA
  *
@@ -251,15 +250,20 @@
     [super viewWillAppear:animated];
 }
 
+/*
+ - (void)viewDidAppear:(BOOL)animated {
+ [super viewDidAppear:animated];
+ }
+ */
+/*
+ - (void)viewWillDisappear:(BOOL)animated {
+ [super viewWillDisappear:animated];
+ }
+ */
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-}
-
-
-- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
-    return UIBarPositionTopAttached;
 }
 
 
@@ -702,20 +706,21 @@
 {
     NSLog(@"promptToConfirmRetryUpload");
     
+    NSString *confirm = [NSString stringWithFormat:@"This trip has not yet been uploaded. Try now?"];
     
     // present action sheet
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"This trip has not yet been uploaded. Try now?"
-                                                                         message:"Try now?"
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
                                                              delegate:self
-                                                    message:@"Cancel"];
+                                                    cancelButtonTitle:@"Cancel"
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Upload", nil];
     
-    //[actionSheet showInView:self.tabBarController.view];
-    //[actionSheet release];
-    
-    [self presentViewController:actionSheet animated:YES completion:nil];
+    actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
+    [actionSheet showInView:self.tabBarController.view];
+    [actionSheet release];
 }
 
-- (void)actionSheet:(UIAlertController *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
         [self promptToConfirmPurpose];
@@ -732,7 +737,7 @@
                                                    //initWithPurpose:[tripManager getPurposeIndex]];
                                                    initWithNibName:@"TripPurposePicker" bundle:nil];
     [tripPurposePickerView setDelegate:self];
-    [self.navigationController presentViewController:tripPurposePickerView animated:YES completion:nil];
+    [self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
     [tripPurposePickerView release];
 }
 
@@ -752,7 +757,11 @@
     // check for recordingInProgress
     Trip *recordingInProgress = [delegate getRecordingInProgress];
     
+    [self displaySelectedTripMap];
+    
     // if trip not yet uploaded => prompt to re-upload
+    
+    /*
     if ( recordingInProgress != selectedTrip )
     {
         if ( !selectedTrip.uploaded )
@@ -775,6 +784,7 @@
         else
             [self displaySelectedTripMap];
     }
+     */
     //else disallow selection of recordingInProgress
 }
 
@@ -793,7 +803,6 @@
     // load map view of saved trip
     MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
     [[self navigationController] pushViewController:mvc animated:YES];
-    
     [mvc release];
 }
 
@@ -865,7 +874,7 @@
 
 // NOTE: implement didDismissWithButtonIndex to process after sheet has been dismissed
 //- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-- (void)actionSheet:(UIAlertController *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
     switch ( buttonIndex )
@@ -941,7 +950,7 @@
 
 
 // called if the system cancels the action sheet (e.g. homescreen button has been pressed)
-- (void)actionSheetCancel:(UIAlertController *)actionSheet
+- (void)actionSheetCancel:(UIActionSheet *)actionSheet
 {
     NSLog(@"actionSheetCancel");
 }
@@ -1023,7 +1032,7 @@
 
 - (void)didCancelNote
 {
-    [self.navigationController dismissViewControllerAnimated:NO completion:nil];
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didEnterTripDetails:(NSString *)details{
@@ -1035,13 +1044,7 @@
     [tripManager saveTookTransit];
     NSLog(@"Noted rider took public transit in SavedTripsViewController.");
 }
-/*
-- (void)didTakeBikeRental {
-    [tripManager saveTookBikeRental];
-    NSLog(@"Noted rider took bike rental in SavedTripsViewController.");
-}
-*/
- 
+
 - (void)saveTrip{
     [tripManager saveTrip];
     NSLog(@"Save trip");
@@ -1049,7 +1052,6 @@
 
 
 - (void)dealloc {
-    
     self.trips = nil;
     self.managedObjectContext = nil;
     self.delegate = nil;
@@ -1067,3 +1069,4 @@
 
 
 @end
+

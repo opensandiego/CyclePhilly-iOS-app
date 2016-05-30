@@ -635,6 +635,7 @@
     
     
 	// create save request - deprecating
+    /* Deprecating SaveRequest
 	SaveRequest *saveRequest = [[[SaveRequest alloc] initWithPostVars:postVars with:3 image:NULL] autorelease];
 	
 	// create the connection with the request and start loading the data
@@ -656,6 +657,7 @@
          // inform the user that the download could not be made
      
      }
+     */
     
 }
 
