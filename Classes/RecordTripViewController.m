@@ -643,7 +643,7 @@
         [actionSheet addAction:discardAction];
         [actionSheet addAction:cancelAction];
         [self presentViewController:actionSheet animated:YES completion:nil];
-     //   [actionSheet release];
+        [actionSheet release];
     }
     
 }
@@ -716,7 +716,7 @@
         [actionSheet addAction:discardAction];
         [actionSheet addAction:cancelAction];
         [self presentViewController:actionSheet animated:YES completion:nil];
-    //    [actionSheet release];
+        [actionSheet release];
         
     }
     

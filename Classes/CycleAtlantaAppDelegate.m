@@ -331,6 +331,7 @@
     }
 }
 
+/*
 - (void)applicationDidEnterBackground:(UIApplication *) application
 {
     CycleAtlantaAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -339,8 +340,8 @@
         [appDelegate.locationManager startUpdatingLocation];
     } else {
         NSLog(@"BACKGROUNDED and sitting idle"); //set location service to startMonitoringSignificantLocationChanges
-        [appDelegate.locationManager stopUpdatingLocation];
-        //[appDelegate.locationManager startMonitoringSignificantLocationChanges];
+        //[appDelegate.locationManager stopUpdatingLocation];
+        [appDelegate.locationManager startMonitoringSignificantLocationChanges];
     }
 }
 
@@ -351,7 +352,7 @@
     //[appDelegate.locationManager stoptMonitoringSignificantLocationChanges];
     [appDelegate.locationManager startUpdatingLocation];
 }
-
+*/
 
 #pragma mark -
 #pragma mark Core Data stack
@@ -379,14 +380,15 @@
  Returns the managed object model for the application.
  If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
  */
-//- (NSManagedObjectModel *)managedObjectModel {
-//	
-//    if (managedObjectModel != nil) {
-//        return managedObjectModel;
-//    }
-//    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];    
-//    return managedObjectModel;
-//}
+- (NSManagedObjectModel *)managedObjectModel {
+	
+    if (managedObjectModel != nil) {
+        return managedObjectModel;
+    }
+    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+    return managedObjectModel;
+}
+/*
 
 - (NSManagedObjectModel *)managedObjectModel {
     
@@ -400,7 +402,7 @@
     
     return managedObjectModel;
 }
-
+*/
 
 /**
  Returns the persistent store coordinator for the application.
