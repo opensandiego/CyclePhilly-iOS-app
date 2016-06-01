@@ -70,19 +70,5 @@
     
 }
 
-- (void)dealloc {
-    self.delegate = nil;
-    self.tookTransitView = nil;
-    self.tookPublicTransit = nil;
-    self.descriptionText = nil;
-    
-    [descriptionText release];
-    [tookPublicTransit release];
-    [delegate release];
-    
-    [navBarItself release];
-    
-    [super dealloc];
-}
 
 @end

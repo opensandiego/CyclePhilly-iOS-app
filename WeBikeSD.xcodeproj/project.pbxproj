@@ -78,6 +78,7 @@
 		8F9C086A16DC947A003EA308 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086916DC947A003EA308 /* User.m */; };
 		8F9C086D16DC947A003EA308 /* Coord.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086C16DC947A003EA308 /* Coord.m */; };
 		8FA0AD9416BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0AD9116BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodeld */; };
+		8FA7D0D31CFE8A690052F6F8 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA7D0D21CFE8A690052F6F8 /* ExternalAccessory.framework */; };
 		8FAD930516F189EE00082B6F /* UIImageViewResizable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FAD930416F189EE00082B6F /* UIImageViewResizable.m */; };
 		8FBCD3CB16E0E58100C11EBE /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBCD3C916E0E58100C11EBE /* NoteViewController.xib */; };
 		8FD696E61655E35800324E6E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD696E51655E35800324E6E /* MobileCoreServices.framework */; };
@@ -300,6 +301,8 @@
 		8F9C086C16DC947A003EA308 /* Coord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coord.m; sourceTree = "<group>"; };
 		8FA0AD9216BB4ED800E0E7C4 /* CycleAtlanta 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CycleAtlanta 2.xcdatamodel"; sourceTree = "<group>"; };
 		8FA0AD9316BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CycleAtlanta.xcdatamodel; sourceTree = "<group>"; };
+		8FA7D0D21CFE8A690052F6F8 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		8FA7D0D41CFE8A690052F6F8 /* WeBikeSD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = WeBikeSD.entitlements; sourceTree = "<group>"; };
 		8FAD930316F189EE00082B6F /* UIImageViewResizable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImageViewResizable.h; path = ../UIImageViewResizable.h; sourceTree = "<group>"; };
 		8FAD930416F189EE00082B6F /* UIImageViewResizable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImageViewResizable.m; path = ../UIImageViewResizable.m; sourceTree = "<group>"; };
 		8FBCD3C916E0E58100C11EBE /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoteViewController.xib; path = Classes/NoteViewController.xib; sourceTree = "<group>"; };
@@ -420,6 +423,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FA7D0D31CFE8A690052F6F8 /* ExternalAccessory.framework in Frameworks */,
 				DA78812718DF46EC008A5BE9 /* SystemConfiguration.framework in Frameworks */,
 				DA78812518DF46DE008A5BE9 /* libc++.dylib in Frameworks */,
 				DA78812118DF418A008A5BE9 /* CFNetwork.framework in Frameworks */,
@@ -513,6 +517,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				8FA7D0D41CFE8A690052F6F8 /* WeBikeSD.entitlements */,
 				9D504DA316B6D0AE00B99EBC /* libz.dylib */,
 				64119AA81068672100C201F0 /* Trip Purpose data source */,
 				6411992B1068371B00C201F0 /* Data Model */,
@@ -568,6 +573,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FA7D0D21CFE8A690052F6F8 /* ExternalAccessory.framework */,
 				DA2D78341A91F7B200C54FB9 /* Firebase.framework */,
 				DA78812618DF46EC008A5BE9 /* SystemConfiguration.framework */,
 				DA78812418DF46DE008A5BE9 /* libc++.dylib */,
@@ -820,6 +826,11 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = Z3W7W6ENN9;
+						SystemCapabilities = {
+							com.apple.WAC = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1030,7 +1041,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -1061,7 +1073,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -1109,7 +1122,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -1160,8 +1174,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_ENTITLEMENTS = dist.plist;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -1211,8 +1225,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_OBJC_ARC = NO;
-				CODE_SIGN_ENTITLEMENTS = dist.plist;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;

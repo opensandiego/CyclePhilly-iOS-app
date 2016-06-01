@@ -73,15 +73,10 @@
 
 - (void)dealloc
 {
-    self.title = nil;
-    self.subtitle = nil;
     self.first = nil;
     self.last = nil;
  
-    [title release];
-    [subtitle release];
     
-    [super dealloc];
 }
 
 

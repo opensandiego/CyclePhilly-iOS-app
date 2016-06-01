@@ -158,8 +158,7 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [request setSortDescriptors:sortDescriptors];
-    [sortDescriptors release];
-    [sortDescriptor release];
+
     
     NSError *error;
     NSInteger count = [tripManager.managedObjectContext countForFetchRequest:request error:&error];
@@ -176,8 +175,6 @@
     [self setTrips:mutableFetchResults];
     [self.tableView reloadData];
     
-    [mutableFetchResults release];
-    [request release];
 }
 
 
@@ -203,7 +200,7 @@
                                               otherButtonTitles:@"Recalculate", nil];
         alert.tag = 202;
         [alert show];
-        [alert release];
+       
     }
     
     // check for countUnSyncedTrips
@@ -216,7 +213,7 @@
                                               otherButtonTitles:@"OK", nil];
         alert.tag = 303;
         [alert show];
-        [alert release];
+        
     }
     else
         NSLog(@"no zero distance or unsynced trips found");
@@ -285,7 +282,7 @@
 - (void)_recalculateDistanceForSelectedTripMap
 {
     // important if we call from a background thread
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // Top-level pool
+   // NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // Top-level pool
     
     // instantiate a temporary TripManager to recalcuate distance
     TripManager *mapTripManager = [[TripManager alloc] initWithTrip:selectedTrip];
@@ -300,35 +297,33 @@
         NSLog(@"_recalculateDistanceForSelectedTripMap error %@, %@", error, [error localizedDescription]);
     }
     
-    [mapTripManager release];
     tripManager.dirty = YES;
     
     [self performSelectorOnMainThread:@selector(_displaySelectedTripMap) withObject:nil waitUntilDone:NO];
-    [pool release];  // Release the objects in the pool.
+     // Release the objects in the pool.
 }
 
 
 - (void)_displaySelectedTripMap
 {
     // important if we call from a background thread
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // Top-level pool
+   // NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init]; // Top-level pool
     
     if ( selectedTrip )
     {
         MapViewController *mvc = [[MapViewController alloc] initWithTrip:selectedTrip];
         [[self navigationController] pushViewController:mvc animated:YES];
-        [mvc release];
+        
         selectedTrip = nil;
     }
     
-    [pool release];  // Release the objects in the pool.
 }
 
 
 // display map view
 - (void)displaySelectedTripMap
 {
-    loading		= [[LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."] retain];
+    loading		= [LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."];
     loading.tag = 909;
     [self performSelectorInBackground:@selector(_recalculateDistanceForSelectedTripMap) withObject:nil];
 }
@@ -358,7 +353,7 @@
     TripCell *cell = (TripCell*)[self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (cell == nil)
     {
-        cell = [[[TripCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier] autorelease];
+        cell = [[TripCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
         cell.detailTextLabel.numberOfLines = 2;
         if ( [reuseIdentifier isEqual: kCellReuseIdentifierCheck] )
         {
@@ -376,7 +371,7 @@
         {
             // add exclamation point
             UIImage		*image		= [UIImage imageNamed:@"failedUpload.png"];
-            UIImageView *imageView	= [[[UIImageView alloc] initWithImage:image] autorelease];
+            UIImageView *imageView	= [[UIImageView alloc] initWithImage:image];
             imageView.frame = CGRectMake( kAccessoryViewX, kAccessoryViewY, image.size.width, image.size.height );
             imageView.tag	= kTagImage;
             //[cell.contentView addSubview:imageView];
@@ -393,7 +388,7 @@
             {
                 // create activity indicator if needed
                 CGRect frame = CGRectMake( kAccessoryViewX + 4.0, kAccessoryViewY + 4.0, kActivityIndicatorSize, kActivityIndicatorSize );
-                inProgressIndicator = [[[UIActivityIndicatorView alloc] initWithFrame:frame] autorelease];
+                inProgressIndicator = [[UIActivityIndicatorView alloc] initWithFrame:frame];
                 inProgressIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
                 [inProgressIndicator sizeToFit];
                 [inProgressIndicator startAnimating];
@@ -492,7 +487,7 @@
             default:
                 image = [UIImage imageNamed:@"GreenCheckMark2.png"];
         }
-        UIImageView *imageView	= [[[UIImageView alloc] initWithImage:image] autorelease];
+        UIImageView *imageView	= [[UIImageView alloc] initWithImage:image];
         imageView.frame			= CGRectMake( kAccessoryViewX, kAccessoryViewY, image.size.width, image.size.height );
         
         //[cell.contentView addSubview:imageView];
@@ -555,8 +550,8 @@
     NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
     [inputFormatter setDateFormat:@"HH:mm:ss"];
     NSLog(@"trip duration: %f", [trip.duration doubleValue]);
-    NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:(NSTimeInterval)[trip.duration doubleValue]
-                                                     sinceDate:fauxDate] autorelease];
+    NSDate *outputDate = [[NSDate alloc] initWithTimeInterval:(NSTimeInterval)[trip.duration doubleValue]
+                                                     sinceDate:fauxDate];
     
     //double mph = ( [trip.distance doubleValue] / 1609.344 ) / ( [trip.duration doubleValue] / 3600. );
     /*
@@ -580,13 +575,13 @@
     
     if (cell == nil) {
         
-        timeText = [[[UILabel alloc] init] autorelease];
+        timeText = [[UILabel alloc] init];
         timeText.tag = 1;
         timeText.frame = CGRectMake( 10, 5, 220, 25);
         [timeText setFont:[UIFont systemFontOfSize:15]];
         [timeText setTextColor:[UIColor grayColor]];
         
-        purposeText = [[[UILabel alloc] init] autorelease];
+        purposeText = [[UILabel alloc] init];
         purposeText.tag = 2;
         purposeText.frame = CGRectMake( 10, 24, 120, 30);
         [purposeText setFont:[UIFont boldSystemFontOfSize:18]];
@@ -603,10 +598,10 @@
         CaloryText = (UILabel *)[cell.contentView viewWithTag:5];
         
         if (durationText == nil) {
-            durationText = [[[UILabel alloc] init] autorelease];
+            durationText = [[UILabel alloc] init];
             durationText.tag = 3;
             
-            CO2Text = [[[UILabel alloc] init] autorelease];
+            CO2Text = [[UILabel alloc] init];
             CO2Text.tag = 4;
             
             // do some version-dependent sizing stuff here
@@ -624,7 +619,7 @@
             [CO2Text setFont:[UIFont systemFontOfSize:12]];
             [CO2Text setTextColor:[UIColor grayColor]];
             
-            CaloryText = [[[UILabel alloc] init] autorelease];
+            CaloryText = [[UILabel alloc] init];
             CaloryText.tag = 5;
             CaloryText.frame = CGRectMake(140, 50, 190, 20);
             [CaloryText setFont:[UIFont systemFontOfSize:12]];
@@ -695,12 +690,12 @@
     return cell;
 }
 
-/*
+
  - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
  {
 	NSLog(@"willDisplayCell: %@", cell);
  }
- */
+
 
 - (void)promptToConfirmRetryUpload
 {
@@ -717,7 +712,7 @@
     
     actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
     [actionSheet showInView:self.tabBarController.view];
-    [actionSheet release];
+   
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -738,10 +733,37 @@
                                                    initWithNibName:@"TripPurposePicker" bundle:nil];
     [tripPurposePickerView setDelegate:self];
     [self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
-    [tripPurposePickerView release];
+
 }
 
+/*
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Navigation logic may go here. Create and push another view controller.
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    // identify trip by row
+    //NSLog(@"didSelectRow: %d", indexPath.row);
+    
+    selectedTrip = (Trip *)[trips objectAtIndex:indexPath.row];
+    //NSLog(@"%@", selectedTrip);
+    
+    // check for recordingInProgress
+    Trip *recordingInProgress = [delegate getRecordingInProgress];
+    
 
+            
+            tripManager = [[TripManager alloc] initWithTrip:selectedTrip];
+            //tripManager.activityDelegate = self;
+            tripManager.alertDelegate = self;
+            tripManager.parent = self;
+            
+
+
+}
+
+ */
+ 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
@@ -750,7 +772,7 @@
     // identify trip by row
     //NSLog(@"didSelectRow: %d", indexPath.row);
     
-    [selectedTrip release];
+   // [selectedTrip release];
     selectedTrip = (Trip *)[trips objectAtIndex:indexPath.row];
     //NSLog(@"%@", selectedTrip);
     
@@ -762,31 +784,37 @@
     // if trip not yet uploaded => prompt to re-upload
     
     /*
-    if ( recordingInProgress != selectedTrip )
-    {
-        if ( !selectedTrip.uploaded )
-        {
-            // init new TripManager instance with selected trip
-            // release previously set tripManager
-            if ( tripManager )
-                [tripManager release];
-            
-            tripManager = [[TripManager alloc] initWithTrip:selectedTrip];
-            //tripManager.activityDelegate = self;
-            tripManager.alertDelegate = self;
-            tripManager.parent = self;
-            
-            //prompt whether user wants to upload now
-            [self promptToConfirmRetryUpload];
-        }
-        
-        // else => goto map view
-        else
-            [self displaySelectedTripMap];
-    }
+     if ( recordingInProgress != selectedTrip )
+     {
+     if ( !selectedTrip.uploaded )
+     {
+     // init new TripManager instance with selected trip
+     // release previously set tripManager
+     if ( tripManager )
+     [tripManager release];
+     
+     tripManager = [[TripManager alloc] initWithTrip:selectedTrip];
+     //tripManager.activityDelegate = self;
+     tripManager.alertDelegate = self;
+     tripManager.parent = self;
+     
+     //prompt whether user wants to upload now
+     [self promptToConfirmRetryUpload];
+     }
+     
+     // else => goto map view
+     else
+     [self displaySelectedTripMap];
+     }
      */
     //else disallow selection of recordingInProgress
 }
+
+
+
+
+
+
 
 
 // Override to support conditional editing of the table view.
@@ -803,7 +831,7 @@
     // load map view of saved trip
     MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
     [[self navigationController] pushViewController:mvc animated:YES];
-    [mvc release];
+   
 }
 
 
@@ -907,44 +935,7 @@
             break;
             
             
-        case kActionSheetButtonConfirm:
-            // TODO:
-            // NSLog(@"Confirm => creating Trip Notes dialog");
-            // [tripManager promptForTripNotes];
-            break;
-            
-            
-            //case kActionSheetButtonChange:
-            /*
-             case 0:
-             NSLog(@"Upload => push Trip Purpose picker");
-             
-             // NOTE: this code to get purposeIndex fails for the load a saved trip case
-             //PickerViewController *pickerViewController = [[PickerViewController alloc]
-             initWithPurpose:[tripManager getPurposeIndex]];
-             //[pickerViewController setDelegate:self];
-             //[[self navigationController] pushViewController:pickerViewController animated:YES];
-             //[pickerViewController release];
-             
-             // Trip Purpose
-             //			NSLog(@"INIT + PUSH");
-             //			PickerViewController *pickerViewController = [[PickerViewController alloc]
-             //														  initWithNibName:@"TripPurposePicker" bundle:nil];
-             //			[pickerViewController setDelegate:self];
-             //			//[[self navigationController] pushViewController:pickerViewController animated:YES];
-             //			[self.navigationController presentModalViewController:pickerViewController animated:YES];
-             //			[pickerViewController release];
-             [tripManager saveTrip];
-             break;
-             */
-            
-            
-            //case kActionSheetButtonCancel:
-        case 1:
-        default:
-            NSLog(@"Cancel");
-            [self displaySelectedTripMap];
-            break;
+
     }
 }
 
@@ -1051,21 +1042,6 @@
 }
 
 
-- (void)dealloc {
-    self.trips = nil;
-    self.managedObjectContext = nil;
-    self.delegate = nil;
-    self.tripManager = nil;
-    self.selectedTrip = nil;
-    
-    [delegate release];
-    [trips release];
-    [tripManager release];
-    [selectedTrip release];
-    [loading release];
-    
-    [super dealloc];
-}
 
 
 @end

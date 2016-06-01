@@ -90,7 +90,19 @@
     return self;
 }
 
-- (UITextField*)initTextFieldAlpha
+- (UITextField*)textFieldAlpha
+{
+    CGRect frame = CGRectMake( 152, 7, 138, 29 );
+    UITextField *textField = [[UITextField alloc] initWithFrame:frame];
+    textField.borderStyle = UITextBorderStyleRoundedRect;
+    textField.textAlignment = UITextAlignmentRight;
+    textField.placeholder = @"Choose one";
+    textField.delegate = self;
+    return textField;
+   
+}
+
+- (UITextField*)textFieldBeta
 {
     CGRect frame = CGRectMake( 152, 7, 138, 29 );
     UITextField *textField = [[UITextField alloc] initWithFrame:frame];
@@ -101,19 +113,8 @@
     return textField;
 }
 
-- (UITextField*)initTextFieldBeta
-{
-    CGRect frame = CGRectMake( 152, 7, 138, 29 );
-    UITextField *textField = [[UITextField alloc] initWithFrame:frame];
-    textField.borderStyle = UITextBorderStyleRoundedRect;
-    textField.textAlignment = UITextAlignmentRight;
-    textField.placeholder = @"Choose one";
-    textField.delegate = self;
-    return textField;
-}
 
-
-- (UITextField*)initTextFieldEmail
+- (UITextField*)textFieldEmail
 {
     CGRect frame = CGRectMake( 152, 7, 138, 29 );
     UITextField *textField = [[UITextField alloc] initWithFrame:frame];
@@ -128,7 +129,7 @@
 }
 
 
-- (UITextField*)initTextFieldNumeric
+- (UITextField*)textFieldNumeric
 {
     CGRect frame = CGRectMake( 152, 7, 138, 29 );
     UITextField *textField = [[UITextField alloc] initWithFrame:frame];
@@ -145,7 +146,7 @@
 - (User *)createUser
 {
     // Create and configure a new instance of the User entity
-    User *noob = (User *)[[NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:managedObjectContext] retain];
+    User *noob = (User *)[NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:managedObjectContext];
     
     NSError *error;
     if (![managedObjectContext save:&error]) {
@@ -153,7 +154,7 @@
         NSLog(@"createUser error %@, %@", error, [error localizedDescription]);
     }
     
-    return [noob autorelease];
+    return noob;
 }
 
 
@@ -193,17 +194,17 @@
     
     
     // initialize text fields
-    self.age		= [self initTextFieldAlpha];
-    self.email		= [self initTextFieldEmail];
-    self.gender		= [self initTextFieldAlpha];
-    self.ethnicity  = [self initTextFieldAlpha];
-    self.income     = [self initTextFieldAlpha];
-    self.homeZIP	= [self initTextFieldNumeric];
-    self.workZIP	= [self initTextFieldNumeric];
-    self.schoolZIP	= [self initTextFieldNumeric];
-    self.cyclingFreq = [self initTextFieldBeta];
-    self.riderType  =  [self initTextFieldBeta];
-    self.riderHistory =[self initTextFieldBeta];
+    self.age		= [self textFieldAlpha];
+    self.email		= [self textFieldEmail];
+    self.gender		= [self textFieldAlpha];
+    self.ethnicity  = [self textFieldAlpha];
+    self.income     = [self textFieldAlpha];
+    self.homeZIP	= [self textFieldNumeric];
+    self.workZIP	= [self textFieldNumeric];
+    self.schoolZIP	= [self textFieldNumeric];
+    self.cyclingFreq = [self textFieldBeta];
+    self.riderType  =  [self textFieldBeta];
+    self.riderHistory =[self textFieldBeta];
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -274,8 +275,6 @@
     else
         NSLog(@"init FAIL");
     
-    [mutableFetchResults release];
-    [request release];
 }
 
 
@@ -379,7 +378,6 @@
         //        [actionSheet addSubview:pickerView];
         //
         [actionSheet showInView:self.view];
-        [actionSheet release];
         //
         //        [actionSheet setBounds:CGRectMake(0, 0, 320, 485)];
         
@@ -455,7 +453,7 @@
     [schoolZIP resignFirstResponder];
     
     NSLog(@"Saving User Data");
-    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://cyclephilly.firebaseio.com"];
+    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://project-3189448588169164345.firebaseio.com/users"];
     if ( user != nil )
     {
         [user setAge:[NSNumber numberWithLong:ageSelectedRow]];
@@ -688,7 +686,7 @@
             static NSString *CellIdentifier = @"CellInstruction";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             
             // inner switch statement identifies row
@@ -708,7 +706,7 @@
             static NSString *CellIdentifier = @"CellPersonalInfo";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             
             // inner switch statement identifies row
@@ -745,7 +743,7 @@
             static NSString *CellIdentifier = @"CellZip";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             
             switch ([indexPath indexAtPosition:1])
@@ -773,7 +771,7 @@
             static NSString *CellIdentifier = @"CellFrequecy";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             
             // inner switch statement identifies row
@@ -793,7 +791,7 @@
             static NSString *CellIdentifier = @"CellType";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             
             // inner switch statement identifies row
@@ -814,7 +812,7 @@
             static NSString *CellIdentifier = @"CellHistory";
             cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
             if (cell == nil) {
-                cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             }
             
             // inner switch statement identifies row
@@ -1212,20 +1210,6 @@
 }
 
 - (void)dealloc {
-    self.delegate = nil;
-    self.managedObjectContext = nil;
-    self.user = nil;
-    self.age = nil;
-    self.email = nil;
-    self.gender = nil;
-    self.ethnicity = nil;
-    self.income = nil;
-    self.homeZIP = nil;
-    self.workZIP = nil;
-    self.schoolZIP = nil;
-    self.cyclingFreq = nil;
-    self.riderType = nil;
-    self.riderHistory = nil;
     self.ageSelectedRow = nil;
     self.genderSelectedRow = nil;
     self.ethnicitySelectedRow = nil;
@@ -1235,30 +1219,8 @@
     self.riderHistorySelectedRow = nil;
     self.selectedItem = nil;
     
-    [delegate release];
-    [managedObjectContext release];
-    [user release];
-    [age release];
-    [email release];
-    [gender release];
-    [ethnicity release];
-    [income release];
-    [homeZIP release];
-    [workZIP release];
-    [schoolZIP release];
-    [cyclingFreq release];
-    [riderType release];
-    [riderHistory release];
     
-    [doneToolbar release];
-    [actionSheet release];
-    [pickerView release];
-    [currentTextField release];
-    [genderArray release];
-    [ageArray release];
-    [ethnicityArray release];
     
-    [super dealloc];
 }
 
 @end

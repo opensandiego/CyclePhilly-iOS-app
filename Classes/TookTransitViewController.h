@@ -20,11 +20,11 @@
     IBOutlet UINavigationBar *navBarItself;
 }
 
-@property (nonatomic, retain) IBOutlet UIView *tookTransitView;
-@property (nonatomic, retain) IBOutlet UILabel *descriptionText;
-@property (nonatomic, retain) IBOutlet UILabel * answerYesNo;
-@property (nonatomic, retain) IBOutlet UISwitch *tookPublicTransit;
-@property (nonatomic, retain) id <TripPurposeDelegate> delegate;
+@property (nonatomic, strong) IBOutlet UIView *tookTransitView;
+@property (nonatomic, strong) IBOutlet UILabel *descriptionText;
+@property (nonatomic, strong) IBOutlet UILabel * answerYesNo;
+@property (nonatomic, strong) IBOutlet UISwitch *tookPublicTransit;
+@property (nonatomic, strong) id <TripPurposeDelegate> delegate;
 
 -(IBAction)cancel:(id)sender;
 -(IBAction)saveDetail:(id)sender;

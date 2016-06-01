@@ -89,7 +89,7 @@ const CGFloat kViewHeight = 44;
     NSDictionary *textAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize:MAIN_FONT_SIZE]};
     
     // Create string drawing context
-    NSStringDrawingContext *drawingContext = [[[NSStringDrawingContext alloc] init] autorelease];
+    NSStringDrawingContext *drawingContext = [[NSStringDrawingContext alloc] init];
     drawingContext.minimumScaleFactor = MIN_MAIN_FONT_SIZE / MAIN_FONT_SIZE;
     
     [self.title drawWithRect:drawRect
@@ -107,12 +107,5 @@ const CGFloat kViewHeight = 44;
     //				baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
 }
 
-- (void)dealloc
-{
-	[title release];
-	[image release];
-	
-	[super dealloc];
-}
 
 @end

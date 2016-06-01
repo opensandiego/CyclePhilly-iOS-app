@@ -74,7 +74,7 @@
 @synthesize timer, timeCounter, distCounter;
 @synthesize recording, shouldUpdateCounter, userInfoSaved;
 @synthesize appDelegate;
-@synthesize saveActionSheet;
+//@synthesize saveActionSheet;
 
 #pragma mark CLLocationManagerDelegate methods
 
@@ -96,12 +96,32 @@
         return appDelegate.locationManager;
     }
     
-    appDelegate.locationManager = [[[CLLocationManager alloc] init] autorelease];
-    appDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    appDelegate.locationManager = [[CLLocationManager alloc] init];
+    appDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
     //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     appDelegate.locationManager.delegate = self;
     
     return appDelegate.locationManager;
+}
+
+/// Request authorization if needed.
+- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView {
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusNotDetermined:
+            // Ask the user for permission to use location.
+            [self.locationManager requestWhenInUseAuthorization];
+            break;
+            
+        case kCLAuthorizationStatusDenied:
+            NSLog(@"Please authorize location services for this SDSU Library under Settings > Privacy.");
+            break;
+            
+        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        case kCLAuthorizationStatusRestricted:
+            // Nothing to do.
+            break;
+    }
 }
 
 
@@ -112,11 +132,10 @@
     CLLocationDistance deltaDistance = [newLocation distanceFromLocation:oldLocation];
     
     if (!myLocation) {
-        myLocation = [newLocation retain];
+        myLocation = newLocation;
     }
     else if ([myLocation distanceFromLocation:newLocation]) {
-        [myLocation release];
-        myLocation = [newLocation retain];
+        myLocation = newLocation;
     }
     
     if ( !didUpdateUserLocation )
@@ -218,7 +237,6 @@
     else
         NSLog(@"no saved user");
     
-    [request release];
     return response;
 }
 
@@ -284,7 +302,7 @@
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
     // setup the noteManager
-    [self initNoteManager:[[[NoteManager alloc] initWithManagedObjectContext:context]autorelease]];
+    [self initNoteManager:[[NoteManager alloc] initWithManagedObjectContext:context]];
     
     // check if any user data has already been saved and pre-select personal info cell accordingly
     if ( [self hasUserInfoBeenSaved] )
@@ -306,7 +324,7 @@
     
     [noteButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [noteButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-    [noteButton setTitleColor:[[[UIColor alloc] initWithRed:185.0 / 255 green:91.0 / 255 blue:47.0 / 255 alpha:1.0 ] autorelease] forState:UIControlStateHighlighted];
+    [noteButton setTitleColor:[[UIColor alloc] initWithRed:185.0 / 255 green:91.0 / 255 blue:47.0 / 255 alpha:1.0 ] forState:UIControlStateHighlighted];
     
     //    noteButton.backgroundColor = [UIColor clearColor];
     noteButton.enabled = YES;
@@ -373,7 +391,6 @@
     MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
     [[self navigationController] pushViewController:mvc animated:YES];
     NSLog(@"displayUploadedTripMap");
-    [mvc release];
 }
 
 
@@ -385,7 +402,6 @@
     NoteViewController *mvc = [[NoteViewController alloc] initWithNote:note];
     [[self navigationController] pushViewController:mvc animated:YES];
     NSLog(@"displayUploadedNote");
-    [mvc release];
 }
 
 
@@ -420,9 +436,8 @@
     [startButton setTitle:@"Start" forState:UIControlStateNormal];
     
     // reset trip, reminder managers
-    [tripManager release];
     NSManagedObjectContext *context = tripManager.managedObjectContext;
-    [self initTripManager:[[[TripManager alloc] initWithManagedObjectContext:context] autorelease]];
+    [self initTripManager:[[TripManager alloc] initWithManagedObjectContext:context]];
     tripManager.dirty = YES;
     
     [self resetCounter];
@@ -524,7 +539,6 @@
             // load map view of saved trip
             MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
             [[self navigationController] pushViewController:mvc animated:YES];
-            [mvc release];
         }
             break;
     }
@@ -533,8 +547,8 @@
 
 - (NSDictionary *)newTripTimerUserInfo
 {
-    return [[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], @"StartDate",
-             tripManager, @"TripManager", nil ] retain ];
+    return [NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], @"StartDate",
+             tripManager, @"TripManager", nil ];
 }
 
 
@@ -565,7 +579,7 @@
             [self resetCounter];
             timer = [NSTimer scheduledTimerWithTimeInterval:kCounterTimeInterval
                                                      target:self selector:@selector(updateCounter:)
-                                                   userInfo:[[self newTripTimerUserInfo] autorelease] repeats:YES];
+                                                   userInfo:[self newTripTimerUserInfo] repeats:YES];
         }
         
         UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
@@ -615,7 +629,6 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No data to upload" message:@"No co-ordinates have been logged for this trip yet." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
             alert.tag = 201;
             [alert show];
-            [alert release];
             return;
         }
         
@@ -643,7 +656,6 @@
         [actionSheet addAction:discardAction];
         [actionSheet addAction:cancelAction];
         [self presentViewController:actionSheet animated:YES completion:nil];
-        [actionSheet release];
     }
     
 }
@@ -662,7 +674,6 @@
         [tripPurposePickerView setDelegate:self];
         //[[self navigationController] pushViewController:pickerViewController animated:YES];
         [self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
-        [tripPurposePickerView release];
     }
     
     // prompt to confirm first
@@ -716,7 +727,6 @@
         [actionSheet addAction:discardAction];
         [actionSheet addAction:cancelAction];
         [self presentViewController:actionSheet animated:YES completion:nil];
-        [actionSheet release];
         
     }
     
@@ -751,7 +761,6 @@
         [self presentViewController:notePickerView animated:YES completion:nil];
         //add location information
         
-        [notePickerView release];
     }
     
     // prompt to confirm first
@@ -807,7 +816,6 @@
         [saveActionSheet addAction:discardAction];
         [saveActionSheet addAction:cancelAction];
         [self presentViewController:saveActionSheet animated:YES completion:nil];
-        [saveActionSheet release];
          
          
     }
@@ -832,12 +840,12 @@
         
         static NSDateFormatter *inputFormatter = nil;
         if ( inputFormatter == nil )
-            inputFormatter = [[[NSDateFormatter alloc] init] autorelease];
+            inputFormatter = [[NSDateFormatter alloc] init];
         
         [inputFormatter setDateFormat:@"HH:mm:ss"];
         NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
         [inputFormatter setDateFormat:@"HH:mm:ss"];
-        NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
+        NSDate *outputDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate];
         
         timeCounter.text = [inputFormatter stringFromDate:outputDate];
     }
@@ -864,7 +872,7 @@
         [inputFormatter setDateFormat:@"HH:mm:ss"];
         NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
         [inputFormatter setDateFormat:@"HH:mm:ss"];
-        NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
+        NSDate *outputDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate];
         
         //NSLog(@"Timer started on %@", startDate);
         //NSLog(@"Timer started %f seconds ago", interval);
@@ -1061,7 +1069,6 @@ shouldSelectViewController:(UIViewController *)viewController
 - (void)didSaveImage:(NSData *)imgData{
     [noteManager.note setImage_data:imgData];
     NSLog(@"Added image, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
-    [imgData release];
 }
 
 - (void)getTripThumbnail:(NSData *)imgData{
@@ -1097,44 +1104,15 @@ shouldSelectViewController:(UIViewController *)viewController
 - (void)dealloc {
     
     appDelegate.locationManager = nil;
-    self.startButton = nil;
-    self.infoButton = nil;
-    self.saveButton = nil;
-    self.noteButton = nil;
-    self.timeCounter = nil;
-    self.distCounter = nil;
-    self.saveActionSheet = nil;
     self.timer = nil;
-    self.parentView = nil;
     self.recording = nil;
     self.shouldUpdateCounter = nil;
     self.userInfoSaved = nil;
-    self.tripManager = nil;
-    self.noteManager = nil;
-    self.appDelegate = nil;
     speedCounter = nil;
     
     //    [appDelegate.locationManager release];
-    [appDelegate release];
-    [infoButton release];
-    [saveButton release];
-    [startButton release];
-    [noteButton release];
-    [timeCounter release];
-    [distCounter release];
-    [speedCounter release];
-    [saveActionSheet release];
-    [timer release];
-    [opacityMask release];
-    [parentView release];
-    [tripManager release];
-    [noteManager release];
-    [myLocation release];
     
-    [managedObjectContext release];
-    [mapView release];
     
-    [super dealloc];
 }
 
 @end

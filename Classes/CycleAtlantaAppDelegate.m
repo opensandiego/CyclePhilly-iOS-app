@@ -93,8 +93,8 @@
 	[self initUniqueIDHash];
 	
 	// initialize trip manager with the managed object context
-	TripManager *tripManager = [[[TripManager alloc] initWithManagedObjectContext:context] autorelease];
-    NoteManager *noteManager = [[[NoteManager alloc] initWithManagedObjectContext:context] autorelease];
+	TripManager *tripManager = [[TripManager alloc] initWithManagedObjectContext:context];
+    NoteManager *noteManager = [[NoteManager alloc] initWithManagedObjectContext:context];
 	
     //Anon Firebase User
     NSDateFormatter *formatter;
@@ -385,7 +385,7 @@
     if (managedObjectModel != nil) {
         return managedObjectModel;
     }
-    managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] retain];
+    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     return managedObjectModel;
 }
 /*
@@ -458,22 +458,10 @@
 #pragma mark Memory management
 
 - (void)dealloc {
-    self.window = nil;
-    self.tabBarController = nil;
-    self.uniqueIDHash = nil;
     self.isRecording = nil;
-    self.locationManager = nil;
     
-    [tabBarController release];
-    [uniqueIDHash release];
-    [locationManager release];
-	[window release];
     
-    [managedObjectContext release];
-    [managedObjectModel release];
-    [persistentStoreCoordinator release];
     
-	[super dealloc];
 }
 
 

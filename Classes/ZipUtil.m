@@ -121,7 +121,6 @@
                 break;
         }
         NSLog(@"%s: deflateInit2() Error: \"%@\" Message: \"%s\"", __func__, errorMsg, zlibStreamStruct.msg);
-        [errorMsg release];
         return nil;
     }
     
@@ -181,7 +180,6 @@
                 break;
         }
         NSLog(@"%s: zlib error while attempting compression: \"%@\" Message: \"%s\"", __func__, errorMsg, zlibStreamStruct.msg);
-        [errorMsg release];
         
         // Free data structures that were dynamically created for the stream.
         deflateEnd(&zlibStreamStruct);
