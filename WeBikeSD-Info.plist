@@ -33,16 +33,17 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>WeBikeSD tracks your routes to share witt local planning authorities to better prepare for bikes on the road.</string>
+	<string>WeBikeSD shares your bike routes with the City of San Diego so that maintenance workers can better maintain the roads for bicycles.</string>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
 		<string>location</string>
-		<string></string>
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>

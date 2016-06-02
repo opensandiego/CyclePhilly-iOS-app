@@ -69,13 +69,13 @@
 }
 
 
-@property (nonatomic, strong) id <TripPurposeDelegate> delegate;
-@property (nonatomic, strong) IBOutlet UIPickerView *customPickerView;
-@property (nonatomic, strong) CustomPickerDataSource *customPickerDataSource;
+@property (nonatomic, retain) id <TripPurposeDelegate> delegate;
+@property (nonatomic, retain) IBOutlet UIPickerView *customPickerView;
+@property (nonatomic, retain) CustomPickerDataSource *customPickerDataSource;
 
-@property (nonatomic, strong) UITextView *description;
+@property (nonatomic, retain) UITextView *description;
 
-@property (nonatomic, strong) IBOutlet UILabel *descriptionText;
+@property (nonatomic, retain) IBOutlet UILabel *descriptionText;
 
 - (id)initWithPurpose:(NSInteger)index;
 

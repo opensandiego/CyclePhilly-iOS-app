@@ -108,7 +108,7 @@
 
 #define kSaveURL			@"https://www.phineasfen.com/teamwebikesd/app/WeBikeSD/php/post"
 
-#define kFireDomain			@"https://project-3189448588169164345.firebaseio.com/"
+#define kFireDomain			@"https://project-3189448588169164345.firebaseio.com/trips"
 //#define kSaveURL			@""
 
 #define kTripNotesPlaceholder	@"Comments"

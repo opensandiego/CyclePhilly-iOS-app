@@ -95,7 +95,7 @@ UITextViewDelegate>
     IBOutlet UILabel *timeCounter;
     IBOutlet UILabel *distCounter;
     IBOutlet UILabel *speedCounter;
-    UIAlertController *saveActionSheet;
+    //UIAlertController *saveActionSheet;
     
     
     NSTimer *__weak timer;

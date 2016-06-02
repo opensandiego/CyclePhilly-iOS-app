@@ -59,6 +59,8 @@
 #import "NoteManager.h"
 #import "Trip.h"
 #import "User.h"
+#import "CycleAtlantaAppDelegate.h"
+
 @import CoreLocation;
 
 @interface RecordTripViewController () <CLLocationManagerDelegate>
@@ -97,7 +99,7 @@
     }
     
     appDelegate.locationManager = [[CLLocationManager alloc] init];
-    appDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+    appDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     appDelegate.locationManager.delegate = self;
     
@@ -275,7 +277,10 @@
         [self.locationManager requestAlwaysAuthorization];
     }
     self->mapView.showsUserLocation = YES;
+    
     [self.locationManager startUpdatingLocation];
+    
+    self->_locationManager.allowsBackgroundLocationUpdates = YES;
     
     // init map region to Petco Park
     MKCoordinateRegion region = { { 32.708282, -117.155739 }, { 0.0078, 0.0068 } };
@@ -448,41 +453,6 @@
 #pragma mark UIActionSheet delegate methods
 
 
-// NOTE: implement didDismissWithButtonIndex to process after sheet has been dismissed
-//- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-/*
-- (void)actionSheet:(UIAlertController *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"actionSheet clickedButtonAtIndex %ld", (long)buttonIndex);
-    switch ( buttonIndex )
-    {
-        case 0:
-        {
-            NSLog(@"Discard!!!!");
-            
-            // actually discard the trip
-            [self.tripManager discardTrip];
-            
-            [self resetRecordingInProgress];
-            
-            break;
-        }
-        case 1:{
-            [self save];
-            break;
-        }
-        default:{
-            NSLog(@"Cancel");
-            // re-enable counter updates
-            shouldUpdateCounter = YES;
-            break;
-        }
-    }
-}
-*/
- 
-
-
 // called if the system cancels the action sheet (e.g. homescreen button has been pressed)
 - (void)actionSheetCancel:(UIAlertController *)actionSheet
 {
@@ -632,7 +602,7 @@
             return;
         }
         
-        UIAlertController* actionSheet = [UIAlertController alertControllerWithTitle:@"WEBIKESD SAVE"
+        UIAlertController* saveActionSheet = [UIAlertController alertControllerWithTitle:@"WEBIKESD SAVE"
                                                                              message:@"Upload Bike Trip?"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
         
@@ -652,10 +622,10 @@
                                                              }];
         
         
-        [actionSheet addAction:saveAction];
-        [actionSheet addAction:discardAction];
-        [actionSheet addAction:cancelAction];
-        [self presentViewController:actionSheet animated:YES completion:nil];
+        [saveActionSheet addAction:saveAction];
+        [saveActionSheet addAction:discardAction];
+        [saveActionSheet addAction:cancelAction];
+        [self presentViewController:saveActionSheet animated:YES completion:nil];
     }
     
 }
@@ -673,7 +643,7 @@
                                                        initWithNibName:@"TripPurposePicker" bundle:nil];
         [tripPurposePickerView setDelegate:self];
         //[[self navigationController] pushViewController:pickerViewController animated:YES];
-        [self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
+        [self.navigationController presentViewController:tripPurposePickerView animated:YES completion:nil];
     }
     
     // prompt to confirm first
@@ -686,23 +656,7 @@
         NSString *purpose = nil;
         if ( tripManager != nil )
             purpose = [self getPurposeString:[tripManager getPurposeIndex]];
-        /*Changing from UIActionSheet to UIAlertController
-        NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
-        
-        // present action sheet
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"Cancel"
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:@"Save", nil];
-        
-        actionSheet.actionSheetStyle		= UIActionSheetStyleBlackTranslucent;
-        UIViewController *pvc = self.parentViewController;
-        UITabBarController *tbc = (UITabBarController *)pvc.parentViewController;
-        
-        [actionSheet showFromTabBar:tbc.tabBar];
-        [actionSheet release];
-        */
+
         UIAlertController* actionSheet = [UIAlertController alertControllerWithTitle:@"My Alert"
                                                                        message:@"This is an alert."
                                                                 preferredStyle:UIAlertControllerStyleAlert];
@@ -792,8 +746,8 @@
         [actionSheet showFromTabBar:tbc.tabBar];
         [actionSheet release];
          */
-        UIAlertController* saveActionSheet = [UIAlertController alertControllerWithTitle:@"My Alert"
-                                                                             message:@"This is an alert."
+        UIAlertController* save = [UIAlertController alertControllerWithTitle:@"WEBIKESD SAVE"
+                                                                             message:@"Note This?"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
@@ -801,21 +755,21 @@
                                                                [self save];
                                                            }];
         
-        UIAlertAction* discardAction = [UIAlertAction actionWithTitle:@"Discard Trip" style:UIAlertActionStyleDestructive
+        UIAlertAction* discardAction = [UIAlertAction actionWithTitle:@"Discard Note." style:UIAlertActionStyleDestructive
                                                               handler:^(UIAlertAction * action) {
                                                                   [self.tripManager discardTrip];
                                                                   [self resetRecordingInProgress];
                                                               }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Discard Trip" style:UIAlertActionStyleCancel
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
                                                              handler:^(UIAlertAction * action) {
                                                                  shouldUpdateCounter = YES;
                                                              }];
         
         
-        [saveActionSheet addAction:saveAction];
-        [saveActionSheet addAction:discardAction];
-        [saveActionSheet addAction:cancelAction];
-        [self presentViewController:saveActionSheet animated:YES completion:nil];
+        [save addAction:saveAction];
+        [save addAction:discardAction];
+        [save addAction:cancelAction];
+        [self presentViewController:save animated:YES completion:nil];
          
          
     }
@@ -991,7 +945,7 @@ shouldSelectViewController:(UIViewController *)viewController
     NSString *purpose = [tripManager setPurpose:index];
     NSLog(@"setPurpose: %@", purpose);
     
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
     return [self updatePurposeWithString:purpose];
 }
@@ -1005,7 +959,9 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelPurpose
 {
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    //[self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = YES;
     recording = YES;
@@ -1017,7 +973,7 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelNote
 {
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     appDelegate = [[UIApplication sharedApplication] delegate];
 }
 

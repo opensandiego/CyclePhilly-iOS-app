@@ -161,11 +161,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSLog(@"Size of Image(bytes):%lu",(unsigned long)[imageData length]);
     self.image = thumbnail;
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark  -

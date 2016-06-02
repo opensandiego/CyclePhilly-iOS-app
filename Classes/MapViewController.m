@@ -165,6 +165,7 @@
     }
     self->mapView.showsUserLocation = YES;
     [self.locationManager startUpdatingLocation];
+    self->_locationManager.allowsBackgroundLocationUpdates = YES;
     
     if ( trip )
 	{
@@ -383,6 +384,27 @@
     //NSLog(@"loading: %@", loading);
     [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
 }
+
+/// Request authorization if needed.
+- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView {
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusNotDetermined:
+            // Ask the user for permission to use location.
+            [self.locationManager requestWhenInUseAuthorization];
+            break;
+            
+        case kCLAuthorizationStatusDenied:
+            NSLog(@"Please authorize location services for this SDSU Library under Settings > Privacy.");
+            break;
+            
+        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        case kCLAuthorizationStatusRestricted:
+            // Nothing to do.
+            break;
+    }
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated{
     UIImage *thumbnailOriginal;

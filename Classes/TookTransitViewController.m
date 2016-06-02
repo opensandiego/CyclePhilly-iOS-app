@@ -66,8 +66,8 @@
     TripDetailViewController *tripDetailViewController = [[TripDetailViewController alloc] initWithNibName:@"TripDetailViewController" bundle:nil];
     tripDetailViewController.delegate = self.delegate;
     
-    [self presentModalViewController:tripDetailViewController animated:YES];
-    
+    //[self presentModalViewController:tripDetailViewController animated:YES];
+    [self presentViewController:tripDetailViewController  animated:YES completion:nil];
 }
 
 

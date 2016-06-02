@@ -105,7 +105,7 @@
     NSMutableString *fireURLC = [[NSMutableString alloc] initWithString:kFireDomain];
     [fireURLC appendString:@"trips-completed/"];
     [fireURLC appendString:today];
-    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://blazing-torch-4795.firebaseio.com/"];
+    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://project-3189448588169164345.firebaseio.com/"];
     
     
     [ref authAnonymouslyWithCompletionBlock:^(NSError *error, FAuthData *authData) {
@@ -238,21 +238,19 @@
 	[self initUniqueIDHash];
 	
 	// initialize trip manager with the managed object context
-	TripManager *manager = [[[TripManager alloc] initWithManagedObjectContext:context] autorelease];
+	TripManager *manager = [[TripManager alloc] initWithManagedObjectContext:context];
 
 	// initialize each tab's root view controller with the trip manager	
-	RecordTripViewController *recordTripViewController = [[[RecordTripViewController alloc]
-														   initWithTripManager:manager]
-														  autorelease];
+	RecordTripViewController *recordTripViewController = [[RecordTripViewController alloc]
+														   initWithTripManager:manager];
 
 	// create tab bar items for the tabs themselves
 	UIImage *image = [UIImage imageNamed:@"tabbar_record.png"];
 	UITabBarItem *recordTab = [[UITabBarItem alloc] initWithTitle:@"Record New Trip" image:image tag:101];
 	recordTripViewController.tabBarItem = recordTab;
 	
-	SavedTripsViewController *savedTripsViewController = [[[SavedTripsViewController alloc]
-														   initWithTripManager:manager]
-														  autorelease];
+	SavedTripsViewController *savedTripsViewController = [[SavedTripsViewController alloc]
+														   initWithTripManager:manager];
 
 	savedTripsViewController.delegate = recordTripViewController;
 	
@@ -341,7 +339,7 @@
     } else {
         NSLog(@"BACKGROUNDED and sitting idle"); //set location service to startMonitoringSignificantLocationChanges
         //[appDelegate.locationManager stopUpdatingLocation];
-        [appDelegate.locationManager startMonitoringSignificantLocationChanges];
+        [appDelegate.locationManager startUpdatingLocation];
     }
 }
 
