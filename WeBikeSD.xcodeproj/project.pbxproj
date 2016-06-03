@@ -16,9 +16,6 @@
 		4688ACAB1902CF1B00A67FAF /* TookTransitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4688ACAA1902CF1B00A67FAF /* TookTransitViewController.xib */; };
 		46CA9E981B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA9E971B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m */; };
 		46D0BD5A1B5623FC008194E4 /* 20-gear2.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD501B5623FC008194E4 /* 20-gear2.png */; };
-		46D0BD611B5623FC008194E4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD571B5623FC008194E4 /* Default-568h@2x.png */; };
-		46D0BD621B5623FC008194E4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD581B5623FC008194E4 /* Default.png */; };
-		46D0BD631B5623FC008194E4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD591B5623FC008194E4 /* Default@2x.png */; };
 		6411996210683D7500C201F0 /* RecordTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6411996110683D7500C201F0 /* RecordTripViewController.m */; };
 		6411996D10683DCD00C201F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6411996C10683DCD00C201F0 /* CoreLocation.framework */; };
 		641199B2106851AA00C201F0 /* SavedTripsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641199B1106851AA00C201F0 /* SavedTripsViewController.m */; };
@@ -83,6 +80,11 @@
 		8FBCD3CB16E0E58100C11EBE /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBCD3C916E0E58100C11EBE /* NoteViewController.xib */; };
 		8FD696E61655E35800324E6E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD696E51655E35800324E6E /* MobileCoreServices.framework */; };
 		8FD696E91655E36600324E6E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD696E81655E36600324E6E /* MediaPlayer.framework */; };
+		8FF2C0D51D0124A000C1C176 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D01D0124A000C1C176 /* Default-568h@2x.png */; };
+		8FF2C0D61D0124A000C1C176 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D11D0124A000C1C176 /* Default-667h@2x.png */; };
+		8FF2C0D71D0124A000C1C176 /* Default-736@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D21D0124A000C1C176 /* Default-736@2x.png */; };
+		8FF2C0D81D0124A000C1C176 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D31D0124A000C1C176 /* Default.png */; };
+		8FF2C0D91D0124A000C1C176 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D41D0124A000C1C176 /* Default@2x.png */; };
 		9D3281DD16EE46C8004C4AF2 /* noteAssetMapGlyph.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3281D916EE46C8004C4AF2 /* noteAssetMapGlyph.png */; };
 		9D3281DE16EE46C8004C4AF2 /* noteAssetMapGlyph@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3281DA16EE46C8004C4AF2 /* noteAssetMapGlyph@2x.png */; };
 		9D3281DF16EE46C8004C4AF2 /* noteIssueMapGlyph.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3281DB16EE46C8004C4AF2 /* noteIssueMapGlyph.png */; };
@@ -208,9 +210,6 @@
 		46CA9E961B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKPointAnnotation+IndegoPointAnnotation.h"; sourceTree = "<group>"; };
 		46CA9E971B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKPointAnnotation+IndegoPointAnnotation.m"; sourceTree = "<group>"; };
 		46D0BD501B5623FC008194E4 /* 20-gear2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "20-gear2.png"; sourceTree = "<group>"; };
-		46D0BD571B5623FC008194E4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		46D0BD581B5623FC008194E4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		46D0BD591B5623FC008194E4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		6411996010683D7500C201F0 /* RecordTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordTripViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		6411996110683D7500C201F0 /* RecordTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordTripViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6411996C10683DCD00C201F0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -308,6 +307,11 @@
 		8FBCD3C916E0E58100C11EBE /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoteViewController.xib; path = Classes/NoteViewController.xib; sourceTree = "<group>"; };
 		8FD696E51655E35800324E6E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8FD696E81655E36600324E6E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		8FF2C0D01D0124A000C1C176 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8FF2C0D11D0124A000C1C176 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
+		8FF2C0D21D0124A000C1C176 /* Default-736@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736@2x.png"; sourceTree = "<group>"; };
+		8FF2C0D31D0124A000C1C176 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		8FF2C0D41D0124A000C1C176 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		9D3281D916EE46C8004C4AF2 /* noteAssetMapGlyph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noteAssetMapGlyph.png; sourceTree = "<group>"; };
 		9D3281DA16EE46C8004C4AF2 /* noteAssetMapGlyph@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noteAssetMapGlyph@2x.png"; sourceTree = "<group>"; };
 		9D3281DB16EE46C8004C4AF2 /* noteIssueMapGlyph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noteIssueMapGlyph.png; sourceTree = "<group>"; };
@@ -607,9 +611,11 @@
 				8F11F2591CFCE3F7008469C8 /* Icon@2x.png */,
 				8F11F25A1CFCE3F7008469C8 /* ItunesArtwork.png */,
 				8F11F25B1CFCE3F7008469C8 /* ItunesArtwork@2x.png */,
-				46D0BD571B5623FC008194E4 /* Default-568h@2x.png */,
-				46D0BD581B5623FC008194E4 /* Default.png */,
-				46D0BD591B5623FC008194E4 /* Default@2x.png */,
+				8FF2C0D01D0124A000C1C176 /* Default-568h@2x.png */,
+				8FF2C0D11D0124A000C1C176 /* Default-667h@2x.png */,
+				8FF2C0D21D0124A000C1C176 /* Default-736@2x.png */,
+				8FF2C0D31D0124A000C1C176 /* Default.png */,
+				8FF2C0D41D0124A000C1C176 /* Default@2x.png */,
 			);
 			path = AppIcons;
 			sourceTree = "<group>";
@@ -893,12 +899,12 @@
 				9D4647C41604EBF400A4F9CB /* redButtonHighlight@2x.png in Resources */,
 				9D4647E11604EF1200A4F9CB /* 20-gear2.png in Resources */,
 				9D4647E21604EF1200A4F9CB /* ArrowButton.png in Resources */,
-				46D0BD611B5623FC008194E4 /* Default-568h@2x.png in Resources */,
 				9D4647E31604EF1200A4F9CB /* cancel_button.png in Resources */,
 				9D4647E41604EF1200A4F9CB /* ClearArrowButton.png in Resources */,
 				9D4647E51604EF1200A4F9CB /* ClearArrowButtonDark.png in Resources */,
 				9D4647E61604EF1200A4F9CB /* ClearArrowButtonWideDark.png in Resources */,
 				9D4647E71604EF1200A4F9CB /* GreenCheckMark.png in Resources */,
+				8FF2C0D81D0124A000C1C176 /* Default.png in Resources */,
 				9D4647E81604EF1200A4F9CB /* GreenCheckMark2.png in Resources */,
 				9D4647E91604EF1200A4F9CB /* GreenCheckMark3.png in Resources */,
 				9D4647EA1604EF1200A4F9CB /* LargeCounter.png in Resources */,
@@ -909,6 +915,7 @@
 				8F11F25C1CFCE3F7008469C8 /* Icon-60.png in Resources */,
 				4688ACAB1902CF1B00A67FAF /* TookTransitViewController.xib in Resources */,
 				8F11F2621CFCE3F7008469C8 /* Icon@2x.png in Resources */,
+				8FF2C0D91D0124A000C1C176 /* Default@2x.png in Resources */,
 				9D4647EF1604EF1200A4F9CB /* OpacityMask80.png in Resources */,
 				9D4647F01604EF1200A4F9CB /* OpacityMaskWindow.png in Resources */,
 				9D4647F11604EF1200A4F9CB /* orangeslide.png in Resources */,
@@ -923,13 +930,13 @@
 				9D4647FA1604EF1200A4F9CB /* yellowslide.png in Resources */,
 				9D46480E1604EF2600A4F9CB /* commute.png in Resources */,
 				9D46480F1604EF2600A4F9CB /* commute@2x.png in Resources */,
+				8FF2C0D71D0124A000C1C176 /* Default-736@2x.png in Resources */,
 				9D4648101604EF2600A4F9CB /* errands.png in Resources */,
 				9D4648111604EF2600A4F9CB /* errands@2x.png in Resources */,
 				9D4648121604EF2600A4F9CB /* exercise.png in Resources */,
 				9D4648131604EF2600A4F9CB /* exercise@2x.png in Resources */,
 				9D4648141604EF2600A4F9CB /* failedUpload.png in Resources */,
 				9D4648151604EF2600A4F9CB /* failedUpload@2x.png in Resources */,
-				46D0BD621B5623FC008194E4 /* Default.png in Resources */,
 				9D4648161604EF2600A4F9CB /* other.png in Resources */,
 				DAA6D2D71978FF63004A83F6 /* Images.xcassets in Resources */,
 				9D4648171604EF2600A4F9CB /* other@2x.png in Resources */,
@@ -949,6 +956,7 @@
 				9D46482A1604EF2F00A4F9CB /* record-map-frame-288x141.png in Resources */,
 				9D4648341604EF3800A4F9CB /* tabbar_instructions.png in Resources */,
 				9D4648351604EF3800A4F9CB /* tabbar_instructions@2x.png in Resources */,
+				8FF2C0D51D0124A000C1C176 /* Default-568h@2x.png in Resources */,
 				9D4648361604EF3800A4F9CB /* tabbar_record.png in Resources */,
 				9D4648371604EF3800A4F9CB /* tabbar_record@2x.png in Resources */,
 				9D4648381604EF3800A4F9CB /* tabbar_settings.png in Resources */,
@@ -967,7 +975,6 @@
 				9D3CDADB16D6F7C900F423B8 /* tabbar_notes@2x.png in Resources */,
 				9D3CDADE16D7041F00F423B8 /* whiteButton.png in Resources */,
 				9D3CDADF16D7041F00F423B8 /* whiteButton@2x.png in Resources */,
-				46D0BD631B5623FC008194E4 /* Default@2x.png in Resources */,
 				9D3CDAE216D7056F00F423B8 /* whiteButtonHighlight.png in Resources */,
 				9D3CDAE316D7056F00F423B8 /* whiteButtonHighlight@2x.png in Resources */,
 				9D6D31A716D7C017007A2497 /* noteAssetPicker.png in Resources */,
@@ -976,6 +983,7 @@
 				9D6D31AA16D7C017007A2497 /* noteIssuePicker@2x.png in Resources */,
 				9D6D31AD16D7C189007A2497 /* noteBlankPicker.png in Resources */,
 				9D6D31AE16D7C189007A2497 /* noteBlankPicker@2x.png in Resources */,
+				8FF2C0D61D0124A000C1C176 /* Default-667h@2x.png in Resources */,
 				8FBCD3CB16E0E58100C11EBE /* NoteViewController.xib in Resources */,
 				9D4CB08C16EAC2500038A96F /* tripEnd.png in Resources */,
 				9D4CB08D16EAC2500038A96F /* tripEnd@2x.png in Resources */,
@@ -1041,6 +1049,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1073,6 +1082,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1122,6 +1132,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1174,6 +1185,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1225,6 +1237,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
