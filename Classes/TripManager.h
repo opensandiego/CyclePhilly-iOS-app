@@ -127,7 +127,7 @@ UITextViewDelegate>
 //- (void)promptForTripNotes;
 
 - (long)countUnSavedTrips;
-- (long)countUnSyncedTrips;
+//- (long)countUnSyncedTrips;
 - (long)countZeroDistanceTrips;
 
 - (BOOL)loadMostRecentUnSavedTrip;

@@ -1006,6 +1006,7 @@
 }
 
 // count trips that have been saved but not uploaded
+/*
 - (long)countUnSyncedTrips
 {
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1026,7 +1027,8 @@
 	
 	return count;
 }
-
+*/
+ 
 // count trips that have been saved but have zero distance
 - (long)countZeroDistanceTrips
 {

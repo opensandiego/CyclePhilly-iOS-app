@@ -106,25 +106,6 @@
     return appDelegate.locationManager;
 }
 
-/// Request authorization if needed.
-- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView {
-    switch ([CLLocationManager authorizationStatus]) {
-        case kCLAuthorizationStatusNotDetermined:
-            // Ask the user for permission to use location.
-            [self.locationManager requestWhenInUseAuthorization];
-            break;
-            
-        case kCLAuthorizationStatusDenied:
-            NSLog(@"Please authorize location services for this SDSU Library under Settings > Privacy.");
-            break;
-            
-        case kCLAuthorizationStatusAuthorizedAlways:
-        case kCLAuthorizationStatusAuthorizedWhenInUse:
-        case kCLAuthorizationStatusRestricted:
-            // Nothing to do.
-            break;
-    }
-}
 
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -317,6 +298,41 @@
     [self hasRecordingBeenInterrupted];
     
     NSLog(@"save");
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Enter your title here", @"" ) message:NSLocalizedString( @"This app requirs location services to track your routes.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Cancel", @"" ) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"" ) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                    UIApplicationOpenSettingsURLString]];
+    }];
+    
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusNotDetermined:
+            // Ask the user for permission to use location.
+            [self.locationManager requestWhenInUseAuthorization];
+            break;
+            
+        case kCLAuthorizationStatusDenied:
+            NSLog(@"Please authorize location services for this SDSU Library under Settings > Privacy.");
+
+            [alertController addAction:cancelAction];
+            [alertController addAction:settingsAction];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            break;
+            
+        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        case kCLAuthorizationStatusRestricted:
+            // Nothing to do.
+            break;
+    }
+    
+    
+    
+    
+    
 }
 
 

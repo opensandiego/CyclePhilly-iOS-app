@@ -191,6 +191,7 @@
     [self refreshTableView];
     
     // check for countZeroDistanceTrips
+    /*Taking this part out... seems pointless (6/4/16 tr)
     if ( [tripManager countZeroDistanceTrips] )
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:kZeroDistanceTitle
@@ -218,6 +219,7 @@
     else
         NSLog(@"no zero distance or unsynced trips found");
     
+    */ 
     // no trip selection by default
     selectedTrip = nil;
     
@@ -355,9 +357,10 @@
     {
         cell = [[TripCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
         cell.detailTextLabel.numberOfLines = 2;
+        /*REMOVING SYNC SECTION OF TABLEVIEW.  IT SEEMS POINTLESS (6/4/16 tr)
         if ( [reuseIdentifier isEqual: kCellReuseIdentifierCheck] )
         {
-            /*
+            
              // add check mark
              UIImage		*image		= [UIImage imageNamed:@"GreenCheckMark2.png"];
              UIImageView *imageView	= [[UIImageView alloc] initWithImage:image];
@@ -365,7 +368,7 @@
              imageView.tag	= kTagImage;
              //[cell.contentView addSubview:imageView];
              cell.accessoryView = imageView;
-             */
+            
         }
         else if ( [reuseIdentifier isEqual: kCellReuseIdentifierExclamation] )
         {
@@ -396,6 +399,7 @@
                 [cell.contentView addSubview:inProgressIndicator];
             }
         }
+         */
     }
     else
         [[cell.contentView viewWithTag:kTagImage] setNeedsDisplay];
