@@ -38,8 +38,6 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>WeBikeSD shares your bike routes with the City of San Diego so that city planners can better prepare the roads for bicycles.</string>
 	<key>NSMainNibFile</key>
