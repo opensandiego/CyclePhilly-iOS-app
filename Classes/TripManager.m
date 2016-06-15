@@ -59,8 +59,8 @@
 
 // use this epsilon for both real-time and post-processing distance calculations
 
-//Tyler changed kEpsilonAccuracy from 100.0 to ...
-#define kEpsilonAccuracy		100.0
+//Tyler changed kEpsilonAccuracy from 100.0 to 10
+#define kEpsilonAccuracy		10.0
 
 // use these epsilons for real-time distance calculation only
 #define kEpsilonTimeInterval	10.0
@@ -297,10 +297,11 @@
     [coord setSpeed:[NSNumber numberWithDouble:location.speed]];
     [coord setHAccuracy:[NSNumber numberWithDouble:location.horizontalAccuracy]];
     [coord setVAccuracy:[NSNumber numberWithDouble:location.verticalAccuracy]];
-    
+   
+
     [trip addCoordsObject:coord];
-    //[coord setTrip:trip];
-    
+    [coord setTrip:trip];
+
     // check to see if the coords array is empty
     if ( [coords count] == 0 )
     {
@@ -322,8 +323,8 @@
         //NSLog(@"duration = %.0fs", duration);
         [trip setDuration:[NSNumber numberWithDouble:duration]];
         
-        /*
-         Coord *prev = [coords objectAtIndex:0];
+        
+         //Coord *prev = [coords objectAtIndex:0];
          CLLocation *prevLoc = [[CLLocation alloc] initWithLatitude:[prev.latitude doubleValue]
          longitude:[prev.longitude doubleValue]];
          CLLocationDistance	deltaDist = [location getDistanceFrom:prevLoc];
@@ -356,7 +357,7 @@
          }
          else
          NSLog(@"WARNING accuracy exceeds epsilon: %f", location.horizontalAccuracy);
-         */
+        
     }
     
     NSError *error;
@@ -366,7 +367,7 @@
     }
     
     [coords insertObject:coord atIndex:0];
-    //NSLog(@"# coords = %d", [coords count]);
+    NSLog(@"# coords = %d", [coords count]);
     
     return distance;
 }

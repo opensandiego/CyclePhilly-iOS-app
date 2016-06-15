@@ -384,7 +384,7 @@
     //NSLog(@"loading: %@", loading);
     [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Enter your title here", @"" ) message:NSLocalizedString( @"This app requirs location services to track your routes.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Enter your title here", @"" ) message:NSLocalizedString( @"This app requires location services to track your routes.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Cancel", @"" ) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"" ) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

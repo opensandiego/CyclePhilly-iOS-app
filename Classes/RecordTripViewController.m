@@ -299,7 +299,7 @@
     
     NSLog(@"save");
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Please turn on location services.", @"" ) message:NSLocalizedString( @"This app requirs location services to track your routes.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Please turn on location services.", @"" ) message:NSLocalizedString( @"This app requires location services to track your routes.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Cancel", @"" ) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"" ) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -322,8 +322,11 @@
             [self presentViewController:alertController animated:YES completion:nil];
             break;
             
-        case kCLAuthorizationStatusAuthorizedAlways:
         case kCLAuthorizationStatusAuthorizedWhenInUse:
+        kCLAuthorizationStatusAuthorizedAlways:
+            NSLog(@"Okay.  Location will be tracked.");
+        case kCLAuthorizationStatusAuthorizedAlways:
+            break;
         case kCLAuthorizationStatusRestricted:
             // Nothing to do.
             break;
