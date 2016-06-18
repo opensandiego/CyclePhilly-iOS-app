@@ -327,7 +327,7 @@
          //Coord *prev = [coords objectAtIndex:0];
          CLLocation *prevLoc = [[CLLocation alloc] initWithLatitude:[prev.latitude doubleValue]
          longitude:[prev.longitude doubleValue]];
-         CLLocationDistance	deltaDist = [location getDistanceFrom:prevLoc];
+         CLLocationDistance	deltaDist = [location distanceFromLocation:prevLoc];
          NSTimeInterval		deltaTime = [location.timestamp timeIntervalSinceDate:prev.recorded];
          
          NSLog(@"deltaDist = %f", deltaDist);
@@ -367,7 +367,7 @@
     }
     
     [coords insertObject:coord atIndex:0];
-    NSLog(@"# coords = %d", [coords count]);
+    NSLog(@"# coords = %lu", (unsigned long)[coords count]);
     
     return distance;
 }

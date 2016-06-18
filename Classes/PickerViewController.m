@@ -62,7 +62,7 @@
 
 @implementation PickerViewController
 
-@synthesize customPickerView, customPickerDataSource, delegate, description;
+@synthesize customPickerView, customPickerDataSource, delegate, descriptionView;
 @synthesize descriptionText;
 
 
@@ -309,13 +309,13 @@
     //[self.navigationController setNavigationBarHidden:NO animated:YES];
     
     //description = [[UITextView alloc] initWithFrame:CGRectMake( 18.0, 280.0, 284.0, 130.0 )];
-    description = [[UITextView alloc] initWithFrame:CGRectMake( 18.0, 314.0, 284.0, 120.0 )];
-    description.editable = NO;
-    description.backgroundColor = [UIColor clearColor];
-    description.textColor = [UIColor whiteColor];
+    descriptionView = [[UITextView alloc] initWithFrame:CGRectMake( 18.0, 314.0, 284.0, 120.0 )];
+    descriptionView.editable = NO;
+    descriptionView.backgroundColor = [UIColor clearColor];
+    descriptionView.textColor = [UIColor whiteColor];
     
-    description.font = [UIFont fontWithName:@"Arial" size:16];
-    [self.view addSubview:description];
+    descriptionView.font = [UIFont fontWithName:@"Arial" size:16];
+    [self.view addSubview:descriptionView];
 }
 
 
@@ -351,28 +351,28 @@
     if (pickerCategory == 0) {
         switch (row) {
             case 0:
-                description.text = kDescCommute;
+                descriptionView.text = kDescCommute;
                 break;
             case 1:
-                description.text = kDescSchool;
+                descriptionView.text = kDescSchool;
                 break;
             case 2:
-                description.text = kDescWork;
+                descriptionView.text = kDescWork;
                 break;
             case 3:
-                description.text = kDescExercise;
+                descriptionView.text = kDescExercise;
                 break;
             case 4:
-                description.text = kDescSocial;
+                descriptionView.text = kDescSocial;
                 break;
             case 5:
-                description.text = kDescShopping;
+                descriptionView.text = kDescShopping;
                 break;
             case 6:
-                description.text = kDescErrand;
+                descriptionView.text = kDescErrand;
                 break;
             default:
-                description.text = kDescOther;
+                descriptionView.text = kDescOther;
                 break;
         }
     }
@@ -380,91 +380,91 @@
     else if (pickerCategory == 1){
         switch (row) {
             case 0:
-                description.text = kIssueDescPavementIssue;
+                descriptionView.text = kIssueDescPavementIssue;
                 break;
             case 1:
-                description.text = kIssueDescTrafficSignal;
+                descriptionView.text = kIssueDescTrafficSignal;
                 break;
             case 2:
-                description.text = kIssueDescEnforcement;
+                descriptionView.text = kIssueDescEnforcement;
                 break;
             case 3:
-                description.text = kIssueDescNeedParking;
+                descriptionView.text = kIssueDescNeedParking;
                 break;
             case 4:
-                description.text = kIssueDescBikeLaneIssue;
+                descriptionView.text = kIssueDescBikeLaneIssue;
                 break;
             default:
-                description.text = kIssueDescNoteThisSpot;
+                descriptionView.text = kIssueDescNoteThisSpot;
                 break;
         }
     }
     else if (pickerCategory == 2){
         switch (row) {
             case 0:
-                description.text = kAssetDescBikeParking;
+                descriptionView.text = kAssetDescBikeParking;
                 break;
             case 1:
-                description.text = kAssetDescBikeShops;
+                descriptionView.text = kAssetDescBikeShops;
                 break;
             case 2:
-                description.text = kAssetDescPublicRestrooms;
+                descriptionView.text = kAssetDescPublicRestrooms;
                 break;
             case 3:
-                description.text = kAssetDescSecretPassage;
+                descriptionView.text = kAssetDescSecretPassage;
                 break;
             case 4:
-                description.text = kAssetDescWaterFountains;
+                descriptionView.text = kAssetDescWaterFountains;
                 break;
             default:
-                description.text = kAssetDescNoteThisSpot;
+                descriptionView.text = kAssetDescNoteThisSpot;
                 break;
         }
     }
     else if (pickerCategory == 3){
         switch (row) {
             case 6:
-                description.text = kDescNoteThis;
+                descriptionView.text = kDescNoteThis;
                 break;
                 
             case 0:
-                description.text = kAssetDescNoteThisSpot;
+                descriptionView.text = kAssetDescNoteThisSpot;
                 break;
             case 1:
-                description.text = kAssetDescWaterFountains;
+                descriptionView.text = kAssetDescWaterFountains;
                 break;
             case 2:
-                description.text = kAssetDescSecretPassage;
+                descriptionView.text = kAssetDescSecretPassage;
                 break;
             case 3:
-                description.text = kAssetDescPublicRestrooms;
+                descriptionView.text = kAssetDescPublicRestrooms;
                 break;
             case 4:
-                description.text = kAssetDescBikeShops;
+                descriptionView.text = kAssetDescBikeShops;
                 break;
             case 5:
-                description.text = kAssetDescBikeParking;
+                descriptionView.text = kAssetDescBikeParking;
                 break;
                 
                 
                 
             case 7:
-                description.text = kIssueDescPavementIssue;
+                descriptionView.text = kIssueDescPavementIssue;
                 break;
             case 8:
-                description.text = kIssueDescTrafficSignal;
+                descriptionView.text = kIssueDescTrafficSignal;
                 break;
             case 9:
-                description.text = kIssueDescEnforcement;
+                descriptionView.text = kIssueDescEnforcement;
                 break;
             case 10:
-                description.text = kIssueDescNeedParking;
+                descriptionView.text = kIssueDescNeedParking;
                 break;
             case 11:
-                description.text = kIssueDescBikeLaneIssue;
+                descriptionView.text = kIssueDescBikeLaneIssue;
                 break;
             case 12:
-                description.text = kIssueDescNoteThisSpot;
+                descriptionView.text = kIssueDescNoteThisSpot;
                 break;
                 
         }

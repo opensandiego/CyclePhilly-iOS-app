@@ -76,8 +76,6 @@
 		8F9C086A16DC947A003EA308 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086916DC947A003EA308 /* User.m */; };
 		8F9C086D16DC947A003EA308 /* Coord.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086C16DC947A003EA308 /* Coord.m */; };
 		8FA0AD9416BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0AD9116BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodeld */; };
-		8FA787AC1D052AB100391F00 /* appStoreIcon512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA787AA1D052AB100391F00 /* appStoreIcon512.png */; };
-		8FA787AD1D052AB100391F00 /* appStoreIcon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA787AB1D052AB100391F00 /* appStoreIcon1024.png */; };
 		8FA787B01D052B1600391F00 /* appStoreIcon512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA787AE1D052B1600391F00 /* appStoreIcon512.png */; };
 		8FA787B11D052B1600391F00 /* appStoreIcon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA787AF1D052B1600391F00 /* appStoreIcon1024.png */; };
 		8FA7D0D31CFE8A690052F6F8 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA7D0D21CFE8A690052F6F8 /* ExternalAccessory.framework */; };
@@ -820,7 +818,6 @@
 				9D4647BF1604EBF400A4F9CB /* greyButton.png in Resources */,
 				9D4647C01604EBF400A4F9CB /* greyButton@2x.png in Resources */,
 				9D4647C11604EBF400A4F9CB /* redButton.png in Resources */,
-				8FA787AC1D052AB100391F00 /* appStoreIcon512.png in Resources */,
 				9D4647C21604EBF400A4F9CB /* redButton@2x.png in Resources */,
 				8F11F2611CFCE3F7008469C8 /* Icon.png in Resources */,
 				9D4647C31604EBF400A4F9CB /* redButtonHighlight.png in Resources */,
@@ -881,7 +878,6 @@
 				9D3CDAE216D7056F00F423B8 /* whiteButtonHighlight.png in Resources */,
 				9D3CDAE316D7056F00F423B8 /* whiteButtonHighlight@2x.png in Resources */,
 				9D6D31A716D7C017007A2497 /* noteAssetPicker.png in Resources */,
-				8FA787AD1D052AB100391F00 /* appStoreIcon1024.png in Resources */,
 				9D6D31A816D7C017007A2497 /* noteAssetPicker@2x.png in Resources */,
 				9D6D31A916D7C017007A2497 /* noteIssuePicker.png in Resources */,
 				9D6D31AA16D7C017007A2497 /* noteIssuePicker@2x.png in Resources */,

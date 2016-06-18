@@ -60,7 +60,7 @@
     UIPickerView			*customPickerView;
     CustomPickerDataSource	*customPickerDataSource;
     
-    UITextView				*description;
+    UITextView				*descriptionView;
     NSInteger pickerCategory;
     NSInteger pickedNotedType;
     IBOutlet UINavigationBar *navBarItself;
@@ -73,7 +73,7 @@
 @property (nonatomic, retain) IBOutlet UIPickerView *customPickerView;
 @property (nonatomic, retain) CustomPickerDataSource *customPickerDataSource;
 
-@property (nonatomic, retain) UITextView *description;
+@property (nonatomic, retain) UITextView *descriptionView;
 
 @property (nonatomic, retain) IBOutlet UILabel *descriptionText;
 
