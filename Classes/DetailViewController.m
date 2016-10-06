@@ -206,13 +206,17 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
         [self presentViewController:picker animated:YES completion:nil];
 //        [picker release];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Error accessing media"
-                              message:@"Device doesn’t support that media source."
-                              delegate:nil
-                              cancelButtonTitle:@"Drat!"
-                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertController* alert = [UIAlertController
+                                    alertControllerWithTitle:@"Error accessing media"
+                                    message:@"Device doesn’t support that media source."
+                                    preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction
+                                        actionWithTitle:@"Drat!"
+                                        style:UIAlertActionStyleCancel
+                                        handler:^(UIAlertAction * action) {}];
+      
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
