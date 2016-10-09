@@ -81,7 +81,11 @@
 	//[UIApplication sharedApplication].idleTimerDisabled = YES;
 	
 	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+<<<<<<< HEAD
     
+=======
+	
+>>>>>>> master
     NSManagedObjectContext *context = [self managedObjectContext];
     if (!context) {
         // Handle the error.
@@ -91,7 +95,12 @@
 	[self initUniqueIDHash];
 	
 	// initialize trip manager with the managed object context
+<<<<<<< HEAD
 	TripManager *tripManager = [[[TripManager alloc] initWithManagedObjectContext:context] autorelease];
+=======
+	TripManager *tripManager = [[TripManager alloc] initWithManagedObjectContext:context];
+    NoteManager *noteManager = [[NoteManager alloc] initWithManagedObjectContext:context];
+>>>>>>> master
 	
     //Anon Firebase User
     NSDateFormatter *formatter;
@@ -102,7 +111,11 @@
     NSMutableString *fireURLC = [[[NSMutableString alloc] initWithString:kFireDomain] autorelease];
     [fireURLC appendString:@"trips-completed/"];
     [fireURLC appendString:today];
+<<<<<<< HEAD
     Firebase *ref = [[[Firebase alloc] initWithUrl:@"https://cyclephilly.firebaseio.com"] autorelease];
+=======
+    Firebase *ref = [[Firebase alloc] initWithUrl:@"https://project-3189448588169164345.firebaseio.com/"];
+>>>>>>> master
     
     
     [ref authAnonymouslyWithCompletionBlock:^(NSError *error, FAuthData *authData) {
@@ -156,6 +169,76 @@
 	[window makeKeyAndVisible];	
 }
 
+<<<<<<< HEAD
+=======
+/*
+- (void)applicationDidFinishLaunching:(UIApplication *)application
+{
+	// disable screen lock
+	[UIApplication sharedApplication].idleTimerDisabled = YES;
+	
+	[UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
+
+    NSManagedObjectContext *context = [self managedObjectContext];
+    if (!context) {
+        // Handle the error.
+    }
+	
+	// init our unique ID hash
+	[self initUniqueIDHash];
+	
+	// initialize trip manager with the managed object context
+	TripManager *manager = [[TripManager alloc] initWithManagedObjectContext:context];
+
+	// initialize each tab's root view controller with the trip manager	
+	RecordTripViewController *recordTripViewController = [[RecordTripViewController alloc]
+														   initWithTripManager:manager];
+
+	// create tab bar items for the tabs themselves
+	UIImage *image = [UIImage imageNamed:@"tabbar_record.png"];
+	UITabBarItem *recordTab = [[UITabBarItem alloc] initWithTitle:@"Record New Trip" image:image tag:101];
+	recordTripViewController.tabBarItem = recordTab;
+	
+	SavedTripsViewController *savedTripsViewController = [[SavedTripsViewController alloc]
+														   initWithTripManager:manager];
+
+	savedTripsViewController.delegate = recordTripViewController;
+	
+	image = [UIImage imageNamed:@"tabbar_view.png"];
+	UITabBarItem *viewTab = [[UITabBarItem alloc] initWithTitle:@"View Saved Trips" image:image tag:102];
+	savedTripsViewController.tabBarItem = viewTab;
+	
+	// create a navigation controller stack for each tab, set delegates to respective root view controller
+	UINavigationController *recordTripNavController = [[UINavigationController alloc]
+													   initWithRootViewController:recordTripViewController];
+	recordTripNavController.delegate = recordTripViewController;
+	recordTripNavController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+
+	UINavigationController *savedTripsNavController = [[UINavigationController alloc]
+													   initWithRootViewController:savedTripsViewController];
+	savedTripsNavController.delegate = savedTripsViewController;
+	savedTripsNavController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+
+	// create a tab bar controller and init with nav controllers above
+	tabBarController = [[UITabBarController alloc] initWithNibName:@"MainWindow.xib" bundle:nil];
+	tabBarController.viewControllers = [NSArray arrayWithObjects:recordTripNavController, 
+																 savedTripsNavController, 
+																 nil];
+
+	// set delegate to prevent changing tabs when locked
+	tabBarController.delegate = recordTripViewController;
+	
+	// set parent view so we can apply opacity mask to it
+	recordTripViewController.parentView = tabBarController.view;
+	//recordTripViewController.parentView = tabBarController.tabBar;
+
+	// Add the tab bar controller's current view as a subview of the window
+    [window addSubview:tabBarController.view];
+	[window makeKeyAndVisible];	
+}
+*/
+
+>>>>>>> master
 - (void)initUniqueIDHash
 {
     self.uniqueIDHash = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
@@ -182,6 +265,7 @@
     }
 }
 
+/*
 - (void)applicationDidEnterBackground:(UIApplication *) application
 {
     CycleAtlantaAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
@@ -190,8 +274,8 @@
         [appDelegate.locationManager startUpdatingLocation];
     } else {
         NSLog(@"BACKGROUNDED and sitting idle"); //set location service to startMonitoringSignificantLocationChanges
-        [appDelegate.locationManager stopUpdatingLocation];
-        //[appDelegate.locationManager startMonitoringSignificantLocationChanges];
+        //[appDelegate.locationManager stopUpdatingLocation];
+        [appDelegate.locationManager startUpdatingLocation];
     }
 }
 
@@ -202,7 +286,7 @@
     //[appDelegate.locationManager stoptMonitoringSignificantLocationChanges];
     [appDelegate.locationManager startUpdatingLocation];
 }
-
+*/
 
 #pragma mark -
 #pragma mark Core Data stack
@@ -230,6 +314,18 @@
  Returns the managed object model for the application.
  If the model doesn't already exist, it is created by merging all of the models found in the application bundle.
  */
+<<<<<<< HEAD
+=======
+- (NSManagedObjectModel *)managedObjectModel {
+	
+    if (managedObjectModel != nil) {
+        return managedObjectModel;
+    }
+    managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    return managedObjectModel;
+}
+/*
+>>>>>>> master
 
 - (NSManagedObjectModel *)managedObjectModel {
     
@@ -243,7 +339,7 @@
     
     return managedObjectModel;
 }
-
+*/
 
 /**
  Returns the persistent store coordinator for the application.
@@ -299,22 +395,10 @@
 #pragma mark Memory management
 
 - (void)dealloc {
-    self.window = nil;
-    self.tabBarController = nil;
-    self.uniqueIDHash = nil;
     self.isRecording = nil;
-    self.locationManager = nil;
     
-    [tabBarController release];
-    [uniqueIDHash release];
-    [locationManager release];
-	[window release];
     
-    [managedObjectContext release];
-    [managedObjectModel release];
-    [persistentStoreCoordinator release];
     
-	[super dealloc];
 }
 
 

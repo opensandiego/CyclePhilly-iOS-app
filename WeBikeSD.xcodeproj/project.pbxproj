@@ -13,6 +13,7 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D801B30F44B63D00FB423F /* CoreData.framework */; };
 		4688ACA81902B8EF00A67FAF /* TookTransitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4688ACA61902B8EF00A67FAF /* TookTransitViewController.m */; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		46CA9E981B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA9E971B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m */; };
 		46CA9EB21B52C9E70058076F /* IndegoStationStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA9EB11B52C9E70058076F /* IndegoStationStrings.m */; };
 		46D0BD461B562294008194E4 /* indegoActive.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD3C1B562294008194E4 /* indegoActive.png */; };
@@ -35,6 +36,11 @@
 		46D0BD611B5623FC008194E4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD571B5623FC008194E4 /* Default-568h@2x.png */; };
 		46D0BD621B5623FC008194E4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD581B5623FC008194E4 /* Default.png */; };
 		46D0BD631B5623FC008194E4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD591B5623FC008194E4 /* Default@2x.png */; };
+=======
+		4688ACAB1902CF1B00A67FAF /* TookTransitViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4688ACAA1902CF1B00A67FAF /* TookTransitViewController.xib */; };
+		46CA9E981B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 46CA9E971B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m */; };
+		46D0BD5A1B5623FC008194E4 /* 20-gear2.png in Resources */ = {isa = PBXBuildFile; fileRef = 46D0BD501B5623FC008194E4 /* 20-gear2.png */; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		6411996210683D7500C201F0 /* RecordTripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6411996110683D7500C201F0 /* RecordTripViewController.m */; };
 		6411996D10683DCD00C201F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6411996C10683DCD00C201F0 /* CoreLocation.framework */; };
 		641199B2106851AA00C201F0 /* SavedTripsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 641199B1106851AA00C201F0 /* SavedTripsViewController.m */; };
@@ -64,9 +70,24 @@
 		64F823C6106AB42B001413F8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F823C5106AB42B001413F8 /* Security.framework */; };
 		64F823E1106AC151001413F8 /* SaveRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F823E0106AC151001413F8 /* SaveRequest.m */; };
 		64F824E6106AFFA4001413F8 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F824E5106AFFA4001413F8 /* PersonalInfoViewController.m */; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		8F0983841C335B9800BF41D1 /* WeBikeSDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0983831C335B9800BF41D1 /* WeBikeSDAppDelegate.m */; };
+=======
+		64FCC5B411352242000FA1B6 /* PersonalInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64FCC5B311352242000FA1B6 /* PersonalInfo.xib */; };
+		8F11F2521CFCE3C2008469C8 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2511CFCE3C1008469C8 /* AppIcon.appiconset */; };
+		8F11F25C1CFCE3F7008469C8 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2531CFCE3F7008469C8 /* Icon-60.png */; };
+		8F11F25D1CFCE3F7008469C8 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2541CFCE3F7008469C8 /* Icon-72.png */; };
+		8F11F25E1CFCE3F7008469C8 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2551CFCE3F7008469C8 /* Icon-72@2x.png */; };
+		8F11F25F1CFCE3F7008469C8 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2561CFCE3F7008469C8 /* Icon-Small-50.png */; };
+		8F11F2601CFCE3F7008469C8 /* Icon-Small-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2571CFCE3F7008469C8 /* Icon-Small-50@2x.png */; };
+		8F11F2611CFCE3F7008469C8 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2581CFCE3F7008469C8 /* Icon.png */; };
+		8F11F2621CFCE3F7008469C8 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F2591CFCE3F7008469C8 /* Icon@2x.png */; };
+		8F11F2631CFCE3F7008469C8 /* ItunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F25A1CFCE3F7008469C8 /* ItunesArtwork.png */; };
+		8F11F2641CFCE3F7008469C8 /* ItunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F11F25B1CFCE3F7008469C8 /* ItunesArtwork@2x.png */; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		8F1B1D3F164B94C60022B776 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F1B1D3E164B94C60022B776 /* DetailViewController.m */; };
 		8F20B0AC16F0F08A00031712 /* TripDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F20B0AA16F0F08A00031712 /* TripDetailViewController.m */; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		8F316F671703161E0087529E /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8F316F661703161E0087529E /* Model.xcmappingmodel */; };
 		8F3B0EEE1C325270004EEEDF /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3B0EED1C325270004EEEDF /* NoteViewController.m */; };
 		8F3B0EF11C3252AE004EEEDF /* NoteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3B0EF01C3252AE004EEEDF /* NoteManager.m */; };
@@ -74,14 +95,36 @@
 		8F5E60661602CBE000D8F85D /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5E60631602CBE000D8F85D /* NSString+MD5Addition.m */; };
 		8F5E60671602CBE000D8F85D /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5E60651602CBE000D8F85D /* UIDevice+IdentifierAddition.m */; };
 		8F986FE71C334CE200ABBD0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F986FE61C334CE200ABBD0D /* Main.storyboard */; };
+=======
+		8F20B0AD16F0F08A00031712 /* TripDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F20B0AB16F0F08A00031712 /* TripDetailViewController.xib */; };
+		8F316F671703161E0087529E /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 8F316F661703161E0087529E /* Model.xcmappingmodel */; };
+		8F3B0EF11C3252AE004EEEDF /* NoteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3B0EF01C3252AE004EEEDF /* NoteManager.m */; };
+		8F5E60661602CBE000D8F85D /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5E60631602CBE000D8F85D /* NSString+MD5Addition.m */; };
+		8F5E60671602CBE000D8F85D /* UIDevice+IdentifierAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5E60651602CBE000D8F85D /* UIDevice+IdentifierAddition.m */; };
+		8F6B64D81D0647FD00B81341 /* Deprecated Images in Resources */ = {isa = PBXBuildFile; fileRef = 8F6B64D71D0647FD00B81341 /* Deprecated Images */; };
+		8F6F68231C39EAC100059630 /* NoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6F68201C39EAC100059630 /* NoteViewController.m */; };
+		8F6F68241C39EAC100059630 /* SavedNotesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F6F68221C39EAC100059630 /* SavedNotesViewController.m */; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		8F9C086416DC9479003EA308 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086316DC9479003EA308 /* Note.m */; };
 		8F9C086716DC9479003EA308 /* Trip.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086616DC9479003EA308 /* Trip.m */; };
 		8F9C086A16DC947A003EA308 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086916DC947A003EA308 /* User.m */; };
 		8F9C086D16DC947A003EA308 /* Coord.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9C086C16DC947A003EA308 /* Coord.m */; };
 		8FA0AD9416BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0AD9116BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodeld */; };
+		8FA787B01D052B1600391F00 /* appStoreIcon512.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA787AE1D052B1600391F00 /* appStoreIcon512.png */; };
+		8FA787B11D052B1600391F00 /* appStoreIcon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA787AF1D052B1600391F00 /* appStoreIcon1024.png */; };
+		8FA7D0D31CFE8A690052F6F8 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FA7D0D21CFE8A690052F6F8 /* ExternalAccessory.framework */; };
 		8FAD930516F189EE00082B6F /* UIImageViewResizable.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FAD930416F189EE00082B6F /* UIImageViewResizable.m */; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+		8FBCD3CB16E0E58100C11EBE /* NoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FBCD3C916E0E58100C11EBE /* NoteViewController.xib */; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		8FD696E61655E35800324E6E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD696E51655E35800324E6E /* MobileCoreServices.framework */; };
 		8FD696E91655E36600324E6E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD696E81655E36600324E6E /* MediaPlayer.framework */; };
+		8FF2C0D51D0124A000C1C176 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D01D0124A000C1C176 /* Default-568h@2x.png */; };
+		8FF2C0D61D0124A000C1C176 /* Default-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D11D0124A000C1C176 /* Default-667h@2x.png */; };
+		8FF2C0D71D0124A000C1C176 /* Default-736@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D21D0124A000C1C176 /* Default-736@2x.png */; };
+		8FF2C0D81D0124A000C1C176 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D31D0124A000C1C176 /* Default.png */; };
+		8FF2C0D91D0124A000C1C176 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF2C0D41D0124A000C1C176 /* Default@2x.png */; };
 		9D3281DD16EE46C8004C4AF2 /* noteAssetMapGlyph.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3281D916EE46C8004C4AF2 /* noteAssetMapGlyph.png */; };
 		9D3281DE16EE46C8004C4AF2 /* noteAssetMapGlyph@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3281DA16EE46C8004C4AF2 /* noteAssetMapGlyph@2x.png */; };
 		9D3281DF16EE46C8004C4AF2 /* noteIssueMapGlyph.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D3281DB16EE46C8004C4AF2 /* noteIssueMapGlyph.png */; };
@@ -110,31 +153,6 @@
 		9D4647C21604EBF400A4F9CB /* redButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647B41604EBF400A4F9CB /* redButton@2x.png */; };
 		9D4647C31604EBF400A4F9CB /* redButtonHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647B51604EBF400A4F9CB /* redButtonHighlight.png */; };
 		9D4647C41604EBF400A4F9CB /* redButtonHighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647B61604EBF400A4F9CB /* redButtonHighlight@2x.png */; };
-		9D4647E11604EF1200A4F9CB /* 20-gear2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647C71604EF1200A4F9CB /* 20-gear2.png */; };
-		9D4647E21604EF1200A4F9CB /* ArrowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647C81604EF1200A4F9CB /* ArrowButton.png */; };
-		9D4647E31604EF1200A4F9CB /* cancel_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647C91604EF1200A4F9CB /* cancel_button.png */; };
-		9D4647E41604EF1200A4F9CB /* ClearArrowButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647CA1604EF1200A4F9CB /* ClearArrowButton.png */; };
-		9D4647E51604EF1200A4F9CB /* ClearArrowButtonDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647CB1604EF1200A4F9CB /* ClearArrowButtonDark.png */; };
-		9D4647E61604EF1200A4F9CB /* ClearArrowButtonWideDark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647CC1604EF1200A4F9CB /* ClearArrowButtonWideDark.png */; };
-		9D4647E71604EF1200A4F9CB /* GreenCheckMark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647CD1604EF1200A4F9CB /* GreenCheckMark.png */; };
-		9D4647E81604EF1200A4F9CB /* GreenCheckMark2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647CE1604EF1200A4F9CB /* GreenCheckMark2.png */; };
-		9D4647E91604EF1200A4F9CB /* GreenCheckMark3.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647CF1604EF1200A4F9CB /* GreenCheckMark3.png */; };
-		9D4647EA1604EF1200A4F9CB /* LargeCounter.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D01604EF1200A4F9CB /* LargeCounter.png */; };
-		9D4647EB1604EF1200A4F9CB /* lock_button1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D11604EF1200A4F9CB /* lock_button1.png */; };
-		9D4647EC1604EF1200A4F9CB /* lock_button2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D21604EF1200A4F9CB /* lock_button2.png */; };
-		9D4647ED1604EF1200A4F9CB /* lock_button_fpo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D31604EF1200A4F9CB /* lock_button_fpo.png */; };
-		9D4647EE1604EF1200A4F9CB /* LockIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D41604EF1200A4F9CB /* LockIcon.png */; };
-		9D4647EF1604EF1200A4F9CB /* OpacityMask80.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D51604EF1200A4F9CB /* OpacityMask80.png */; };
-		9D4647F01604EF1200A4F9CB /* OpacityMaskWindow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D61604EF1200A4F9CB /* OpacityMaskWindow.png */; };
-		9D4647F11604EF1200A4F9CB /* orangeslide.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D71604EF1200A4F9CB /* orangeslide.png */; };
-		9D4647F21604EF1200A4F9CB /* save_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D81604EF1200A4F9CB /* save_button.png */; };
-		9D4647F31604EF1200A4F9CB /* save_button_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647D91604EF1200A4F9CB /* save_button_selected.png */; };
-		9D4647F41604EF1200A4F9CB /* slider_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647DA1604EF1200A4F9CB /* slider_ball.png */; };
-		9D4647F51604EF1200A4F9CB /* SlideToUnlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647DB1604EF1200A4F9CB /* SlideToUnlock.png */; };
-		9D4647F61604EF1200A4F9CB /* start_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647DC1604EF1200A4F9CB /* start_button.png */; };
-		9D4647F71604EF1200A4F9CB /* start_button_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647DD1604EF1200A4F9CB /* start_button_selected.png */; };
-		9D4647F81604EF1200A4F9CB /* UnlockIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647DE1604EF1200A4F9CB /* UnlockIcon.png */; };
-		9D4647FA1604EF1200A4F9CB /* yellowslide.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647E01604EF1200A4F9CB /* yellowslide.png */; };
 		9D46480E1604EF2600A4F9CB /* commute.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647FC1604EF2600A4F9CB /* commute.png */; };
 		9D46480F1604EF2600A4F9CB /* commute@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647FD1604EF2600A4F9CB /* commute@2x.png */; };
 		9D4648101604EF2600A4F9CB /* errands.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4647FE1604EF2600A4F9CB /* errands.png */; };
@@ -166,8 +184,11 @@
 		9D4648391604EF3800A4F9CB /* tabbar_settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4648311604EF3800A4F9CB /* tabbar_settings@2x.png */; };
 		9D46483A1604EF3800A4F9CB /* tabbar_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4648321604EF3800A4F9CB /* tabbar_view.png */; };
 		9D46483B1604EF3800A4F9CB /* tabbar_view@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4648331604EF3800A4F9CB /* tabbar_view@2x.png */; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		9D47F901160BA4E900B8B14D /* appStoreIcon512.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D47F8F9160BA4E900B8B14D /* appStoreIcon512.png */; };
 		9D47F902160BA4E900B8B14D /* appStoreIcon1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D47F8FA160BA4E900B8B14D /* appStoreIcon1024.png */; };
+=======
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		9D4CB08C16EAC2500038A96F /* tripEnd.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4CB08816EAC2410038A96F /* tripEnd.png */; };
 		9D4CB08D16EAC2500038A96F /* tripEnd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4CB08916EAC2420038A96F /* tripEnd@2x.png */; };
 		9D4CB08E16EAC2500038A96F /* tripStart.png in Resources */ = {isa = PBXBuildFile; fileRef = 9D4CB08A16EAC2450038A96F /* tripStart.png */; };
@@ -203,6 +224,7 @@
 		32CA4F630368D1EE00C91783 /* WeBikeSD_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeBikeSD_Prefix.pch; sourceTree = "<group>"; };
 		4688ACA51902B8EF00A67FAF /* TookTransitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TookTransitViewController.h; sourceTree = "<group>"; };
 		4688ACA61902B8EF00A67FAF /* TookTransitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TookTransitViewController.m; sourceTree = "<group>"; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		46CA9E961B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKPointAnnotation+IndegoPointAnnotation.h"; sourceTree = "<group>"; };
 		46CA9E971B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKPointAnnotation+IndegoPointAnnotation.m"; sourceTree = "<group>"; };
 		46CA9EB11B52C9E70058076F /* IndegoStationStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndegoStationStrings.m; sourceTree = "<group>"; };
@@ -227,6 +249,12 @@
 		46D0BD571B5623FC008194E4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		46D0BD581B5623FC008194E4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		46D0BD591B5623FC008194E4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+=======
+		4688ACAA1902CF1B00A67FAF /* TookTransitViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TookTransitViewController.xib; sourceTree = "<group>"; };
+		46CA9E961B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKPointAnnotation+IndegoPointAnnotation.h"; sourceTree = "<group>"; };
+		46CA9E971B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKPointAnnotation+IndegoPointAnnotation.m"; sourceTree = "<group>"; };
+		46D0BD501B5623FC008194E4 /* 20-gear2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "20-gear2.png"; sourceTree = "<group>"; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		6411996010683D7500C201F0 /* RecordTripViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RecordTripViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		6411996110683D7500C201F0 /* RecordTripViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RecordTripViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		6411996C10683DCD00C201F0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -274,13 +302,29 @@
 		64F823E0106AC151001413F8 /* SaveRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveRequest.m; sourceTree = "<group>"; };
 		64F824E4106AFFA4001413F8 /* PersonalInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoViewController.h; sourceTree = "<group>"; };
 		64F824E5106AFFA4001413F8 /* PersonalInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoViewController.m; sourceTree = "<group>"; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		8D1107310486CEB800E47090 /* WeBikeSD-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WeBikeSD-Info.plist"; sourceTree = "<group>"; };
 		8F0983821C335B9800BF41D1 /* WeBikeSDAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeBikeSDAppDelegate.h; sourceTree = "<group>"; };
 		8F0983831C335B9800BF41D1 /* WeBikeSDAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeBikeSDAppDelegate.m; sourceTree = "<group>"; };
+=======
+		64FCC5B311352242000FA1B6 /* PersonalInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonalInfo.xib; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* WeBikeSD-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "WeBikeSD-Info.plist"; sourceTree = "<group>"; };
+		8F11F2511CFCE3C1008469C8 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppIcon.appiconset; path = AppIcons/AppIcon.appiconset; sourceTree = "<group>"; };
+		8F11F2531CFCE3F7008469C8 /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60.png"; sourceTree = "<group>"; };
+		8F11F2541CFCE3F7008469C8 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		8F11F2551CFCE3F7008469C8 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		8F11F2561CFCE3F7008469C8 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		8F11F2571CFCE3F7008469C8 /* Icon-Small-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50@2x.png"; sourceTree = "<group>"; };
+		8F11F2581CFCE3F7008469C8 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		8F11F2591CFCE3F7008469C8 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		8F11F25A1CFCE3F7008469C8 /* ItunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ItunesArtwork.png; sourceTree = "<group>"; };
+		8F11F25B1CFCE3F7008469C8 /* ItunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ItunesArtwork@2x.png"; sourceTree = "<group>"; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		8F1B1D3D164B94C60022B776 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		8F1B1D3E164B94C60022B776 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = DetailViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8F20B0A916F0F08A00031712 /* TripDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripDetailViewController.h; sourceTree = "<group>"; };
 		8F20B0AA16F0F08A00031712 /* TripDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TripDetailViewController.m; sourceTree = "<group>"; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		8F316F661703161E0087529E /* Model.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model.xcmappingmodel; sourceTree = "<group>"; };
 		8F3B0EEC1C325270004EEEDF /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoteViewController.h; path = ../NoteViewController.h; sourceTree = "<group>"; };
 		8F3B0EED1C325270004EEEDF /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoteViewController.m; path = ../NoteViewController.m; sourceTree = "<group>"; };
@@ -288,11 +332,25 @@
 		8F3B0EF01C3252AE004EEEDF /* NoteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteManager.m; sourceTree = "<group>"; };
 		8F3B0EF21C325B8C004EEEDF /* SavedNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedNotesViewController.h; path = ../SavedNotesViewController.h; sourceTree = "<group>"; };
 		8F3B0EF31C325B8C004EEEDF /* SavedNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedNotesViewController.m; path = ../SavedNotesViewController.m; sourceTree = "<group>"; };
+=======
+		8F20B0AB16F0F08A00031712 /* TripDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TripDetailViewController.xib; path = Classes/TripDetailViewController.xib; sourceTree = "<group>"; };
+		8F316F661703161E0087529E /* Model.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model.xcmappingmodel; sourceTree = "<group>"; };
+		8F3B0EEF1C3252AE004EEEDF /* NoteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteManager.h; sourceTree = "<group>"; };
+		8F3B0EF01C3252AE004EEEDF /* NoteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteManager.m; sourceTree = "<group>"; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		8F5E60621602CBE000D8F85D /* NSString+MD5Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5Addition.h"; path = "../NSString+MD5Addition.h"; sourceTree = "<group>"; };
 		8F5E60631602CBE000D8F85D /* NSString+MD5Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5Addition.m"; path = "../NSString+MD5Addition.m"; sourceTree = "<group>"; };
 		8F5E60641602CBE000D8F85D /* UIDevice+IdentifierAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+IdentifierAddition.h"; path = "../UIDevice+IdentifierAddition.h"; sourceTree = "<group>"; };
 		8F5E60651602CBE000D8F85D /* UIDevice+IdentifierAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+IdentifierAddition.m"; path = "../UIDevice+IdentifierAddition.m"; sourceTree = "<group>"; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		8F986FE61C334CE200ABBD0D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = SOURCE_ROOT; };
+=======
+		8F6B64D71D0647FD00B81341 /* Deprecated Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Deprecated Images"; sourceTree = "<group>"; };
+		8F6F681F1C39EAC100059630 /* NoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteViewController.h; sourceTree = "<group>"; };
+		8F6F68201C39EAC100059630 /* NoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteViewController.m; sourceTree = "<group>"; };
+		8F6F68211C39EAC100059630 /* SavedNotesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SavedNotesViewController.h; sourceTree = "<group>"; };
+		8F6F68221C39EAC100059630 /* SavedNotesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SavedNotesViewController.m; sourceTree = "<group>"; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		8F9C086216DC9479003EA308 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Note.h; sourceTree = "<group>"; };
 		8F9C086316DC9479003EA308 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Note.m; sourceTree = "<group>"; };
 		8F9C086516DC9479003EA308 /* Trip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trip.h; sourceTree = "<group>"; };
@@ -303,10 +361,25 @@
 		8F9C086C16DC947A003EA308 /* Coord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Coord.m; sourceTree = "<group>"; };
 		8FA0AD9216BB4ED800E0E7C4 /* CycleAtlanta 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "CycleAtlanta 2.xcdatamodel"; sourceTree = "<group>"; };
 		8FA0AD9316BB4ED800E0E7C4 /* CycleAtlanta.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CycleAtlanta.xcdatamodel; sourceTree = "<group>"; };
+		8FA787AA1D052AB100391F00 /* appStoreIcon512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appStoreIcon512.png; sourceTree = "<group>"; };
+		8FA787AB1D052AB100391F00 /* appStoreIcon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appStoreIcon1024.png; sourceTree = "<group>"; };
+		8FA787AE1D052B1600391F00 /* appStoreIcon512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appStoreIcon512.png; sourceTree = "<group>"; };
+		8FA787AF1D052B1600391F00 /* appStoreIcon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appStoreIcon1024.png; sourceTree = "<group>"; };
+		8FA7D0D21CFE8A690052F6F8 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		8FA7D0D41CFE8A690052F6F8 /* WeBikeSD.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = WeBikeSD.entitlements; sourceTree = "<group>"; };
 		8FAD930316F189EE00082B6F /* UIImageViewResizable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImageViewResizable.h; path = ../UIImageViewResizable.h; sourceTree = "<group>"; };
 		8FAD930416F189EE00082B6F /* UIImageViewResizable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImageViewResizable.m; path = ../UIImageViewResizable.m; sourceTree = "<group>"; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+		8FBCD3C916E0E58100C11EBE /* NoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoteViewController.xib; path = Classes/NoteViewController.xib; sourceTree = "<group>"; };
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		8FD696E51655E35800324E6E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		8FD696E81655E36600324E6E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		8FF2C0D01D0124A000C1C176 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		8FF2C0D11D0124A000C1C176 /* Default-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h@2x.png"; sourceTree = "<group>"; };
+		8FF2C0D21D0124A000C1C176 /* Default-736@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736@2x.png"; sourceTree = "<group>"; };
+		8FF2C0D31D0124A000C1C176 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		8FF2C0D41D0124A000C1C176 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		9D3281D916EE46C8004C4AF2 /* noteAssetMapGlyph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noteAssetMapGlyph.png; sourceTree = "<group>"; };
 		9D3281DA16EE46C8004C4AF2 /* noteAssetMapGlyph@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noteAssetMapGlyph@2x.png"; sourceTree = "<group>"; };
 		9D3281DB16EE46C8004C4AF2 /* noteIssueMapGlyph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noteIssueMapGlyph.png; sourceTree = "<group>"; };
@@ -335,31 +408,6 @@
 		9D4647B41604EBF400A4F9CB /* redButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redButton@2x.png"; sourceTree = "<group>"; };
 		9D4647B51604EBF400A4F9CB /* redButtonHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redButtonHighlight.png; sourceTree = "<group>"; };
 		9D4647B61604EBF400A4F9CB /* redButtonHighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "redButtonHighlight@2x.png"; sourceTree = "<group>"; };
-		9D4647C71604EF1200A4F9CB /* 20-gear2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "20-gear2.png"; sourceTree = "<group>"; };
-		9D4647C81604EF1200A4F9CB /* ArrowButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowButton.png; sourceTree = "<group>"; };
-		9D4647C91604EF1200A4F9CB /* cancel_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel_button.png; sourceTree = "<group>"; };
-		9D4647CA1604EF1200A4F9CB /* ClearArrowButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClearArrowButton.png; sourceTree = "<group>"; };
-		9D4647CB1604EF1200A4F9CB /* ClearArrowButtonDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClearArrowButtonDark.png; sourceTree = "<group>"; };
-		9D4647CC1604EF1200A4F9CB /* ClearArrowButtonWideDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClearArrowButtonWideDark.png; sourceTree = "<group>"; };
-		9D4647CD1604EF1200A4F9CB /* GreenCheckMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenCheckMark.png; sourceTree = "<group>"; };
-		9D4647CE1604EF1200A4F9CB /* GreenCheckMark2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenCheckMark2.png; sourceTree = "<group>"; };
-		9D4647CF1604EF1200A4F9CB /* GreenCheckMark3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenCheckMark3.png; sourceTree = "<group>"; };
-		9D4647D01604EF1200A4F9CB /* LargeCounter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LargeCounter.png; sourceTree = "<group>"; };
-		9D4647D11604EF1200A4F9CB /* lock_button1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_button1.png; sourceTree = "<group>"; };
-		9D4647D21604EF1200A4F9CB /* lock_button2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_button2.png; sourceTree = "<group>"; };
-		9D4647D31604EF1200A4F9CB /* lock_button_fpo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_button_fpo.png; sourceTree = "<group>"; };
-		9D4647D41604EF1200A4F9CB /* LockIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LockIcon.png; sourceTree = "<group>"; };
-		9D4647D51604EF1200A4F9CB /* OpacityMask80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OpacityMask80.png; sourceTree = "<group>"; };
-		9D4647D61604EF1200A4F9CB /* OpacityMaskWindow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OpacityMaskWindow.png; sourceTree = "<group>"; };
-		9D4647D71604EF1200A4F9CB /* orangeslide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = orangeslide.png; sourceTree = "<group>"; };
-		9D4647D81604EF1200A4F9CB /* save_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save_button.png; sourceTree = "<group>"; };
-		9D4647D91604EF1200A4F9CB /* save_button_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save_button_selected.png; sourceTree = "<group>"; };
-		9D4647DA1604EF1200A4F9CB /* slider_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider_ball.png; sourceTree = "<group>"; };
-		9D4647DB1604EF1200A4F9CB /* SlideToUnlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SlideToUnlock.png; sourceTree = "<group>"; };
-		9D4647DC1604EF1200A4F9CB /* start_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start_button.png; sourceTree = "<group>"; };
-		9D4647DD1604EF1200A4F9CB /* start_button_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start_button_selected.png; sourceTree = "<group>"; };
-		9D4647DE1604EF1200A4F9CB /* UnlockIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UnlockIcon.png; sourceTree = "<group>"; };
-		9D4647E01604EF1200A4F9CB /* yellowslide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowslide.png; sourceTree = "<group>"; };
 		9D4647FC1604EF2600A4F9CB /* commute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = commute.png; sourceTree = "<group>"; };
 		9D4647FD1604EF2600A4F9CB /* commute@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "commute@2x.png"; sourceTree = "<group>"; };
 		9D4647FE1604EF2600A4F9CB /* errands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = errands.png; sourceTree = "<group>"; };
@@ -391,8 +439,11 @@
 		9D4648311604EF3800A4F9CB /* tabbar_settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_settings@2x.png"; sourceTree = "<group>"; };
 		9D4648321604EF3800A4F9CB /* tabbar_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tabbar_view.png; sourceTree = "<group>"; };
 		9D4648331604EF3800A4F9CB /* tabbar_view@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_view@2x.png"; sourceTree = "<group>"; };
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		9D47F8F9160BA4E900B8B14D /* appStoreIcon512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appStoreIcon512.png; path = Images/appStoreIcon512.png; sourceTree = "<group>"; };
 		9D47F8FA160BA4E900B8B14D /* appStoreIcon1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = appStoreIcon1024.png; path = Images/appStoreIcon1024.png; sourceTree = "<group>"; };
+=======
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		9D4CB08816EAC2410038A96F /* tripEnd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tripEnd.png; sourceTree = "<group>"; };
 		9D4CB08916EAC2420038A96F /* tripEnd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tripEnd@2x.png"; sourceTree = "<group>"; };
 		9D4CB08A16EAC2450038A96F /* tripStart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tripStart.png; sourceTree = "<group>"; };
@@ -422,6 +473,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FA7D0D31CFE8A690052F6F8 /* ExternalAccessory.framework in Frameworks */,
 				DA78812718DF46EC008A5BE9 /* SystemConfiguration.framework in Frameworks */,
 				DA78812518DF46DE008A5BE9 /* libc++.dylib in Frameworks */,
 				DA78812118DF418A008A5BE9 /* CFNetwork.framework in Frameworks */,
@@ -463,10 +515,19 @@
 				642F161C1071ED1C0050BCB9 /* MapCoord.m */,
 				642F15251071DA700050BCB9 /* MapViewController.h */,
 				642F15261071DA700050BCB9 /* MapViewController.m */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				8F3B0EEC1C325270004EEEDF /* NoteViewController.h */,
 				8F3B0EED1C325270004EEEDF /* NoteViewController.m */,
 				8F3B0EEF1C3252AE004EEEDF /* NoteManager.h */,
 				8F3B0EF01C3252AE004EEEDF /* NoteManager.m */,
+=======
+				8F3B0EEF1C3252AE004EEEDF /* NoteManager.h */,
+				8F3B0EF01C3252AE004EEEDF /* NoteManager.m */,
+				8F6F681F1C39EAC100059630 /* NoteViewController.h */,
+				8F6F68201C39EAC100059630 /* NoteViewController.m */,
+				8F6F68211C39EAC100059630 /* SavedNotesViewController.h */,
+				8F6F68221C39EAC100059630 /* SavedNotesViewController.m */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				8F5E60621602CBE000D8F85D /* NSString+MD5Addition.h */,
 				8F5E60631602CBE000D8F85D /* NSString+MD5Addition.m */,
 				6433E5C5106D62ED00C27387 /* PersonalInfoDelegate.h */,
@@ -481,8 +542,11 @@
 				6411996110683D7500C201F0 /* RecordTripViewController.m */,
 				6426476C1073FEC300E43DEF /* ReminderManager.h */,
 				6426476D1073FEC300E43DEF /* ReminderManager.m */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				8F3B0EF21C325B8C004EEEDF /* SavedNotesViewController.h */,
 				8F3B0EF31C325B8C004EEEDF /* SavedNotesViewController.m */,
+=======
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				641199B0106851AA00C201F0 /* SavedTripsViewController.h */,
 				641199B1106851AA00C201F0 /* SavedTripsViewController.m */,
 				64F823DF106AC151001413F8 /* SaveRequest.h */,
@@ -515,6 +579,10 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				8FA7D0D41CFE8A690052F6F8 /* WeBikeSD.entitlements */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				9D504DA316B6D0AE00B99EBC /* libz.dylib */,
 				64119AA81068672100C201F0 /* Trip Purpose data source */,
 				6411992B1068371B00C201F0 /* Data Model */,
@@ -532,8 +600,11 @@
 			children = (
 				64F823B6106AB402001413F8 /* constants.h */,
 				32CA4F630368D1EE00C91783 /* WeBikeSD_Prefix.pch */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				8F0983821C335B9800BF41D1 /* WeBikeSDAppDelegate.h */,
 				8F0983831C335B9800BF41D1 /* WeBikeSDAppDelegate.m */,
+=======
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				29B97316FDCFA39411CA2CEA /* main.m */,
 				DA2D78321A91F36200C54FB9 /* migrate.c */,
 				46CA9EB31B52CA030058076F /* IndegoStationStrings.h */,
@@ -545,13 +616,22 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				46D0BD3A1B5621F8008194E4 /* AppIcons */,
 				46D0BD371B561E8A008194E4 /* IndegoIcons */,
+=======
+				8F6B64D71D0647FD00B81341 /* Deprecated Images */,
+				46D0BD3A1B5621F8008194E4 /* AppIcons */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				DAA6D2D61978FF63004A83F6 /* Images.xcassets */,
+				8F11F2511CFCE3C1008469C8 /* AppIcon.appiconset */,
 				9D46482B1604EF3800A4F9CB /* TabBarIcons V2 */,
 				9D4648201604EF2F00A4F9CB /* UI Elements */,
 				9D4647FB1604EF2600A4F9CB /* TripPurposePickerIcons V3 */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				9D4647C61604EF1200A4F9CB /* Deprecated Images */,
+=======
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				9D4647A81604EBF400A4F9CB /* Button Icons */,
 				6411A185106A90E400C201F0 /* TripPurposePickerIcons v2 */,
 				6411A16A106A05DE00C201F0 /* Images */,
@@ -566,6 +646,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FA7D0D21CFE8A690052F6F8 /* ExternalAccessory.framework */,
 				DA2D78341A91F7B200C54FB9 /* Firebase.framework */,
 				DA78812618DF46EC008A5BE9 /* SystemConfiguration.framework */,
 				DA78812418DF46DE008A5BE9 /* libc++.dylib */,
@@ -586,6 +667,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		46D0BD371B561E8A008194E4 /* IndegoIcons */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,10 +685,13 @@
 			path = IndegoIcons;
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		46D0BD3A1B5621F8008194E4 /* AppIcons */ = {
 			isa = PBXGroup;
 			children = (
 				46D0BD501B5623FC008194E4 /* 20-gear2.png */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				46D0BD511B5623FC008194E4 /* appIcon.png */,
 				46D0BD521B5623FC008194E4 /* appIcon@2x.png */,
 				46D0BD531B5623FC008194E4 /* appIcon@Retina.png */,
@@ -616,6 +701,24 @@
 				46D0BD571B5623FC008194E4 /* Default-568h@2x.png */,
 				46D0BD581B5623FC008194E4 /* Default.png */,
 				46D0BD591B5623FC008194E4 /* Default@2x.png */,
+=======
+				8FA787AA1D052AB100391F00 /* appStoreIcon512.png */,
+				8FA787AB1D052AB100391F00 /* appStoreIcon1024.png */,
+				8F11F2531CFCE3F7008469C8 /* Icon-60.png */,
+				8F11F2541CFCE3F7008469C8 /* Icon-72.png */,
+				8F11F2551CFCE3F7008469C8 /* Icon-72@2x.png */,
+				8F11F2561CFCE3F7008469C8 /* Icon-Small-50.png */,
+				8F11F2571CFCE3F7008469C8 /* Icon-Small-50@2x.png */,
+				8F11F2581CFCE3F7008469C8 /* Icon.png */,
+				8F11F2591CFCE3F7008469C8 /* Icon@2x.png */,
+				8F11F25A1CFCE3F7008469C8 /* ItunesArtwork.png */,
+				8F11F25B1CFCE3F7008469C8 /* ItunesArtwork@2x.png */,
+				8FF2C0D01D0124A000C1C176 /* Default-568h@2x.png */,
+				8FF2C0D11D0124A000C1C176 /* Default-667h@2x.png */,
+				8FF2C0D21D0124A000C1C176 /* Default-736@2x.png */,
+				8FF2C0D31D0124A000C1C176 /* Default.png */,
+				8FF2C0D41D0124A000C1C176 /* Default@2x.png */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 			);
 			path = AppIcons;
 			sourceTree = "<group>";
@@ -655,8 +758,13 @@
 				9D3CDAD116D6F7A900F423B8 /* lcdScreen@2x.png */,
 				9D3CDAD216D6F7A900F423B8 /* photoFrame.png */,
 				9D3CDAD316D6F7A900F423B8 /* photoFrame@2x.png */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				9D47F8F9160BA4E900B8B14D /* appStoreIcon512.png */,
 				9D47F8FA160BA4E900B8B14D /* appStoreIcon1024.png */,
+=======
+				8FA787AE1D052B1600391F00 /* appStoreIcon512.png */,
+				8FA787AF1D052B1600391F00 /* appStoreIcon1024.png */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -702,6 +810,7 @@
 			path = "Button Icons";
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 		9D4647C61604EF1200A4F9CB /* Deprecated Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -734,6 +843,8 @@
 			path = "Deprecated Images";
 			sourceTree = "<group>";
 		};
+=======
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 		9D4647FB1604EF2600A4F9CB /* TripPurposePickerIcons V3 */ = {
 			isa = PBXGroup;
 			children = (
@@ -831,7 +942,16 @@
 				LastUpgradeCheck = 0710;
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 						DevelopmentTeam = JC38TD696S;
+=======
+						DevelopmentTeam = Z3W7W6ENN9;
+						SystemCapabilities = {
+							com.apple.WAC = {
+								enabled = 1;
+							};
+						};
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 					};
 				};
 			};
@@ -856,16 +976,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				8F6B64D81D0647FD00B81341 /* Deprecated Images in Resources */,
+				64119A9C1068665B00C201F0 /* TripPurposePicker.xib in Resources */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				6411A18E106A90E400C201F0 /* commute.tif in Resources */,
 				6411A18F106A90E400C201F0 /* errands.tif in Resources */,
 				6411A190106A90E400C201F0 /* exercise.tif in Resources */,
+				8F11F2521CFCE3C2008469C8 /* AppIcon.appiconset in Resources */,
+				8F11F2641CFCE3F7008469C8 /* ItunesArtwork@2x.png in Resources */,
 				6411A191106A90E400C201F0 /* other.tif in Resources */,
 				6411A192106A90E400C201F0 /* school.tif in Resources */,
 				6411A193106A90E400C201F0 /* shopping.tif in Resources */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				46D0BD5E1B5623FC008194E4 /* appIcon29x29.png in Resources */,
 				6411A194106A90E400C201F0 /* social.tif in Resources */,
 				6411A195106A90E400C201F0 /* work-related.tif in Resources */,
 				64577E29106DC2FD003ACBFD /* dist.plist in Resources */,
+=======
+				8F11F25F1CFCE3F7008469C8 /* Icon-Small-50.png in Resources */,
+				6411A194106A90E400C201F0 /* social.tif in Resources */,
+				6411A195106A90E400C201F0 /* work-related.tif in Resources */,
+				64577E29106DC2FD003ACBFD /* dist.plist in Resources */,
+				642F150C1071D9910050BCB9 /* MapViewController.xib in Resources */,
+				8F11F2631CFCE3F7008469C8 /* ItunesArtwork.png in Resources */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				6458114E107AA4D30075DABD /* bicycle-bell-normalized.aiff in Resources */,
 				46D0BD4B1B562294008194E4 /* indegoPartialService@2x.png in Resources */,
 				644ED3E410853DEC008725A8 /* commuter2.png in Resources */,
@@ -876,6 +1012,7 @@
 				46D0BD491B562294008194E4 /* indegoComingSoon@2x.png in Resources */,
 				9D4647BA1604EBF400A4F9CB /* blueButtonHighlight@2x.png in Resources */,
 				9D4647BB1604EBF400A4F9CB /* greenButton.png in Resources */,
+				8F11F25E1CFCE3F7008469C8 /* Icon-72@2x.png in Resources */,
 				9D4647BC1604EBF400A4F9CB /* greenButton@2x.png in Resources */,
 				9D4647BD1604EBF400A4F9CB /* greenButtonHighlight.png in Resources */,
 				9D4647BE1604EBF400A4F9CB /* greenButtonHighlight@2x.png in Resources */,
@@ -884,8 +1021,10 @@
 				9D4647C01604EBF400A4F9CB /* greyButton@2x.png in Resources */,
 				9D4647C11604EBF400A4F9CB /* redButton.png in Resources */,
 				9D4647C21604EBF400A4F9CB /* redButton@2x.png in Resources */,
+				8F11F2611CFCE3F7008469C8 /* Icon.png in Resources */,
 				9D4647C31604EBF400A4F9CB /* redButtonHighlight.png in Resources */,
 				9D4647C41604EBF400A4F9CB /* redButtonHighlight@2x.png in Resources */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				9D4647E11604EF1200A4F9CB /* 20-gear2.png in Resources */,
 				46D0BD4E1B562294008194E4 /* indegoUnavailable.png in Resources */,
 				9D4647E21604EF1200A4F9CB /* ArrowButton.png in Resources */,
@@ -917,8 +1056,17 @@
 				9D4647F81604EF1200A4F9CB /* UnlockIcon.png in Resources */,
 				46D0BD4D1B562294008194E4 /* indegoSpecialEvent@2x.png in Resources */,
 				9D4647FA1604EF1200A4F9CB /* yellowslide.png in Resources */,
+=======
+				8FF2C0D81D0124A000C1C176 /* Default.png in Resources */,
+				8F11F25C1CFCE3F7008469C8 /* Icon-60.png in Resources */,
+				4688ACAB1902CF1B00A67FAF /* TookTransitViewController.xib in Resources */,
+				8F11F2621CFCE3F7008469C8 /* Icon@2x.png in Resources */,
+				8FF2C0D91D0124A000C1C176 /* Default@2x.png in Resources */,
+				8F11F25D1CFCE3F7008469C8 /* Icon-72.png in Resources */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				9D46480E1604EF2600A4F9CB /* commute.png in Resources */,
 				9D46480F1604EF2600A4F9CB /* commute@2x.png in Resources */,
+				8FF2C0D71D0124A000C1C176 /* Default-736@2x.png in Resources */,
 				9D4648101604EF2600A4F9CB /* errands.png in Resources */,
 				9D4648111604EF2600A4F9CB /* errands@2x.png in Resources */,
 				9D4648121604EF2600A4F9CB /* exercise.png in Resources */,
@@ -933,6 +1081,7 @@
 				9D4648191604EF2600A4F9CB /* school@2x.png in Resources */,
 				8F986FE71C334CE200ABBD0D /* Main.storyboard in Resources */,
 				9D46481A1604EF2600A4F9CB /* shopping.png in Resources */,
+				8F11F2601CFCE3F7008469C8 /* Icon-Small-50@2x.png in Resources */,
 				9D46481B1604EF2600A4F9CB /* shopping@2x.png in Resources */,
 				9D46481C1604EF2600A4F9CB /* social.png in Resources */,
 				9D46481D1604EF2600A4F9CB /* social@2x.png in Resources */,
@@ -947,10 +1096,12 @@
 				9D46482A1604EF2F00A4F9CB /* record-map-frame-288x141.png in Resources */,
 				9D4648341604EF3800A4F9CB /* tabbar_instructions.png in Resources */,
 				9D4648351604EF3800A4F9CB /* tabbar_instructions@2x.png in Resources */,
+				8FF2C0D51D0124A000C1C176 /* Default-568h@2x.png in Resources */,
 				9D4648361604EF3800A4F9CB /* tabbar_record.png in Resources */,
 				46D0BD4A1B562294008194E4 /* indegoPartialService.png in Resources */,
 				9D4648371604EF3800A4F9CB /* tabbar_record@2x.png in Resources */,
 				9D4648381604EF3800A4F9CB /* tabbar_settings.png in Resources */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				46D0BD4C1B562294008194E4 /* indegoSpecialEvent.png in Resources */,
 				46D0BD471B562294008194E4 /* indegoActive@2x.png in Resources */,
 				46D0BD5A1B5623FC008194E4 /* 20-gear2.png in Resources */,
@@ -959,8 +1110,17 @@
 				9D46483B1604EF3800A4F9CB /* tabbar_view@2x.png in Resources */,
 				9D47F901160BA4E900B8B14D /* appStoreIcon512.png in Resources */,
 				9D47F902160BA4E900B8B14D /* appStoreIcon1024.png in Resources */,
+=======
+				46D0BD5A1B5623FC008194E4 /* 20-gear2.png in Resources */,
+				8FA787B01D052B1600391F00 /* appStoreIcon512.png in Resources */,
+				9D4648391604EF3800A4F9CB /* tabbar_settings@2x.png in Resources */,
+				9D46483A1604EF3800A4F9CB /* tabbar_view.png in Resources */,
+				9D46483B1604EF3800A4F9CB /* tabbar_view@2x.png in Resources */,
+				8F1B1D41164B94E90022B776 /* DetailView.xib in Resources */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				9D3CDAD416D6F7A900F423B8 /* lcdScreen.png in Resources */,
 				9D3CDAD516D6F7A900F423B8 /* lcdScreen@2x.png in Resources */,
+				8FA787B11D052B1600391F00 /* appStoreIcon1024.png in Resources */,
 				9D3CDAD616D6F7A900F423B8 /* photoFrame.png in Resources */,
 				9D3CDAD716D6F7A900F423B8 /* photoFrame@2x.png in Resources */,
 				9D3CDADA16D6F7C900F423B8 /* tabbar_notes.png in Resources */,
@@ -976,6 +1136,11 @@
 				9D6D31AA16D7C017007A2497 /* noteIssuePicker@2x.png in Resources */,
 				9D6D31AD16D7C189007A2497 /* noteBlankPicker.png in Resources */,
 				9D6D31AE16D7C189007A2497 /* noteBlankPicker@2x.png in Resources */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				8FF2C0D61D0124A000C1C176 /* Default-667h@2x.png in Resources */,
+				8FBCD3CB16E0E58100C11EBE /* NoteViewController.xib in Resources */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				9D4CB08C16EAC2500038A96F /* tripEnd.png in Resources */,
 				9D4CB08D16EAC2500038A96F /* tripEnd@2x.png in Resources */,
 				9D4CB08E16EAC2500038A96F /* tripStart.png in Resources */,
@@ -1013,6 +1178,11 @@
 				645E4EDC1200C1C800EFF0E6 /* LoadingView.m in Sources */,
 				8F5E60661602CBE000D8F85D /* NSString+MD5Addition.m in Sources */,
 				46CA9E981B52BCCE0058076F /* MKPointAnnotation+IndegoPointAnnotation.m in Sources */,
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				8F6F68231C39EAC100059630 /* NoteViewController.m in Sources */,
+				8F6F68241C39EAC100059630 /* SavedNotesViewController.m in Sources */,
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				8F5E60671602CBE000D8F85D /* UIDevice+IdentifierAddition.m in Sources */,
 				8F3B0EF41C325B8C004EEEDF /* SavedNotesViewController.m in Sources */,
 				8F0983841C335B9800BF41D1 /* WeBikeSDAppDelegate.m in Sources */,
@@ -1042,9 +1212,16 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				CLANG_ENABLE_OBJC_ARC = NO;
+=======
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1055,6 +1232,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -1064,6 +1242,17 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				New_Setting = "";
+				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
+				PRODUCT_NAME = WeBikeSD;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1073,9 +1262,16 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				CLANG_ENABLE_OBJC_ARC = NO;
+=======
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1084,6 +1280,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -1093,6 +1290,17 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				New_Setting = "";
+				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
+				PRODUCT_NAME = WeBikeSD;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1103,11 +1311,19 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				COMPRESS_PNG_FILES = NO;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				OTHER_CODE_SIGN_FLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";
@@ -1120,9 +1336,16 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				CLANG_ENABLE_OBJC_ARC = NO;
+=======
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1131,16 +1354,28 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = org.opensandiego.cycle;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				New_Setting = "";
+				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				PRODUCT_NAME = WeBikeSD;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8D7C7187-369B-42E2-9E58-20421916EBBA";
 				SDKROOT = iphoneos;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				TARGETED_DEVICE_FAMILY = "1,2";
+=======
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Distribution;
@@ -1152,11 +1387,19 @@
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				COMPRESS_PNG_FILES = NO;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				OTHER_CODE_SIGN_FLAGS = "-ObjC";
 				"OTHER_CODE_SIGN_FLAGS[sdk=*]" = "-ObjC";
 				PROVISIONING_PROFILE = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";
@@ -1170,10 +1413,17 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
+=======
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1184,6 +1434,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -1193,6 +1444,17 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				New_Setting = "";
+				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
+				PRODUCT_NAME = WeBikeSD;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Beta;
@@ -1203,11 +1465,19 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				COMPRESS_PNG_FILES = NO;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				OTHER_CODE_SIGN_FLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";
@@ -1220,10 +1490,17 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_ENTITLEMENTS = dist.plist;
+=======
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_ENTITLEMENTS = WeBikeSD.entitlements;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1232,6 +1509,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WeBikeSD_Prefix.pch;
 				INFOPLIST_FILE = "WeBikeSD-Info.plist";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				New_Setting = "";
 				OTHER_CODE_SIGN_FLAGS = "";
@@ -1241,6 +1519,17 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				New_Setting = "";
+				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.teamwebikesd.WeBikeSD;
+				PRODUCT_NAME = WeBikeSD;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = "Release Beta";
@@ -1251,12 +1540,20 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				COMPRESS_PNG_FILES = NO;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CODE_SIGN_FLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";
@@ -1271,11 +1568,19 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Kathryn Killebrew (4R28S5TJB2)";
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
+=======
+				COMPRESS_PNG_FILES = NO;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+<<<<<<< HEAD:WeBikeSD.xcodeproj/project.pbxproj
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+=======
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+>>>>>>> master:WeBikeSD.xcodeproj/project.pbxproj
 				OTHER_CODE_SIGN_FLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9360687D-F9FF-4B0F-B21D-E9ABB488AB13";

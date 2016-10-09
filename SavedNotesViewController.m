@@ -137,8 +137,11 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:NO];
     NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
     [request setSortDescriptors:sortDescriptors];
+<<<<<<< HEAD:SavedNotesViewController.m
     [sortDescriptors release];
     [sortDescriptor release];
+=======
+>>>>>>> master:Classes/SavedNotesViewController.m
     
     NSError *error;
     NSInteger count = [noteManager.managedObjectContext countForFetchRequest:request error:&error];
@@ -155,8 +158,11 @@
     [self setNotes:mutableFetchResults];
     [self.tableView reloadData];
     
+<<<<<<< HEAD:SavedNotesViewController.m
     [mutableFetchResults release];
     [request release];
+=======
+>>>>>>> master:Classes/SavedNotesViewController.m
 }
 
 
@@ -185,9 +191,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     NSLog(@"SavedNotesViewController viewWillAppear");
+<<<<<<< HEAD:SavedNotesViewController.m
     
     [self refreshTableView];
     
+=======
+    
+    [self refreshTableView];
+    
+>>>>>>> master:Classes/SavedNotesViewController.m
     [super viewWillAppear:animated];
 }
 
@@ -221,13 +233,21 @@
     NoteCell *cell = (NoteCell*)[self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (cell == nil)
     {
+<<<<<<< HEAD:SavedNotesViewController.m
         cell = [[[NoteCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier] autorelease];
+=======
+        cell = [[NoteCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
+>>>>>>> master:Classes/SavedNotesViewController.m
         cell.detailTextLabel.numberOfLines = 2;
         if ( [reuseIdentifier isEqual: kCellReuseIdentifierExclamation] )
         {
             // add exclamation point
             UIImage		*image		= [UIImage imageNamed:@"failedUpload.png"];
+<<<<<<< HEAD:SavedNotesViewController.m
             UIImageView *imageView	= [[[UIImageView alloc] initWithImage:image] autorelease];
+=======
+            UIImageView *imageView	= [[UIImageView alloc] initWithImage:image];
+>>>>>>> master:Classes/SavedNotesViewController.m
             imageView.frame = CGRectMake( kAccessoryViewX, kAccessoryViewY, image.size.width, image.size.height );
             imageView.tag	= kTagImage;
             cell.accessoryView = imageView;
@@ -286,7 +306,7 @@
          //   image = [UIImage imageNamed:@"GreenCheckMark2.png"];
         }
         
-        UIImageView *imageView	= [[[UIImageView alloc] initWithImage:image] autorelease];
+        UIImageView *imageView	= [[UIImageView alloc] initWithImage:image];
         imageView.frame			= CGRectMake( kAccessoryViewX, kAccessoryViewY, image.size.width, image.size.height );
         
         //[cell.contentView addSubview:imageView];
@@ -305,7 +325,7 @@
     cell.detailTextLabel.tag = kTagDetail;
     cell.textLabel.tag = kTagTitle;
     
-    NSString *title = [[[NSString alloc] init] autorelease] ;
+    NSString *title = [[NSString alloc] init] ;
     switch ([note.note_type intValue]) {
         case 0:
             title = @"Pavement issue";
@@ -375,6 +395,7 @@
     return cell;
 }
 
+
 - (void)promptToConfirmPurpose
 {
     NSLog(@"promptToConfirmPurpose");
@@ -390,7 +411,10 @@
     
     actionSheet.actionSheetStyle	= UIActionSheetStyleBlackTranslucent;
     [actionSheet showInView:self.tabBarController.view];
+<<<<<<< HEAD:SavedNotesViewController.m
     [actionSheet release];
+=======
+>>>>>>> master:Classes/SavedNotesViewController.m
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -416,13 +440,20 @@
 
 - (void)displaySelectedNoteMap
 {
+<<<<<<< HEAD:SavedNotesViewController.m
     loading		= [[LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."] retain];
+=======
+    loading		= [LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."];
+>>>>>>> master:Classes/SavedNotesViewController.m
     loading.tag = 999;
     if ( selectedNote )
     {
         NoteViewController *mvc = [[NoteViewController alloc] initWithNote:selectedNote];
         [[self navigationController] pushViewController:mvc animated:YES];
+<<<<<<< HEAD:SavedNotesViewController.m
         [mvc release];
+=======
+>>>>>>> master:Classes/SavedNotesViewController.m
         selectedNote = nil;
     }
 }
@@ -435,7 +466,6 @@
     NoteViewController *mvc = [[NoteViewController alloc] initWithNote:note];
     [[self navigationController] pushViewController:mvc animated:YES];
     NSLog(@"displayUploadedNote");
-    [mvc release];
 }
 
 
@@ -497,10 +527,18 @@
     
     selectedNote = (Note *)[notes objectAtIndex:indexPath.row];
     
+<<<<<<< HEAD:SavedNotesViewController.m
     loading		= [[LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."] retain];
+=======
+    loading		= [LoadingView loadingViewInView:self.parentViewController.view messageString:@"Loading..."];
+>>>>>>> master:Classes/SavedNotesViewController.m
     loading.tag = 999;
     [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
     
+    NoteViewController *mvc = [[NoteViewController alloc] initWithNote:selectedNote];
+    [[self navigationController] pushViewController:mvc animated:YES];
+    selectedNote = nil;
+    /*
     if (!selectedNote.uploaded) {
         if ( noteManager )
             [noteManager release];
@@ -518,6 +556,11 @@
         [mvc release];
         selectedNote = nil;
     }
+<<<<<<< HEAD:SavedNotesViewController.m
+=======
+     
+     */
+>>>>>>> master:Classes/SavedNotesViewController.m
 }
 
 
@@ -541,18 +584,5 @@
     }
 }
 
-- (void)dealloc {
-    self.notes = nil;
-    self.managedObjectContext = nil;
-    self.noteManager = nil;
-    self.selectedNote = nil;
-    
-    [notes release];
-    [selectedNote release];
-    [noteManager release];
-    [loading release];
-    
-    [super dealloc];
-}
 
 @end

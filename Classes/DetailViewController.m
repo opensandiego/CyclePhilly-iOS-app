@@ -163,6 +163,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
     
     NSLog(@"Size of Image(bytes):%lu",(unsigned long)[imageData length]);
     self.image = thumbnail;
+<<<<<<< HEAD
     [picker dismissViewControllerAnimated:NO completion:nil];
     [picker release];
 }
@@ -170,6 +171,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info {
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:NO completion:nil];
     [picker release];
+=======
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+>>>>>>> master
 }
 
 #pragma mark  -
@@ -221,29 +229,6 @@ static UIImage *shrinkImage(UIImage *original, CGSize size) {
 }
 
 
-- (void)dealloc {
-    self.delegate = nil;
-    self.detailTextView = nil;
-    self.addPicButton = nil;
-    self.imageView = nil;
-    self.imageFrameView = nil;
-    self.image = nil;
-    self.imageFrame = nil;
-    self.imageData = nil;
-    self.lastChosenMediaType = nil;
-    
-    [delegate release];
-    [detailTextView release];
-    [addPicButton release];
-    [imageView release];
-    [imageFrameView release];
-    [image release];
-    [imageFrame release];
-    [imageData release];
-    [lastChosenMediaType release];
-    
-    [super dealloc];
-}
 
 
 @end

@@ -133,7 +133,7 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	CGRect frame    = CGRectMake(floor(0.5 * (320 - DEFAULT_LABEL_WIDTH)),
 								 floor(0.5 * ([[UIScreen mainScreen] bounds].size.height - DEFAULT_LABEL_HEIGHT)), 
 								 DEFAULT_LABEL_WIDTH, DEFAULT_LABEL_HEIGHT);
-	LoadingView *loadingView = [[[LoadingView alloc] initWithFrame:frame] autorelease];
+	LoadingView *loadingView = [[LoadingView alloc] initWithFrame:frame];
 	
 	if (!loadingView)
 	{
@@ -151,15 +151,19 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 	 */ //[lblText setFrame:CGRectMake(10, 21, 100, 250)];
 	CGRect labelFrame = CGRectMake(0, 0, DEFAULT_LABEL_WIDTH, 35.);
 	loadingView.loadingLabel =
-		[[[UILabel alloc]
-			initWithFrame:labelFrame]
-		autorelease];
+		[[UILabel alloc]
+			initWithFrame:labelFrame];
 	loadingView.loadingLabel.text = message;
 	loadingView.loadingLabel.textColor = [UIColor whiteColor];
     loadingView.loadingLabel.numberOfLines = 3;
     loadingView.loadingLabel.lineBreakMode = NSLineBreakByWordWrapping;
+<<<<<<< HEAD
 	loadingView.loadingLabel.backgroundColor = [UIColor clearColor];
 	loadingView.loadingLabel.textAlignment = NSTextAlignmentCenter;
+=======
+    loadingView.loadingLabel.textAlignment = NSTextAlignmentCenter;
+	loadingView.loadingLabel.backgroundColor = [UIColor clearColor];
+>>>>>>> master
 	loadingView.loadingLabel.font = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
 	loadingView.loadingLabel.autoresizingMask =
 		UIViewAutoresizingFlexibleLeftMargin |
@@ -168,9 +172,8 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 		UIViewAutoresizingFlexibleBottomMargin;
 	
 	[loadingView addSubview:loadingView.loadingLabel];
-	loadingView.activityIndicatorView = [[[UIActivityIndicatorView alloc]
-													   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite]
-													  autorelease];
+	loadingView.activityIndicatorView = [[UIActivityIndicatorView alloc]
+													   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	CGRect activityIndicatorRect = loadingView.activityIndicatorView.frame;
     loadingView.activityIndicatorView.hidesWhenStopped = YES;
 	activityIndicatorRect.origin.x = 0.5 * (loadingView.frame.size.width - activityIndicatorRect.size.width);
@@ -207,6 +210,7 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 {
     self.loadingLabel.text=completeMessage;
     
+<<<<<<< HEAD
     CGSize maxLabelSize = CGSizeMake(DEFAULT_LABEL_WIDTH, 400);
     
     NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
@@ -219,6 +223,22 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
                                                             context:nil];
     CGSize labelSize = labelRect.size;
 
+=======
+//    CGFloat totalHeight = self.loadingLabel.frame.size.height;
+//    CGRect labelFrame = CGRectMake(0, 0, DEFAULT_LABEL_WIDTH, 35.);
+//	labelFrame.origin.x = floor(0.5 * (self.frame.size.width - DEFAULT_LABEL_WIDTH));
+//	labelFrame.origin.y = floor(0.5 * (self.frame.size.height - totalHeight));
+    
+    
+    CGSize maxLabelSize = CGSizeMake(DEFAULT_LABEL_WIDTH, 400);
+    CGSize labelSize = maxLabelSize;
+    
+    /*
+     removed deprecated sizeWithFont (1/4/16 tr)
+    CGSize labelSize = [self.loadingLabel.text sizeWithFont:self.loadingLabel.font constrainedToSize:maxLabelSize lineBreakMode:self.loadingLabel.lineBreakMode];
+    */
+     
+>>>>>>> master
     CGRect newFrame = self.loadingLabel.frame;
     newFrame.size.height = ceil(labelSize.height);
     
@@ -293,15 +313,5 @@ CGPathRef NewPathWithRoundRect(CGRect rect, CGFloat cornerRadius)
 //
 // Release instance memory.
 //
-- (void)dealloc
-{
-    self.loadingLabel = nil;
-    self.activityIndicatorView = nil;
-    
-    [loadingLabel release];
-    [activityIndicatorView release];
-    
-    [super dealloc];
-}
 
 @end

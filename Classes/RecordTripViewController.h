@@ -68,7 +68,10 @@
 
 //@interface RecordTripViewController : UITableViewController
 @interface RecordTripViewController : UIViewController
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 <CLLocationManagerDelegate,
 MKMapViewDelegate,
 UINavigationControllerDelegate,
@@ -99,10 +102,17 @@ UITextViewDelegate>
     IBOutlet UILabel *timeCounter;
     IBOutlet UILabel *distCounter;
     IBOutlet UILabel *speedCounter;
+<<<<<<< HEAD
     UIActionSheet *saveActionSheet;
     
     
     NSTimer *timer;
+=======
+    //UIAlertController *saveActionSheet;
+    
+    
+    NSTimer *__weak timer;
+>>>>>>> master
     
     // pointer to opacity mask, TabBar view
     UIView *opacityMask;
@@ -128,19 +138,26 @@ UITextViewDelegate>
  @property (nonatomic, retain) UITableViewCell	*tripPurposeCell;
  @property (nonatomic, retain) UITableViewCell	*personalInfoCell;
  */
+<<<<<<< HEAD
 @property (nonatomic, retain) UIButton *infoButton;
 @property (nonatomic, retain) UIButton *saveButton;
 @property (nonatomic, retain) UIButton *startButton;
 @property (nonatomic, retain) UIButton *noteButton;
+=======
+@property (nonatomic, strong) UIButton *infoButton;
+@property (nonatomic, strong) UIButton *saveButton;
+@property (nonatomic, strong) UIButton *startButton;
+@property (nonatomic, strong) UIButton *noteButton;
+>>>>>>> master
 
-@property (nonatomic, retain) UILabel *timeCounter;
-@property (nonatomic, retain) UILabel *distCounter;
-@property (nonatomic, retain) UIActionSheet *saveActionSheet;
+@property (nonatomic, strong) UILabel *timeCounter;
+@property (nonatomic, strong) UILabel *distCounter;
+//@property (nonatomic, strong) UIAlertController *saveActionSheet;
 
 
-@property (assign) NSTimer *timer;
+@property (weak) NSTimer *timer;
 
-@property (nonatomic, retain) UIView   *parentView;
+@property (nonatomic, strong) UIView   *parentView;
 
 
 @property (assign) BOOL recording;
@@ -148,11 +165,11 @@ UITextViewDelegate>
 @property (assign) BOOL userInfoSaved;
 
 //@property (nonatomic, retain) ReminderManager *reminderManager;
-@property (nonatomic, retain) TripManager *tripManager;
+@property (nonatomic, strong) TripManager *tripManager;
 
-@property (nonatomic, retain) NoteManager *noteManager;
+@property (nonatomic, strong) NoteManager *noteManager;
 
-@property (nonatomic, retain) CycleAtlantaAppDelegate *appDelegate;
+@property (nonatomic, strong) CycleAtlantaAppDelegate *appDelegate;
 
 - (void)initTripManager:(TripManager*)manager;
 

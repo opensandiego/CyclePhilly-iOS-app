@@ -59,6 +59,8 @@
 #import "NoteManager.h"
 #import "Trip.h"
 #import "User.h"
+#import "CycleAtlantaAppDelegate.h"
+
 @import CoreLocation;
 
 @interface RecordTripViewController () <CLLocationManagerDelegate>
@@ -74,8 +76,12 @@
 @synthesize timer, timeCounter, distCounter;
 @synthesize recording, shouldUpdateCounter, userInfoSaved;
 @synthesize appDelegate;
+<<<<<<< HEAD
 @synthesize saveActionSheet;
 @synthesize window;
+=======
+//@synthesize saveActionSheet;
+>>>>>>> master
 
 #pragma mark CLLocationManagerDelegate methods
 
@@ -97,13 +103,18 @@
         return appDelegate.locationManager;
     }
     
+<<<<<<< HEAD
     appDelegate.locationManager = [[[CLLocationManager alloc] init] autorelease];
+=======
+    appDelegate.locationManager = [[CLLocationManager alloc] init];
+>>>>>>> master
     appDelegate.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     //locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     appDelegate.locationManager.delegate = self;
     
     return appDelegate.locationManager;
 }
+
 
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -113,11 +124,10 @@
     CLLocationDistance deltaDistance = [newLocation distanceFromLocation:oldLocation];
     
     if (!myLocation) {
-        myLocation = [newLocation retain];
+        myLocation = newLocation;
     }
     else if ([myLocation distanceFromLocation:newLocation]) {
-        [myLocation release];
-        myLocation = [newLocation retain];
+        myLocation = newLocation;
     }
     
     if ( !didUpdateUserLocation )
@@ -136,6 +146,25 @@
         [mapView setCenterCoordinate:newLocation.coordinate animated:YES];
     }
     
+<<<<<<< HEAD
+    if ( !didUpdateUserLocation )
+    {
+        NSLog(@"zooming to current user location");
+        MKCoordinateRegion region = { newLocation.coordinate, { 0.0078, 0.0068 } };
+        [mapView setRegion:region animated:YES];
+        
+        didUpdateUserLocation = YES;
+    }
+    
+    // only update map if deltaDistance is at least some epsilon
+    else if ( deltaDistance > 1.0 )
+    {
+        //NSLog(@"center map to current user location");
+        [mapView setCenterCoordinate:newLocation.coordinate animated:YES];
+    }
+    
+=======
+>>>>>>> master
     if ( recording )
     {
         // add to CoreData store
@@ -219,7 +248,10 @@
     else
         NSLog(@"no saved user");
     
+<<<<<<< HEAD
     [request release];
+=======
+>>>>>>> master
     return response;
 }
 
@@ -258,10 +290,18 @@
         [self.locationManager requestAlwaysAuthorization];
     }
     self->mapView.showsUserLocation = YES;
+    
     [self.locationManager startUpdatingLocation];
     
+<<<<<<< HEAD
     // init map region to Philadelphia
     MKCoordinateRegion region = { { 39.954491, -75.163758 }, { 0.0078, 0.0068 } };
+=======
+    self->_locationManager.allowsBackgroundLocationUpdates = YES;
+    
+    // init map region to Petco Park
+    MKCoordinateRegion region = { { 32.708282, -117.155739 }, { 0.0078, 0.0068 } };
+>>>>>>> master
     [mapView setRegion:region animated:NO];
     
     // setup info button used when showing recorded trips
@@ -285,6 +325,7 @@
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
     // setup the noteManager
+<<<<<<< HEAD
     [self initNoteManager:[[[NoteManager alloc] initWithManagedObjectContext:context]autorelease]];
     
     // check if any user data has already been saved and pre-select personal info cell accordingly
@@ -295,6 +336,56 @@
     [self hasRecordingBeenInterrupted];
     
     NSLog(@"save");
+=======
+    [self initNoteManager:[[NoteManager alloc] initWithManagedObjectContext:context]];
+    
+    // check if any user data has already been saved and pre-select personal info cell accordingly
+    if ( [self hasUserInfoBeenSaved] )
+        [self setSaved:YES];
+    
+    // check for any unsaved trips / interrupted recordings
+    [self hasRecordingBeenInterrupted];
+    
+    NSLog(@"save");
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Please turn on location services.", @"" ) message:NSLocalizedString( @"This app requires location services to track your routes.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Cancel", @"" ) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"" ) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                    UIApplicationOpenSettingsURLString]];
+    }];
+    
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusNotDetermined:
+            // Ask the user for permission to use location.
+            [self.locationManager requestWhenInUseAuthorization];
+            break;
+            
+        case kCLAuthorizationStatusDenied:
+            NSLog(@"Please authorize location services for this SDSU Library under Settings > Privacy.");
+
+            [alertController addAction:cancelAction];
+            [alertController addAction:settingsAction];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            break;
+            
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        kCLAuthorizationStatusAuthorizedAlways:
+            NSLog(@"Okay.  Location will be tracked.");
+        case kCLAuthorizationStatusAuthorizedAlways:
+            break;
+        case kCLAuthorizationStatusRestricted:
+            // Nothing to do.
+            break;
+    }
+    
+    
+    
+    
+    
+>>>>>>> master
 }
 
 
@@ -307,7 +398,7 @@
     
     [noteButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [noteButton setBackgroundImage:buttonImageHighlight forState:UIControlStateHighlighted];
-    [noteButton setTitleColor:[[[UIColor alloc] initWithRed:185.0 / 255 green:91.0 / 255 blue:47.0 / 255 alpha:1.0 ] autorelease] forState:UIControlStateHighlighted];
+    [noteButton setTitleColor:[[UIColor alloc] initWithRed:185.0 / 255 green:91.0 / 255 blue:47.0 / 255 alpha:1.0 ] forState:UIControlStateHighlighted];
     
     //    noteButton.backgroundColor = [UIColor clearColor];
     noteButton.enabled = YES;
@@ -374,7 +465,6 @@
     MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
     [[self navigationController] pushViewController:mvc animated:YES];
     NSLog(@"displayUploadedTripMap");
-    [mvc release];
 }
 
 
@@ -386,7 +476,6 @@
     NoteViewController *mvc = [[NoteViewController alloc] initWithNote:note];
     [[self navigationController] pushViewController:mvc animated:YES];
     NSLog(@"displayUploadedNote");
-    [mvc release];
 }
 
 
@@ -421,9 +510,14 @@
     [startButton setTitle:@"Start" forState:UIControlStateNormal];
     
     // reset trip, reminder managers
+<<<<<<< HEAD
     [tripManager release];
     NSManagedObjectContext *context = tripManager.managedObjectContext;
     [self initTripManager:[[[TripManager alloc] initWithManagedObjectContext:context] autorelease]];
+=======
+    NSManagedObjectContext *context = tripManager.managedObjectContext;
+    [self initTripManager:[[TripManager alloc] initWithManagedObjectContext:context]];
+>>>>>>> master
     tripManager.dirty = YES;
     
     [self resetCounter];
@@ -434,6 +528,7 @@
 #pragma mark UIActionSheet delegate methods
 
 
+<<<<<<< HEAD
 // NOTE: implement didDismissWithButtonIndex to process after sheet has been dismissed
 //- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -466,8 +561,10 @@
 }
 
 
+=======
+>>>>>>> master
 // called if the system cancels the action sheet (e.g. homescreen button has been pressed)
-- (void)actionSheetCancel:(UIActionSheet *)actionSheet
+- (void)actionSheetCancel:(UIAlertController *)actionSheet
 {
     NSLog(@"actionSheetCancel");
 }
@@ -522,7 +619,10 @@
             // load map view of saved trip
             MapViewController *mvc = [[MapViewController alloc] initWithTrip:trip];
             [[self navigationController] pushViewController:mvc animated:YES];
+<<<<<<< HEAD
             [mvc release];
+=======
+>>>>>>> master
         }
             break;
     }
@@ -531,8 +631,13 @@
 
 - (NSDictionary *)newTripTimerUserInfo
 {
+<<<<<<< HEAD
     return [[NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], @"StartDate",
              tripManager, @"TripManager", nil ] retain ];
+=======
+    return [NSDictionary dictionaryWithObjectsAndKeys:[NSDate date], @"StartDate",
+             tripManager, @"TripManager", nil ];
+>>>>>>> master
 }
 
 
@@ -563,7 +668,11 @@
             [self resetCounter];
             timer = [NSTimer scheduledTimerWithTimeInterval:kCounterTimeInterval
                                                      target:self selector:@selector(updateCounter:)
+<<<<<<< HEAD
                                                    userInfo:[[self newTripTimerUserInfo] autorelease] repeats:YES];
+=======
+                                                   userInfo:[self newTripTimerUserInfo] repeats:YES];
+>>>>>>> master
         }
         
         UIImage *buttonImage = [[UIImage imageNamed:@"blueButton.png"]
@@ -613,18 +722,33 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No data to upload" message:@"No co-ordinates have been logged for this trip yet." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:nil];
             alert.tag = 201;
             [alert show];
-            [alert release];
             return;
         }
         
-        saveActionSheet = [[UIActionSheet alloc]
-                           initWithTitle:@""
-                           delegate:self
-                           cancelButtonTitle:@"Continue"
-                           destructiveButtonTitle:@"Discard"
-                           otherButtonTitles:@"Save",nil];
-        //[saveActionSheet showInView:self.view];
-        [saveActionSheet showInView:[UIApplication sharedApplication].keyWindow];
+        UIAlertController* saveActionSheet = [UIAlertController alertControllerWithTitle:@"WEBIKESD SAVE"
+                                                                             message:@"Upload Bike Trip?"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
+                                                               [self save];
+                                                           }];
+        
+        UIAlertAction* discardAction = [UIAlertAction actionWithTitle:@"Discard Trip" style:UIAlertActionStyleDestructive
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self.tripManager discardTrip];
+                                                                  [self resetRecordingInProgress];
+                                                              }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * action) {
+                                                                 shouldUpdateCounter = YES;
+                                                             }];
+        
+        
+        [saveActionSheet addAction:saveAction];
+        [saveActionSheet addAction:discardAction];
+        [saveActionSheet addAction:cancelAction];
+        [self presentViewController:saveActionSheet animated:YES completion:nil];
     }
     
 }
@@ -642,8 +766,12 @@
                                                        initWithNibName:@"TripPurposePicker" bundle:nil];
         [tripPurposePickerView setDelegate:self];
         //[[self navigationController] pushViewController:pickerViewController animated:YES];
+<<<<<<< HEAD
         [self.navigationController presentModalViewController:tripPurposePickerView animated:YES];
         [tripPurposePickerView release];
+=======
+        [self.navigationController presentViewController:tripPurposePickerView animated:YES completion:nil];
+>>>>>>> master
     }
     
     // prompt to confirm first
@@ -656,6 +784,7 @@
         NSString *purpose = nil;
         if ( tripManager != nil )
             purpose = [self getPurposeString:[tripManager getPurposeIndex]];
+<<<<<<< HEAD
         
         NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
         
@@ -672,6 +801,34 @@
         
         [actionSheet showFromTabBar:tbc.tabBar];
         [actionSheet release];
+=======
+
+        UIAlertController* actionSheet = [UIAlertController alertControllerWithTitle:@"My Alert"
+                                                                       message:@"This is an alert."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self save];
+                                                              }];
+        
+        UIAlertAction* discardAction = [UIAlertAction actionWithTitle:@"Discard Trip" style:UIAlertActionStyleDestructive
+                                                           handler:^(UIAlertAction * action) {
+                                                               [self.tripManager discardTrip];
+                                                               [self resetRecordingInProgress];
+                                                           }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                                                              handler:^(UIAlertAction * action) {
+                                                                  shouldUpdateCounter = YES;
+                                                              }];
+        
+        
+        [actionSheet addAction:saveAction];
+        [actionSheet addAction:discardAction];
+        [actionSheet addAction:cancelAction];
+        [self presentViewController:actionSheet animated:YES completion:nil];
+        
+>>>>>>> master
     }
     
 }
@@ -694,6 +851,7 @@
     {
         // Trip Purpose
         NSLog(@"INIT + PUSH");
+<<<<<<< HEAD
         
         
         PickerViewController *notePickerView = [[PickerViewController alloc]
@@ -702,10 +860,23 @@
         [notePickerView setDelegate:self];
         //[[self navigationController] pushViewController:pickerViewController animated:YES];
         [self.navigationController presentModalViewController:notePickerView animated:YES];
+=======
         
+>>>>>>> master
+        
+        PickerViewController *notePickerView = [[PickerViewController alloc]
+                                                //initWithPurpose:[tripManager getPurposeIndex]];
+                                                initWithNibName:@"TripPurposePicker" bundle:nil];
+        [notePickerView setDelegate:self];
+        //[[self navigationController] pushViewController:pickerViewController animated:YES];
+        //[self.navigationController presentModalViewController:notePickerView animated:YES]; deprecated
+        [self presentViewController:notePickerView animated:YES completion:nil];
         //add location information
         
+<<<<<<< HEAD
         [notePickerView release];
+=======
+>>>>>>> master
     }
     
     // prompt to confirm first
@@ -719,9 +890,17 @@
         if ( tripManager != nil )
             purpose = [self getPurposeString:[tripManager getPurposeIndex]];
         
+<<<<<<< HEAD
         NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
         
         // present action sheet
+=======
+        
+        
+        // present action sheet
+        /*Changing from UIActionSheet
+         NSString *confirm = [NSString stringWithFormat:@"Stop recording & save this trip?"];
+>>>>>>> master
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:confirm
                                                                  delegate:self
                                                         cancelButtonTitle:@"Cancel"
@@ -734,6 +913,36 @@
         
         [actionSheet showFromTabBar:tbc.tabBar];
         [actionSheet release];
+<<<<<<< HEAD
+=======
+         */
+        UIAlertController* save = [UIAlertController alertControllerWithTitle:@"WEBIKESD SAVE"
+                                                                             message:@"Note This?"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* saveAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
+                                                               [self save];
+                                                           }];
+        
+        UIAlertAction* discardAction = [UIAlertAction actionWithTitle:@"Discard Note." style:UIAlertActionStyleDestructive
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [self.tripManager discardTrip];
+                                                                  [self resetRecordingInProgress];
+                                                              }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * action) {
+                                                                 shouldUpdateCounter = YES;
+                                                             }];
+        
+        
+        [save addAction:saveAction];
+        [save addAction:discardAction];
+        [save addAction:cancelAction];
+        [self presentViewController:save animated:YES completion:nil];
+         
+         
+>>>>>>> master
     }
 }
 
@@ -756,12 +965,20 @@
         
         static NSDateFormatter *inputFormatter = nil;
         if ( inputFormatter == nil )
+<<<<<<< HEAD
             inputFormatter = [[[NSDateFormatter alloc] init] autorelease];
+=======
+            inputFormatter = [[NSDateFormatter alloc] init];
+>>>>>>> master
         
         [inputFormatter setDateFormat:@"HH:mm:ss"];
         NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
         [inputFormatter setDateFormat:@"HH:mm:ss"];
+<<<<<<< HEAD
         NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
+=======
+        NSDate *outputDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate];
+>>>>>>> master
         
         timeCounter.text = [inputFormatter stringFromDate:outputDate];
     }
@@ -788,7 +1005,11 @@
         [inputFormatter setDateFormat:@"HH:mm:ss"];
         NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
         [inputFormatter setDateFormat:@"HH:mm:ss"];
+<<<<<<< HEAD
         NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate] autorelease];
+=======
+        NSDate *outputDate = [[NSDate alloc] initWithTimeInterval:interval sinceDate:fauxDate];
+>>>>>>> master
         
         //NSLog(@"Timer started on %@", startDate);
         //NSLog(@"Timer started %f seconds ago", interval);
@@ -907,7 +1128,11 @@ shouldSelectViewController:(UIViewController *)viewController
     NSString *purpose = [tripManager setPurpose:index];
     NSLog(@"setPurpose: %@", purpose);
     
+<<<<<<< HEAD
     //[self.navigationController popViewControllerAnimated:YES];
+=======
+    [self.navigationController popViewControllerAnimated:YES];
+>>>>>>> master
     
     return [self updatePurposeWithString:purpose];
 }
@@ -921,7 +1146,13 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelPurpose
 {
+<<<<<<< HEAD
     [self.navigationController dismissModalViewControllerAnimated:YES];
+=======
+    //[self.navigationController dismissModalViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+>>>>>>> master
     appDelegate = [[UIApplication sharedApplication] delegate];
     appDelegate.isRecording = YES;
     recording = YES;
@@ -933,7 +1164,11 @@ shouldSelectViewController:(UIViewController *)viewController
 
 - (void)didCancelNote
 {
+<<<<<<< HEAD
     [self.navigationController dismissModalViewControllerAnimated:YES];
+=======
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+>>>>>>> master
     appDelegate = [[UIApplication sharedApplication] delegate];
 }
 
@@ -985,7 +1220,6 @@ shouldSelectViewController:(UIViewController *)viewController
 - (void)didSaveImage:(NSData *)imgData{
     [noteManager.note setImage_data:imgData];
     NSLog(@"Added image, Size of Image(bytes):%lu", (unsigned long)[imgData length]);
-    [imgData release];
 }
 
 - (void)getTripThumbnail:(NSData *)imgData{
@@ -1021,24 +1255,14 @@ shouldSelectViewController:(UIViewController *)viewController
 - (void)dealloc {
     
     appDelegate.locationManager = nil;
-    self.startButton = nil;
-    self.infoButton = nil;
-    self.saveButton = nil;
-    self.noteButton = nil;
-    self.timeCounter = nil;
-    self.distCounter = nil;
-    self.saveActionSheet = nil;
     self.timer = nil;
-    self.parentView = nil;
     self.recording = nil;
     self.shouldUpdateCounter = nil;
     self.userInfoSaved = nil;
-    self.tripManager = nil;
-    self.noteManager = nil;
-    self.appDelegate = nil;
     speedCounter = nil;
     
     //    [appDelegate.locationManager release];
+<<<<<<< HEAD
     [appDelegate release];
     [infoButton release];
     [saveButton release];
@@ -1059,6 +1283,10 @@ shouldSelectViewController:(UIViewController *)viewController
     [mapView release];
     
     [super dealloc];
+=======
+    
+    
+>>>>>>> master
 }
 
 @end

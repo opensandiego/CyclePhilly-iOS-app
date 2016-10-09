@@ -42,6 +42,8 @@
 
 @interface ZipUtil : NSObject
 
+//Changed NSData to NSUInteger
+
 +(NSData*) gzipDeflate: (NSData*)pUncompressedData ;
 
 @end

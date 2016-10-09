@@ -128,6 +128,7 @@
 
 - (void)initInfoView
 {
+<<<<<<< HEAD
     infoView					= [[UIView alloc] initWithFrame:CGRectMake(0,0,320,560)];
     infoView.alpha				= kInfoViewAlpha;
     infoView.backgroundColor	= [UIColor blackColor];
@@ -147,6 +148,27 @@
     notesText.text				= trip.notes;
     notesText.textColor			= [UIColor whiteColor];
     [infoView addSubview:notesText];
+=======
+	infoView					= [[UIView alloc] initWithFrame:CGRectMake(0,0,320,560)];
+	infoView.alpha				= kInfoViewAlpha;
+	infoView.backgroundColor	= [UIColor blackColor];
+	
+	UILabel *notesHeader		= [[UILabel alloc] initWithFrame:CGRectMake(9,85,160,25)];
+	notesHeader.backgroundColor = [UIColor clearColor];
+	notesHeader.font			= [UIFont boldSystemFontOfSize:18.0];
+	notesHeader.opaque			= NO;
+	notesHeader.text			= @"Trip Notes";
+	notesHeader.textColor		= [UIColor whiteColor];
+	[infoView addSubview:notesHeader];
+	
+	UITextView *notesText		= [[UITextView alloc] initWithFrame:CGRectMake(0,110,320,200)];
+	notesText.backgroundColor	= [UIColor clearColor];
+	notesText.editable			= NO;
+	notesText.font				= [UIFont systemFontOfSize:16.0];
+	notesText.text				= trip.notes;
+	notesText.textColor			= [UIColor whiteColor];
+	[infoView addSubview:notesText];
+>>>>>>> master
     
 }
 
@@ -165,8 +187,10 @@
     }
     self->mapView.showsUserLocation = YES;
     [self.locationManager startUpdatingLocation];
+    self->_locationManager.allowsBackgroundLocationUpdates = YES;
     
     if ( trip )
+<<<<<<< HEAD
     {
         // format date as a string
         static NSDateFormatter *dateFormatter = nil;
@@ -187,6 +211,26 @@
         NSDate *outputDate = [[[NSDate alloc] initWithTimeInterval:(NSTimeInterval)[trip.duration doubleValue] sinceDate:fauxDate] autorelease];
         
         double mph = ( [trip.distance doubleValue] / 1609.344 ) / ( [trip.duration doubleValue] / 3600. );
+=======
+	{
+		// format date as a string
+		static NSDateFormatter *dateFormatter = nil;
+		if (dateFormatter == nil) {
+			dateFormatter = [[NSDateFormatter alloc] init];
+			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+			[dateFormatter setDateStyle:NSDateFormatterLongStyle];
+		}
+		
+		// display duration, distance as navbar prompt
+		static NSDateFormatter *inputFormatter = nil;
+		if ( inputFormatter == nil )
+			inputFormatter = [[NSDateFormatter alloc] init];
+		
+		[inputFormatter setDateFormat:@"HH:mm:ss"];
+		NSDate *fauxDate = [inputFormatter dateFromString:@"00:00:00"];
+		[inputFormatter setDateFormat:@"HH:mm:ss"];
+		NSDate *outputDate = [[NSDate alloc] initWithTimeInterval:(NSTimeInterval)[trip.duration doubleValue] sinceDate:fauxDate];
+>>>>>>> master
         
         self.navigationItem.prompt = [NSString stringWithFormat:@"elapsed: %@ ~ %@",
                                       [inputFormatter stringFromDate:outputDate],
@@ -219,6 +263,7 @@
          NSArray *sortDescriptors = [NSArray arrayWithObjects:dateDescriptor, nil];
          NSArray *sortedCoords = [[trip.coords allObjects] sortedArrayUsingDescriptors:sortDescriptors];
          */
+<<<<<<< HEAD
         
         // filter coords by hAccuracy
         NSPredicate *filterByAccuracy	= [NSPredicate predicateWithFormat:@"hAccuracy < 100.0"];
@@ -241,8 +286,32 @@
         NSNumber *maxLat = [NSNumber numberWithDouble:0.0];
         NSNumber *minLon = [NSNumber numberWithDouble:0.0];
         NSNumber *maxLon = [NSNumber numberWithDouble:0.0];
+=======
+		
+		// filter coords by hAccuracy
+		NSPredicate *filterByAccuracy	= [NSPredicate predicateWithFormat:@"hAccuracy < 100.0"];
+		NSArray		*filteredCoords		= [[trip.coords allObjects] filteredArrayUsingPredicate:filterByAccuracy];
+		NSLog(@"count of filtered coords = %lu", (unsigned long)[filteredCoords count]);
+		
+		// sort filtered coords by recorded date
+		NSSortDescriptor *sortByDate	= [[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:YES];
+		NSArray		*sortDescriptors	= [NSArray arrayWithObjects:sortByDate, nil];
+		NSArray		*sortedCoords		= [filteredCoords sortedArrayUsingDescriptors:sortDescriptors];
+		
+		// add coords as annotations to map
+		BOOL first = YES;
+		Coord *last = nil;
+		MapCoord *pin = nil;
+		int count = 0;
+		
+		// calculate min/max values for lat, lon
+		NSNumber *minLat = [NSNumber numberWithDouble:0.0];
+		NSNumber *maxLat = [NSNumber numberWithDouble:0.0];
+		NSNumber *minLon = [NSNumber numberWithDouble:0.0];
+		NSNumber *maxLon = [NSNumber numberWithDouble:0.0];
+>>>>>>> master
         
-        NSMutableArray *routeCoords = [[[NSMutableArray alloc]init] autorelease];
+        NSMutableArray *routeCoords = [[NSMutableArray alloc]init];
         
         for ( Coord *coord in sortedCoords )
         {
@@ -255,11 +324,16 @@
                 coordinate.latitude  = [coord.latitude doubleValue];
                 coordinate.longitude = [coord.longitude doubleValue];
                 
+<<<<<<< HEAD
                 CLLocation *routePoint = [[[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude] autorelease];
                 [routeCoords addObject:routePoint];
                 
                 //pin = [[MapCoord alloc] init];
                 //pin.coordinate = coordinate;
+=======
+                CLLocation *routePoint = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+				[routeCoords addObject:routePoint];
+>>>>>>> master
                 
                 if ( first )
                 {
@@ -311,11 +385,11 @@
         [mapView setNeedsDisplay];
         
         //add start/end pins
-        MKPointAnnotation *startPoint = [[[MKPointAnnotation alloc] init] autorelease];
+        MKPointAnnotation *startPoint = [[MKPointAnnotation alloc] init];
         startPoint.coordinate = routePath[0];
         startPoint.title = @"Start";
         [mapView addAnnotation:startPoint];
-        MKPointAnnotation *endPoint = [[[MKPointAnnotation alloc] init] autorelease];
+        MKPointAnnotation *endPoint = [[MKPointAnnotation alloc] init];
         endPoint.coordinate = routePath[numPoints-1];
         endPoint.title = @"End";
         [mapView addAnnotation:endPoint];
@@ -362,8 +436,13 @@
                 (routePath[0].longitude + routePath[numPoints-1].longitude) / 2 },
                 { latDelta,
                     lonDelta } };
+<<<<<<< HEAD
             [mapView setRegion:region animated:NO];
         }
+=======
+			[mapView setRegion:region animated:NO];
+		}
+>>>>>>> master
         else
         {
             // init map region to Petco Park.
@@ -382,7 +461,65 @@
     LoadingView *loading = (LoadingView*)[self.parentViewController.view viewWithTag:909];
     //NSLog(@"loading: %@", loading);
     [loading performSelector:@selector(removeView) withObject:nil afterDelay:0.5];
+<<<<<<< HEAD
+=======
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString( @"Enter your title here", @"" ) message:NSLocalizedString( @"This app requires location services to track your routes.", @"" ) preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Cancel", @"" ) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:NSLocalizedString( @"Settings", @"" ) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:
+                                                    UIApplicationOpenSettingsURLString]];
+    }];
+    
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusNotDetermined:
+            // Ask the user for permission to use location.
+            [self.locationManager requestWhenInUseAuthorization];
+            break;
+            
+        case kCLAuthorizationStatusDenied:
+            NSLog(@"Please authorize location services for this SDSU Library under Settings > Privacy.");
+            
+            [alertController addAction:cancelAction];
+            [alertController addAction:settingsAction];
+            
+            [self presentViewController:alertController animated:YES completion:nil];
+            break;
+            
+        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        case kCLAuthorizationStatusRestricted:
+            // Nothing to do.
+            break;
+    }
+    
+    
+    
+    
+>>>>>>> master
 }
+
+/// Request authorization if needed.
+- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView {
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusNotDetermined:
+            // Ask the user for permission to use location.
+            [self.locationManager requestWhenInUseAuthorization];
+            break;
+            
+        case kCLAuthorizationStatusDenied:
+            NSLog(@"Please authorize location services for this SDSU Library under Settings > Privacy.");
+            break;
+            
+        case kCLAuthorizationStatusAuthorizedAlways:
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+        case kCLAuthorizationStatusRestricted:
+            // Nothing to do.
+            break;
+    }
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated{
     UIImage *thumbnailOriginal;
@@ -400,7 +537,7 @@
     UIImage *thumbnail;
     thumbnail = shrinkImage(newImage, size);
     
-    NSData *thumbnailData = [[[NSData alloc] initWithData:UIImageJPEGRepresentation(thumbnail, 0)] autorelease];
+    NSData *thumbnailData = [[NSData alloc] initWithData:UIImageJPEGRepresentation(thumbnail, 0)];
     NSLog(@"Size of Thumbnail Image(bytes):%lu",(unsigned long)[thumbnailData length]);
     NSLog(@"Size: %f, %f", thumbnail.size.height, thumbnail.size.width);
     
@@ -429,12 +566,12 @@ UIImage *shrinkImage(UIImage *original, CGSize size) {
 
 - (UIImage*)screenshot
 {
-    NSLog(@"Screen Shoot");
+    NSLog(@"Screen Shot");
     // Create a graphics context with the target size
     // On iOS 4 and later, use UIGraphicsBeginImageContextWithOptions to take the scale into consideration
     // On iOS prior to 4, fall back to use UIGraphicsBeginImageContext
     CGSize imageSize = [[UIScreen mainScreen] bounds].size;
-    if (NULL != UIGraphicsBeginImageContextWithOptions)
+    if (NULL != &UIGraphicsBeginImageContextWithOptions)
         UIGraphicsBeginImageContextWithOptions(imageSize, NO, 0);
     else
         UIGraphicsBeginImageContext(imageSize);
@@ -528,6 +665,7 @@ UIImage *shrinkImage(UIImage *original, CGSize size) {
     // Handle any custom annotations.
     if ([annotation isKindOfClass:[MapCoord class]])
     {
+<<<<<<< HEAD
         MKAnnotationView* annotationView = nil;
         
         if ( [(MapCoord*)annotation first] )
@@ -593,17 +731,81 @@ UIImage *shrinkImage(UIImage *original, CGSize size) {
             }
         }
         
+=======
+		MKAnnotationView* annotationView = nil;
+		
+		if ( [(MapCoord*)annotation first] )
+		{
+			// Try to dequeue an existing pin view first.
+			MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
+																  dequeueReusableAnnotationViewWithIdentifier:@"FirstCoord"];
+			
+			if ( !pinView )
+			{
+				// If an existing pin view was not available, create one
+				pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"FirstCoord"];
+                pinView.image = [UIImage imageNamed:@"tripStart.png"];
+                NSLog(@"START GLYPH");
+			}
+			
+			annotationView = pinView;
+		}
+		else if ( [(MapCoord*)annotation last] )
+		{
+			// Try to dequeue an existing pin view first.
+			MKPinAnnotationView* pinView = (MKPinAnnotationView*)[mapView
+																  dequeueReusableAnnotationViewWithIdentifier:@"LastCoord"];
+			
+			if ( !pinView )
+			{
+				// If an existing pin view was not available, create one
+				pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"LastCoord"];
+                pinView.image = [UIImage imageNamed:@"tripEnd.png"];
+                NSLog(@"STOP GLYPH");
+			}
+			
+			annotationView = pinView;
+		}
+		else
+		{
+			// Try to dequeue an existing pin view first.
+			annotationView = (MKAnnotationView*)[mapView
+												 dequeueReusableAnnotationViewWithIdentifier:@"MapCoord"];
+			
+			if (!annotationView)
+			{
+				// If an existing pin view was not available, create one
+				annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"MapCoord"];
+				
+				annotationView.image = [UIImage imageNamed:@"MapCoord.png"];
+				
+				/*
+				 pinView.pinColor = MKPinAnnotationColorPurple;
+				 pinView.animatesDrop = YES;
+				 pinView.canShowCallout = YES;
+				 */
+				
+				/*
+				 // Add a detail disclosure button to the callout.
+				 UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+				 [rightButton addTarget:self action:@selector(myShowDetailsMethod:) forControlEvents:UIControlEventTouchUpInside];
+				 pinView.rightCalloutAccessoryView = rightButton;
+				 */
+			}
+		}
+		
+>>>>>>> master
         return annotationView;
     } else {
         //handle 'normal' pins
         
         if([annotation.title isEqual:@"Start"]){
-            MKPinAnnotationView *annView=[[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"tripPin"] autorelease];
+            MKPinAnnotationView *annView=[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"tripPin"];
             annView.image = [UIImage imageNamed:@"tripStart.png"];
             annView.centerOffset = CGPointMake(-(annView.image.size.width/4),(annView.image.size.height/3));
             return annView;
         }else if ([annotation.title isEqual:@"End"]){
-            MKPinAnnotationView *annView=[[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"tripPin"] autorelease];
+            MKPinAnnotationView *annView=[[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"tripPin"];
             annView.image = [UIImage imageNamed:@"tripEnd.png"];
             annView.centerOffset = CGPointMake(-(annView.image.size.width/4),(annView.image.size.height/3));
             return annView;
@@ -613,14 +815,15 @@ UIImage *shrinkImage(UIImage *original, CGSize size) {
     return nil;
 }
 
-- (MKOverlayView*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
+- (MKPolylineRenderer*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
 {
-    MKPolylineView* lineView = [[[MKPolylineView alloc] initWithPolyline:self.routeLine] autorelease];
+    MKPolylineRenderer* lineView = [[MKPolylineRenderer alloc] initWithPolyline:self.routeLine];
     lineView.strokeColor = [UIColor blueColor];
     lineView.lineWidth = 5;
     return lineView;
 }
 
+<<<<<<< HEAD
 - (void)dealloc {
     self.trip = nil;
     self.doneButton = nil;
@@ -640,6 +843,8 @@ UIImage *shrinkImage(UIImage *original, CGSize size) {
     
     [super dealloc];
 }
+=======
+>>>>>>> master
 
 
 @end

@@ -100,13 +100,24 @@
 #define kSaveError			@"Your trip has been saved. Please try uploading again later."
 
 //	updated references for posting to Cycle Philly site for Cycle Philly adaptation for questions email Corey Acri acri.corey@gmail.com
+//updated for WeBikeSD (1/3/2016 tr)
 
+<<<<<<< HEAD
 #define kInfoURL			@"http://www.webikesd.org"
 #define kInstructionsURL	@"mailto:support@webikesd.org"
 
 #define kSaveURL			@"http://www.webikesd.org/post/"
 
 #define kFireDomain			@"https://blazing-torch-4795.firebaseio.com/"
+=======
+
+#define kInfoURL			@"http://www.webikesd.org/#about"
+#define kInstructionsURL	@"mailto:support@teamwebikesd.org"
+
+#define kSaveURL			@"https://www.phineasfen.com/teamwebikesd/app/WeBikeSD/php/post"
+
+#define kFireDomain			@"https://project-3189448588169164345.firebaseio.com/trips"
+>>>>>>> master
 //#define kSaveURL			@""
 
 #define kTripNotesPlaceholder	@"Comments"

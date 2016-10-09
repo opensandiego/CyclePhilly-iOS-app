@@ -44,7 +44,7 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/22/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 
@@ -58,31 +58,31 @@
 
 
 @interface TripManager : NSObject
-<ActivityIndicatorDelegate, 
-TripPurposeDelegate, 
-UIAlertViewDelegate, 
+<ActivityIndicatorDelegate,
+TripPurposeDelegate,
+UIAlertViewDelegate,
 UITextViewDelegate>
 {
-	UIAlertView *saving;
-	UIAlertView *tripNotes;
-	UITextView	*tripNotesText;
-//    id <ActivityIndicatorDelegate> activityDelegate;
-//    id <UIAlertViewDelegate> alertDelegate;
-//    UIActivityIndicatorView *activityIndicator;
-
-	BOOL dirty;
-	Trip *trip;
-	CLLocationDistance distance;
-	NSInteger purposeIndex;
-	
-	NSMutableArray *coords;
+    UIAlertView *saving;
+    UIAlertView *tripNotes;
+    UITextView	*tripNotesText;
+    //    id <ActivityIndicatorDelegate> activityDelegate;
+    //    id <UIAlertViewDelegate> alertDelegate;
+    //    UIActivityIndicatorView *activityIndicator;
+    
+    BOOL dirty;
+    Trip *trip;
+    CLLocationDistance distance;
+    NSInteger purposeIndex;
+    
+    NSMutableArray *coords;
     NSManagedObjectContext *managedObjectContext;
-
-	NSMutableData *receivedData;
-	
-	NSMutableArray *unSavedTrips;
-	NSMutableArray *unSyncedTrips;
-	NSMutableArray *zeroDistanceTrips;
+    
+    NSMutableData *receivedData;
+    
+    NSMutableArray *unSavedTrips;
+    NSMutableArray *unSyncedTrips;
+    NSMutableArray *zeroDistanceTrips;
 }
 
 @property (nonatomic, retain) id <ActivityIndicatorDelegate> activityDelegate;
@@ -91,7 +91,7 @@ UITextViewDelegate>
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, retain) LoadingView *uploadingView;
 
-@property (nonatomic, retain) UIViewController *parent; 
+@property (nonatomic, retain) UIViewController *parent;
 
 @property (nonatomic, retain) UIAlertView *saving;
 @property (nonatomic, retain) UIAlertView *tripNotes;
@@ -127,7 +127,7 @@ UITextViewDelegate>
 //- (void)promptForTripNotes;
 
 - (long)countUnSavedTrips;
-- (long)countUnSyncedTrips;
+//- (long)countUnSyncedTrips;
 - (long)countZeroDistanceTrips;
 
 - (BOOL)loadMostRecentUnSavedTrip;
@@ -143,5 +143,3 @@ UITextViewDelegate>
 + (NSString *)getPurposeString:(long)index;
 
 @end
-
-

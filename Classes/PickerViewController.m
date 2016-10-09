@@ -44,7 +44,7 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/28/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 
@@ -61,59 +61,64 @@
 
 @implementation PickerViewController
 
+<<<<<<< HEAD
 @synthesize customPickerView, customPickerDataSource, delegate;
 @synthesize descriptionText = description;
 @synthesize descriptionLabel;
+=======
+@synthesize customPickerView, customPickerDataSource, delegate, descriptionView;
+@synthesize descriptionText;
+>>>>>>> master
 
 
 // return the picker frame based on its size
 - (CGRect)pickerFrameWithSize:(CGSize)size
 {
-	
-	// layout at bottom of page
-	/*
-	CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
-	CGRect pickerRect = CGRectMake(	0.0,
-									screenRect.size.height - 84.0 - size.height,
-									size.width,
-									size.height);
-	 */
-	
-	// layout at top of page
-	//CGRect pickerRect = CGRectMake(	0.0, 0.0, size.width, size.height );	
-	
-	// layout at top of page, leaving room for translucent nav bar
-	//CGRect pickerRect = CGRectMake(	0.0, 43.0, size.width, size.height );
-	
-	CGRect pickerRect = CGRectMake(	0.0, 78.0, size.width, size.height );	
-	return pickerRect;
+    
+    // layout at bottom of page
+    /*
+     CGRect screenRect = [[UIScreen mainScreen] applicationFrame];
+     CGRect pickerRect = CGRectMake(	0.0,
+     screenRect.size.height - 84.0 - size.height,
+     size.width,
+     size.height);
+     */
+    
+    // layout at top of page
+    //CGRect pickerRect = CGRectMake(	0.0, 0.0, size.width, size.height );
+    
+    // layout at top of page, leaving room for translucent nav bar
+    //CGRect pickerRect = CGRectMake(	0.0, 43.0, size.width, size.height );
+    
+    CGRect pickerRect = CGRectMake(	0.0, 78.0, size.width, size.height );
+    return pickerRect;
 }
 
 
 - (void)createCustomPicker
 {
-	customPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
-	customPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	
-	// setup the data source and delegate for this picker
-	customPickerDataSource = [[CustomPickerDataSource alloc] init];
-	customPickerDataSource.parent = self;
-	customPickerView.dataSource = customPickerDataSource;
-	customPickerView.delegate = customPickerDataSource;
-	
-	// note we are using CGRectZero for the dimensions of our picker view,
-	// this is because picker views have a built in optimum size,
-	// you just need to set the correct origin in your view.
-	//
-	// position the picker at the bottom
-	CGSize pickerSize = [customPickerView sizeThatFits:CGSizeZero];
-	customPickerView.frame = [self pickerFrameWithSize:pickerSize];
-	
-	customPickerView.showsSelectionIndicator = YES;
-	
-	// add this picker to our view controller, initially hidden
-	//customPickerView.hidden = YES;
-	[self.view addSubview:customPickerView];
+    customPickerView = [[UIPickerView alloc] initWithFrame:CGRectZero];
+    customPickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+    // setup the data source and delegate for this picker
+    customPickerDataSource = [[CustomPickerDataSource alloc] init];
+    customPickerDataSource.parent = self;
+    customPickerView.dataSource = customPickerDataSource;
+    customPickerView.delegate = customPickerDataSource;
+    
+    // note we are using CGRectZero for the dimensions of our picker view,
+    // this is because picker views have a built in optimum size,
+    // you just need to set the correct origin in your view.
+    //
+    // position the picker at the bottom
+    CGSize pickerSize = [customPickerView sizeThatFits:CGSizeZero];
+    customPickerView.frame = [self pickerFrameWithSize:pickerSize];
+    
+    customPickerView.showsSelectionIndicator = YES;
+    
+    // add this picker to our view controller, initially hidden
+    //customPickerView.hidden = YES;
+    [self.view addSubview:customPickerView];
 }
 
 
@@ -123,7 +128,7 @@
     pickerCategory = [[NSUserDefaults standardUserDefaults] integerForKey:@"pickerCategory"];
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey: @"pickerCategory"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-	[delegate didCancelNote];
+    [delegate didCancelNote];
 }
 
 
@@ -201,7 +206,7 @@
         NSInteger row = [customPickerView selectedRowInComponent:0];
         
         NSNumber *tempType = 0;
-
+        
         
         if(row>=7){
             tempType = [NSNumber numberWithLong:row-7];
@@ -213,19 +218,19 @@
         NSLog(@"tempType: %d", [tempType intValue]);
         
         [delegate didPickNoteType:tempType];
-    }	
+    }
 }
 
 
 - (id)initWithNibName:(NSString *)nibName bundle:(NSBundle *)nibBundle
 {
-	NSLog(@"initWithNibNamed");
-	if (self = [super initWithNibName:nibName bundle:nibBundle])
-	{
-		//NSLog(@"PickerViewController init");		
-		[self createCustomPicker];
+    NSLog(@"initWithNibNamed");
+    if (self = [super initWithNibName:nibName bundle:nibBundle])
+    {
+        //NSLog(@"PickerViewController init");
+        [self createCustomPicker];
         
-		pickerCategory = [[NSUserDefaults standardUserDefaults] integerForKey:@"pickerCategory"];
+        pickerCategory = [[NSUserDefaults standardUserDefaults] integerForKey:@"pickerCategory"];
         if (pickerCategory == 0) {
             // picker defaults to top-most item => update the description
             [self pickerView:customPickerView didSelectRow:0 inComponent:0];
@@ -235,22 +240,22 @@
             [self pickerView:customPickerView didSelectRow:6 inComponent:0];
         }
         
-		
-	}
-	return self;
+        
+    }
+    return self;
 }
 
 
 - (id)initWithPurpose:(NSInteger)index
 {
-	if (self = [self init])
-	{
-		//NSLog(@"PickerViewController initWithPurpose: %d", index);
-		
-		// update the picker
-		[customPickerView selectRow:index inComponent:0 animated:YES];
-		
-		pickerCategory = [[NSUserDefaults standardUserDefaults] integerForKey:@"pickerCategory"];
+    if (self = [self init])
+    {
+        //NSLog(@"PickerViewController initWithPurpose: %d", index);
+        
+        // update the picker
+        [customPickerView selectRow:index inComponent:0 animated:YES];
+        
+        pickerCategory = [[NSUserDefaults standardUserDefaults] integerForKey:@"pickerCategory"];
         if (pickerCategory == 0) {
             // picker defaults to top-most item => update the description
             [self pickerView:customPickerView didSelectRow:0 inComponent:0];
@@ -259,8 +264,8 @@
             // picker defaults to top-most item => update the description
             [self pickerView:customPickerView didSelectRow:6 inComponent:0];
         }
-	}
-	return self;
+    }
+    return self;
 }
 
 
@@ -284,31 +289,31 @@
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-
-	[super viewDidLoad];
     
-	
-
-	//self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-	// self.view.backgroundColor = [[UIColor alloc] initWithRed:40. green:42. blue:57. alpha:1. ];
-
-	// Set up the buttons.
-	/*
-	UIBarButtonItem* done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
-															  target:self action:@selector(done)];
-	done.enabled = YES;
-	self.navigationItem.rightBarButtonItem = done;
-	 */
-	//[self.navigationController setNavigationBarHidden:NO animated:YES];
-	
-	//description = [[UITextView alloc] initWithFrame:CGRectMake( 18.0, 280.0, 284.0, 130.0 )];
-	description = [[UITextView alloc] initWithFrame:CGRectMake( 18.0, 314.0, 284.0, 120.0 )];
-	description.editable = NO;
-    description.backgroundColor = [UIColor clearColor];
-    description.textColor = [UIColor whiteColor];
+    [super viewDidLoad];
     
-	description.font = [UIFont fontWithName:@"Arial" size:16];
-	[self.view addSubview:description];
+    
+    
+    //self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    // self.view.backgroundColor = [[UIColor alloc] initWithRed:40. green:42. blue:57. alpha:1. ];
+    
+    // Set up the buttons.
+    /*
+     UIBarButtonItem* done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+     target:self action:@selector(done)];
+     done.enabled = YES;
+     self.navigationItem.rightBarButtonItem = done;
+     */
+    //[self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    //description = [[UITextView alloc] initWithFrame:CGRectMake( 18.0, 280.0, 284.0, 130.0 )];
+    descriptionView = [[UITextView alloc] initWithFrame:CGRectMake( 18.0, 314.0, 284.0, 120.0 )];
+    descriptionView.editable = NO;
+    descriptionView.backgroundColor = [UIColor clearColor];
+    descriptionView.textColor = [UIColor whiteColor];
+    
+    descriptionView.font = [UIFont fontWithName:@"Arial" size:16];
+    [self.view addSubview:descriptionView];
 }
 
 
@@ -318,10 +323,10 @@
 //
 
 - (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
+    // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
+    
+    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark UIPickerViewDelegate
@@ -337,42 +342,139 @@
             navBarItself.topItem.rightBarButtonItem.enabled = YES;
         }
     }
-	//NSLog(@"parent didSelectRow: %d inComponent:%d", row, component);
+    //NSLog(@"parent didSelectRow: %d inComponent:%d", row, component);
     
     pickerCategory = [[NSUserDefaults standardUserDefaults] integerForKey:@"pickerCategory"];
     
     if (pickerCategory == 0) {
         switch (row) {
             case 0:
-                description.text = kDescCommute;
+                descriptionView.text = kDescCommute;
                 break;
             case 1:
-                description.text = kDescSchool;
+                descriptionView.text = kDescSchool;
                 break;
             case 2:
-                description.text = kDescWork;
+                descriptionView.text = kDescWork;
                 break;
             case 3:
-                description.text = kDescExercise;
+                descriptionView.text = kDescExercise;
                 break;
             case 4:
-                description.text = kDescSocial;
+                descriptionView.text = kDescSocial;
                 break;
             case 5:
-                description.text = kDescShopping;
+                descriptionView.text = kDescShopping;
                 break;
             case 6:
-                description.text = kDescErrand;
+                descriptionView.text = kDescErrand;
                 break;
             default:
-                description.text = kDescOther;
+                descriptionView.text = kDescOther;
                 break;
         }
     }
+<<<<<<< HEAD
+=======
+    
+    else if (pickerCategory == 1){
+        switch (row) {
+            case 0:
+                descriptionView.text = kIssueDescPavementIssue;
+                break;
+            case 1:
+                descriptionView.text = kIssueDescTrafficSignal;
+                break;
+            case 2:
+                descriptionView.text = kIssueDescEnforcement;
+                break;
+            case 3:
+                descriptionView.text = kIssueDescNeedParking;
+                break;
+            case 4:
+                descriptionView.text = kIssueDescBikeLaneIssue;
+                break;
+            default:
+                descriptionView.text = kIssueDescNoteThisSpot;
+                break;
+        }
+    }
+    else if (pickerCategory == 2){
+        switch (row) {
+            case 0:
+                descriptionView.text = kAssetDescBikeParking;
+                break;
+            case 1:
+                descriptionView.text = kAssetDescBikeShops;
+                break;
+            case 2:
+                descriptionView.text = kAssetDescPublicRestrooms;
+                break;
+            case 3:
+                descriptionView.text = kAssetDescSecretPassage;
+                break;
+            case 4:
+                descriptionView.text = kAssetDescWaterFountains;
+                break;
+            default:
+                descriptionView.text = kAssetDescNoteThisSpot;
+                break;
+        }
+    }
+    else if (pickerCategory == 3){
+        switch (row) {
+            case 6:
+                descriptionView.text = kDescNoteThis;
+                break;
+                
+            case 0:
+                descriptionView.text = kAssetDescNoteThisSpot;
+                break;
+            case 1:
+                descriptionView.text = kAssetDescWaterFountains;
+                break;
+            case 2:
+                descriptionView.text = kAssetDescSecretPassage;
+                break;
+            case 3:
+                descriptionView.text = kAssetDescPublicRestrooms;
+                break;
+            case 4:
+                descriptionView.text = kAssetDescBikeShops;
+                break;
+            case 5:
+                descriptionView.text = kAssetDescBikeParking;
+                break;
+                
+                
+                
+            case 7:
+                descriptionView.text = kIssueDescPavementIssue;
+                break;
+            case 8:
+                descriptionView.text = kIssueDescTrafficSignal;
+                break;
+            case 9:
+                descriptionView.text = kIssueDescEnforcement;
+                break;
+            case 10:
+                descriptionView.text = kIssueDescNeedParking;
+                break;
+            case 11:
+                descriptionView.text = kIssueDescBikeLaneIssue;
+                break;
+            case 12:
+                descriptionView.text = kIssueDescNoteThisSpot;
+                break;
+                
+        }
+    }
+>>>>>>> master
 }
 
 
 
+<<<<<<< HEAD
 - (void)dealloc
 {
     self.delegate = nil;
@@ -391,6 +493,9 @@
 	
 	[super dealloc];
 }
+=======
+
+>>>>>>> master
 
 @end
 

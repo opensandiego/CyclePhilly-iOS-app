@@ -58,7 +58,9 @@
 #import "RecordTripViewController.h"
 
 // use this epsilon for both real-time and post-processing distance calculations
-#define kEpsilonAccuracy		100.0
+
+//Tyler changed kEpsilonAccuracy from 100.0 to 10
+#define kEpsilonAccuracy		10.0
 
 // use these epsilons for real-time distance calculation only
 #define kEpsilonTimeInterval	10.0
@@ -83,7 +85,7 @@
     if ( self = [super init] )
 	{
 		self.activityDelegate		= self;
-		self.coords					= [[[NSMutableArray alloc] initWithCapacity:1000] autorelease];
+		self.coords					= [[NSMutableArray alloc] initWithCapacity:1000];
 		distance					= 0.0;
 		self.managedObjectContext	= context;
 		self.trip					= nil;
@@ -96,56 +98,55 @@
 - (BOOL)loadTrip:(Trip*)_trip
 {
     if ( _trip )
-	{
+    {
         self.trip					= _trip;
-		distance					= [_trip.distance doubleValue];
-		self.managedObjectContext	= [_trip managedObjectContext];
-		
-		// NOTE: loading coords can be expensive for a large trip
-		NSLog(@"loading %fm trip started at %@...", distance, _trip.start);
-
-		// sort coords by recorded date DESCENDING so that the coord at index=0 is the most recent
-		NSSortDescriptor *dateDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"recorded"
-																		ascending:NO] autorelease];
-		NSArray *sortDescriptors	= [NSArray arrayWithObjects:dateDescriptor, nil];
-		self.coords					= [[[[_trip.coords allObjects] sortedArrayUsingDescriptors:sortDescriptors] mutableCopy] autorelease];
-
-		
-		//NSLog(@"loading %d coords completed.", [self.coords count]);
-
-		// recalculate duration
-		if ( self.coords && [self.coords count] > 1 )
-		{
-			Coord *last		= [self.coords objectAtIndex:0];
-			Coord *first	= [self.coords lastObject];
-			NSTimeInterval duration = [last.recorded timeIntervalSinceDate:first.recorded];
-			NSLog(@"duration = %.0fs", duration);
-			[trip setDuration:[NSNumber numberWithDouble:duration]];
-		}
+        distance					= [_trip.distance doubleValue];
+        self.managedObjectContext	= [_trip managedObjectContext];
         
-		// save updated duration to CoreData
-		NSError *error;
-		if (![self.managedObjectContext save:&error]) {
-			// Handle the error.
-			NSLog(@"loadTrip error %@, %@", error, [error localizedDescription]);
+        // NOTE: loading coords can be expensive for a large trip
+        NSLog(@"loading %fm trip started at %@...", distance, _trip.start);
+        
+        // sort coords by recorded date DESCENDING so that the coord at index=0 is the most recent
+        NSSortDescriptor *dateDescriptor = [[NSSortDescriptor alloc] initWithKey:@"recorded"
+                                                                        ascending:NO];
+        NSArray *sortDescriptors	= [NSArray arrayWithObjects:dateDescriptor, nil];
+        self.coords					= [[[_trip.coords allObjects] sortedArrayUsingDescriptors:sortDescriptors] mutableCopy];
+        
+        
+        //NSLog(@"loading %d coords completed.", [self.coords count]);
+        
+        // recalculate duration
+        if ( self.coords && [self.coords count] > 1 )
+        {
+            Coord *last		= [self.coords objectAtIndex:0];
+            Coord *first	= [self.coords lastObject];
+            NSTimeInterval duration = [last.recorded timeIntervalSinceDate:first.recorded];
+            NSLog(@"duration = %.0fs", duration);
+            [trip setDuration:[NSNumber numberWithDouble:duration]];
+        }
+        
+        // save updated duration to CoreData
+        NSError *error;
+        if (![self.managedObjectContext save:&error]) {
+            // Handle the error.
+            NSLog(@"loadTrip error %@, %@", error, [error localizedDescription]);
             
-		}
+        }
         
-		/*
-		// recalculate trip distance
-		CLLocationDistance newDist	= [self calculateTripDistance:_trip];
-		
-		NSLog(@"newDist: %f", newDist);
-		NSLog(@"oldDist: %f", distance);
-		*/
-		
-		// TODO: initialize purposeIndex from trip.purpose
-		purposeIndex				= -1;
+        /*
+         // recalculate trip distance
+         CLLocationDistance newDist	= [self calculateTripDistance:_trip];
+         
+         NSLog(@"newDist: %f", newDist);
+         NSLog(@"oldDist: %f", distance);
+         */
+        
+        // TODO: initialize purposeIndex from trip.purpose
+        purposeIndex				= -1;
     }
-
+    
     return YES;
 }
-
 
 - (id)initWithTrip:(Trip*)_trip
 {
@@ -160,7 +161,7 @@
 
 - (void)createTripNotesText
 {
-	tripNotesText = [[[UITextView alloc] initWithFrame:CGRectMake( 12.0, 50.0, 260.0, 65.0 )] autorelease];
+	tripNotesText = [[UITextView alloc] initWithFrame:CGRectMake( 12.0, 50.0, 260.0, 65.0 )];
 	tripNotesText.delegate = self;
 	tripNotesText.enablesReturnKeyAutomatically = NO;
 	tripNotesText.font = [UIFont fontWithName:@"Arial" size:16];
@@ -213,70 +214,71 @@
 	return YES;
 }
 
-
 - (CLLocationDistance)distanceFrom:(Coord*)prev to:(Coord*)next realTime:(BOOL)realTime
 {
-	CLLocation *prevLoc = [[[CLLocation alloc] initWithLatitude:[prev.latitude doubleValue]
-													 longitude:[prev.longitude doubleValue]] autorelease];
-	CLLocation *nextLoc = [[[CLLocation alloc] initWithLatitude:[next.latitude doubleValue]
-													 longitude:[next.longitude doubleValue]] autorelease];
-	
-	CLLocationDistance	deltaDist	= [nextLoc distanceFromLocation:prevLoc];
-	NSTimeInterval		deltaTime	= [next.recorded timeIntervalSinceDate:prev.recorded];
-	CLLocationDistance	newDist		= 0.;
-	
-	/*
-	 NSLog(@"prev.date = %@", prev.recorded);
-	 NSLog(@"deltaTime = %f", deltaTime);
-	 
-	 NSLog(@"deltaDist = %f", deltaDist);
-	 NSLog(@"est speed = %f", deltaDist / deltaTime);
-	 
-	 if ( [next.speed doubleValue] > 0.1 ) {
-	 NSLog(@"est speed = %f", deltaDist / deltaTime);
-	 NSLog(@"rec speed = %f", [next.speed doubleValue]);
-	 }
-	 */
-	
-	// sanity check accuracy
-	if ( [prev.hAccuracy doubleValue] < kEpsilonAccuracy && 
-		 [next.hAccuracy doubleValue] < kEpsilonAccuracy )
-	{
-		// sanity check time interval
-		if ( !realTime || deltaTime < kEpsilonTimeInterval )
-		{
-			// sanity check speed
-			if ( !realTime || (deltaDist / deltaTime < kEpsilonSpeed) )
-			{
-				// consider distance delta as valid
-				newDist += deltaDist;
-				
-				// only log non-zero changes
-				/*
-				 if ( deltaDist > 0.1 )
-				 {
-				 NSLog(@"new dist  = %f", newDist);
-				 NSLog(@"est speed = %f", deltaDist / deltaTime);
-				 }
-				 */
-			}
-			else
-				NSLog(@"WARNING speed exceeds epsilon: %f => throw out deltaDist: %f, deltaTime: %f", 
-					  deltaDist / deltaTime, deltaDist, deltaTime);
-		}
-		else
-			NSLog(@"WARNING deltaTime exceeds epsilon: %f => throw out deltaDist: %f", deltaTime, deltaDist);
-	}
-	else
-		NSLog(@"WARNING accuracy exceeds epsilon: %f => throw out deltaDist: %f", 
-			  MAX([prev.hAccuracy doubleValue], [next.hAccuracy doubleValue]) , deltaDist);
-	
-	return newDist;
+    CLLocation *prevLoc = [[CLLocation alloc] initWithLatitude:[prev.latitude doubleValue]
+                                                      longitude:[prev.longitude doubleValue]];
+    CLLocation *nextLoc = [[CLLocation alloc] initWithLatitude:[next.latitude doubleValue]
+                                                      longitude:[next.longitude doubleValue]];
+    
+    CLLocationDistance	deltaDist	= [nextLoc distanceFromLocation:prevLoc];
+    NSTimeInterval		deltaTime	= [next.recorded timeIntervalSinceDate:prev.recorded];
+    CLLocationDistance	newDist		= 0.;
+    
+    /*
+     NSLog(@"prev.date = %@", prev.recorded);
+     NSLog(@"deltaTime = %f", deltaTime);
+     
+     NSLog(@"deltaDist = %f", deltaDist);
+     NSLog(@"est speed = %f", deltaDist / deltaTime);
+     
+     if ( [next.speed doubleValue] > 0.1 ) {
+     NSLog(@"est speed = %f", deltaDist / deltaTime);
+     NSLog(@"rec speed = %f", [next.speed doubleValue]);
+     }
+     */
+    
+    // sanity check accuracy
+    if ( [prev.hAccuracy doubleValue] < kEpsilonAccuracy &&
+        [next.hAccuracy doubleValue] < kEpsilonAccuracy )
+    {
+        // sanity check time interval
+        if ( !realTime || deltaTime < kEpsilonTimeInterval )
+        {
+            // sanity check speed
+            if ( !realTime || (deltaDist / deltaTime < kEpsilonSpeed) )
+            {
+                // consider distance delta as valid
+                newDist += deltaDist;
+                
+                // only log non-zero changes
+                /*
+                 if ( deltaDist > 0.1 )
+                 {
+                 NSLog(@"new dist  = %f", newDist);
+                 NSLog(@"est speed = %f", deltaDist / deltaTime);
+                 }
+                 */
+            }
+            else
+                NSLog(@"WARNING speed exceeds epsilon: %f => throw out deltaDist: %f, deltaTime: %f",
+                      deltaDist / deltaTime, deltaDist, deltaTime);
+        }
+        else
+            NSLog(@"WARNING deltaTime exceeds epsilon: %f => throw out deltaDist: %f", deltaTime, deltaDist);
+    }
+    else
+        NSLog(@"WARNING accuracy exceeds epsilon: %f => throw out deltaDist: %f", 
+              MAX([prev.hAccuracy doubleValue], [next.hAccuracy doubleValue]) , deltaDist);
+    
+    return newDist;
 }
+
 
 
 - (CLLocationDistance)addCoord:(CLLocation *)location
 {
+<<<<<<< HEAD
 	NSLog(@"addCoord");
 	
 	if ( !trip )
@@ -369,72 +371,164 @@
 	//NSLog(@"# coords = %d", [coords count]);
 	
 	return distance;
+=======
+    NSLog(@"addCoord");
+    
+    if ( !trip )
+        [self createTrip];
+    
+    // Create and configure a new instance of the Coord entity
+    Coord *coord = (Coord *)[NSEntityDescription insertNewObjectForEntityForName:@"Coord" inManagedObjectContext:managedObjectContext];
+    
+    [coord setAltitude:[NSNumber numberWithDouble:location.altitude]];
+    [coord setLatitude:[NSNumber numberWithDouble:location.coordinate.latitude]];
+    [coord setLongitude:[NSNumber numberWithDouble:location.coordinate.longitude]];
+    
+    // NOTE: location.timestamp is a constant value on Simulator
+    //[coord setRecorded:[NSDate date]];
+    [coord setRecorded:location.timestamp];
+    
+    [coord setSpeed:[NSNumber numberWithDouble:location.speed]];
+    [coord setHAccuracy:[NSNumber numberWithDouble:location.horizontalAccuracy]];
+    [coord setVAccuracy:[NSNumber numberWithDouble:location.verticalAccuracy]];
+   
+
+    [trip addCoordsObject:coord];
+    [coord setTrip:trip];
+
+    // check to see if the coords array is empty
+    if ( [coords count] == 0 )
+    {
+        NSLog(@"updated trip start time");
+        // this is the first coord of a new trip => update start
+        [trip setStart:[coord recorded]];
+        dirty = YES;
+    }
+    else
+    {
+        // update distance estimate by tabulating deltaDist with a low tolerance for noise
+        Coord *prev  = [coords objectAtIndex:0];
+        distance	+= [self distanceFrom:prev to:coord realTime:YES];
+        [trip setDistance:[NSNumber numberWithDouble:distance]];
+        
+        // update duration
+        Coord *first	= [coords lastObject];
+        NSTimeInterval duration = [coord.recorded timeIntervalSinceDate:first.recorded];
+        //NSLog(@"duration = %.0fs", duration);
+        [trip setDuration:[NSNumber numberWithDouble:duration]];
+        
+        
+         //Coord *prev = [coords objectAtIndex:0];
+         CLLocation *prevLoc = [[CLLocation alloc] initWithLatitude:[prev.latitude doubleValue]
+         longitude:[prev.longitude doubleValue]];
+         CLLocationDistance	deltaDist = [location distanceFromLocation:prevLoc];
+         NSTimeInterval		deltaTime = [location.timestamp timeIntervalSinceDate:prev.recorded];
+         
+         NSLog(@"deltaDist = %f", deltaDist);
+         NSLog(@"deltaTime = %f", deltaTime);
+         NSLog(@"est speed = %f", deltaDist / deltaTime);
+         
+         // sanity check accuracy
+         if ( [prev.hAccuracy doubleValue] < kEpsilonAccuracy &&
+         location.horizontalAccuracy < kEpsilonAccuracy )
+         {
+         // sanity check time interval if non-zero
+         if ( !kEpsilonTimeInterval || deltaTime < kEpsilonTimeInterval )
+         {
+         // sanity check speed
+         if ( deltaDist / deltaTime < kEpsilonSpeed )
+         {
+         // consider distance delta as valid
+         distance += deltaDist;
+         dirty = YES;
+         NSLog(@"distance: %f", distance);
+         }
+         else
+         NSLog(@"WARNING speed exceeds epsilon: %f", deltaDist / deltaTime);
+         }
+         else
+         NSLog(@"WARNING deltaTime exceeds epsilon: %f", deltaTime);
+         }
+         else
+         NSLog(@"WARNING accuracy exceeds epsilon: %f", location.horizontalAccuracy);
+        
+    }
+    
+    NSError *error;
+    if (![managedObjectContext save:&error]) {
+        // Handle the error.
+        NSLog(@"TripManager addCoord error %@, %@", error, [error localizedDescription]);
+    }
+    
+    [coords insertObject:coord atIndex:0];
+    NSLog(@"# coords = %lu", (unsigned long)[coords count]);
+    
+    return distance;
+>>>>>>> master
 }
 
 
 - (CLLocationDistance)getDistanceEstimate
 {
-	return distance;
+    return distance;
 }
 
 
 - (NSDictionary*)encodeUserData
 {
-	NSLog(@"encodeUserData");
-	NSMutableDictionary *userDict = [NSMutableDictionary dictionaryWithCapacity:7];
-	
-	NSFetchRequest		*request = [[NSFetchRequest alloc] init];
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext];
-	[request setEntity:entity];
-	
-	NSError *error;
-	NSInteger count = [managedObjectContext countForFetchRequest:request error:&error];
-	//NSLog(@"saved user count  = %d", count);
-	
-	if ( count )
-	{
-		NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
-		if (mutableFetchResults == nil) {
-			// Handle the error.
-			NSLog(@"no saved user");
-			if ( error != nil )
-				NSLog(@"TripManager fetch saved user data error %@, %@", error, [error localizedDescription]);
-		}
+    NSLog(@"encodeUserData");
+    NSMutableDictionary *userDict = [NSMutableDictionary dictionaryWithCapacity:7];
+    
+    NSFetchRequest		*request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User" inManagedObjectContext:managedObjectContext];
+    [request setEntity:entity];
+    
+    NSError *error;
+    NSInteger count = [managedObjectContext countForFetchRequest:request error:&error];
+    //NSLog(@"saved user count  = %d", count);
+    
+    if ( count )
+    {
+        NSMutableArray *mutableFetchResults = [[managedObjectContext executeFetchRequest:request error:&error] mutableCopy];
+        if (mutableFetchResults == nil) {
+            // Handle the error.
+            NSLog(@"no saved user");
+            if ( error != nil )
+                NSLog(@"TripManager fetch saved user data error %@, %@", error, [error localizedDescription]);
+        }
         
         NSString *appVersion = [NSString stringWithFormat:@"%@ (%@) on iOS %@",
                                 [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
                                 [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"],
                                 [[UIDevice currentDevice] systemVersion]];
         
-		User *user = [mutableFetchResults objectAtIndex:0];
-		if ( user != nil )
-		{
-			// initialize text fields to saved personal info
-			[userDict setValue:user.age             forKey:@"age"];
-			[userDict setValue:user.email           forKey:@"email"];
-			[userDict setValue:user.gender          forKey:@"gender"];
-			[userDict setValue:user.homeZIP         forKey:@"homeZIP"];
-			[userDict setValue:user.workZIP         forKey:@"workZIP"];
-			[userDict setValue:user.schoolZIP       forKey:@"schoolZIP"];
-			[userDict setValue:user.cyclingFreq     forKey:@"cyclingFreq"];
+        User *user = [mutableFetchResults objectAtIndex:0];
+        if ( user != nil )
+        {
+            // initialize text fields to saved personal info
+            [userDict setValue:user.age             forKey:@"age"];
+            [userDict setValue:user.email           forKey:@"email"];
+            [userDict setValue:user.gender          forKey:@"gender"];
+            [userDict setValue:user.homeZIP         forKey:@"homeZIP"];
+            [userDict setValue:user.workZIP         forKey:@"workZIP"];
+            [userDict setValue:user.schoolZIP       forKey:@"schoolZIP"];
+            [userDict setValue:user.cyclingFreq     forKey:@"cyclingFreq"];
             [userDict setValue:user.ethnicity       forKey:@"ethnicity"];
             [userDict setValue:user.income          forKey:@"income"];
             [userDict setValue:user.rider_type      forKey:@"rider_type"];
             [userDict setValue:user.rider_history	forKey:@"rider_history"];
             [userDict setValue:appVersion           forKey:@"app_version"];
-		}
+        }
         
         /* Update firebase user data here */
         
-		else
-			NSLog(@"TripManager fetch user FAIL");
-		
-		[mutableFetchResults release];
-	}
-	else
-		NSLog(@"TripManager WARNING no saved user data to encode");
-	
-	[request release];
+        else
+            NSLog(@"TripManager fetch user FAIL");
+        
+    }
+    else
+        NSLog(@"TripManager WARNING no saved user data to encode");
+    
     return userDict;
 }
 
@@ -475,197 +569,200 @@
     }
 }
 
-
 - (void)saveTrip
 {
-	NSLog(@"about to save trip with %lu coords...", (unsigned long)[coords count]);
-//	[activityDelegate updateSavingMessage:kPreparingData];
-	//NSLog(@"%@", trip);
-
-	// close out Trip record
-	// NOTE: this code assumes we're saving the current recording in progress
-	
-	/* TODO: revise to work with following edge cases:
-	 o coords unsorted
-	 o break in recording => can't calc duration by comparing first & last timestamp,
-	   incrementally tally delta time if < epsilon instead
-	 o recalculate distance
-	 */
-	if ( trip && [coords count] )
-	{
-		CLLocationDistance newDist = [self calculateTripDistance:trip];
-		NSLog(@"real-time distance = %.0fm", distance);
-		NSLog(@"post-processing    = %.0fm", newDist);
-		
-		distance = newDist;
-		[trip setDistance:[NSNumber numberWithDouble:distance]];
-		
-		Coord *last		= [coords objectAtIndex:0];
-		Coord *first	= [coords lastObject];
-		NSTimeInterval duration = [last.recorded timeIntervalSinceDate:first.recorded];
-		NSLog(@"duration = %.0fs", duration);
-		[trip setDuration:[NSNumber numberWithDouble:duration]];
-	}
-	
-	[trip setSaved:[NSDate date]];
-	
-	NSError *error;
-	if (![managedObjectContext save:&error])
-	{
-		// Handle the error.
-		NSLog(@"TripManager setSaved error %@, %@", error, [error localizedDescription]);
-	}
-	else
-		NSLog(@"Saved trip: %@ (%.0fm, %.0fs)", trip.purpose, [trip.distance doubleValue], [trip.duration doubleValue]);
-
-	dirty = YES;
-	
-	// get array of coords
-	NSMutableDictionary *tripDict = [NSMutableDictionary dictionaryWithCapacity:[coords count]];
-	NSEnumerator *enumerator = [coords objectEnumerator];
-	Coord *coord;
-	
-	// format date as a string
-	NSDateFormatter *outputFormatter = [[[NSDateFormatter alloc] init] autorelease];
-	[outputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-
+    NSLog(@"about to save trip with %lu coords...", (unsigned long)[coords count]);
+    //	[activityDelegate updateSavingMessage:kPreparingData];
+    //NSLog(@"%@", trip);
+    
+    // close out Trip record
+    // NOTE: this code assumes we're saving the current recording in progress
+    
+    /* TODO: revise to work with following edge cases:
+     o coords unsorted
+     o break in recording => can't calc duration by comparing first & last timestamp,
+     incrementally tally delta time if < epsilon instead
+     o recalculate distance
+     */
+    if ( trip && [coords count] )
+    {
+        CLLocationDistance newDist = [self calculateTripDistance:trip];
+        NSLog(@"real-time distance = %.0fm", distance);
+        NSLog(@"post-processing    = %.0fm", newDist);
+        
+        distance = newDist;
+        [trip setDistance:[NSNumber numberWithDouble:distance]];
+        
+        Coord *last		= [coords objectAtIndex:0];
+        Coord *first	= [coords lastObject];
+        NSTimeInterval duration = [last.recorded timeIntervalSinceDate:first.recorded];
+        NSLog(@"duration = %.0fs", duration);
+        [trip setDuration:[NSNumber numberWithDouble:duration]];
+    }
+    
+    [trip setSaved:[NSDate date]];
+    
+    NSError *error;
+    if (![managedObjectContext save:&error])
+    {
+        // Handle the error.
+        NSLog(@"TripManager setSaved error %@, %@", error, [error localizedDescription]);
+    }
+    else
+        NSLog(@"Saved trip: %@ (%.0fm, %.0fs)", trip.purpose, [trip.distance doubleValue], [trip.duration doubleValue]);
+    
+    dirty = YES;
+    
+    // get array of coords
+    NSMutableDictionary *tripDict = [NSMutableDictionary dictionaryWithCapacity:[coords count]];
+    NSEnumerator *enumerator = [coords objectEnumerator];
+    Coord *coord;
+    
+    // format date as a string
+    NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    [outputFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
 #if kSaveProtocolVersion == kSaveProtocolVersion_3
     NSLog(@"saving using protocol version 3");
-	
-	// create a tripDict entry for each coord
-	while (coord = [enumerator nextObject])
-	{
-		NSMutableDictionary *coordsDict = [NSMutableDictionary dictionaryWithCapacity:7];
-		[coordsDict setValue:coord.altitude  forKey:@"a"];  //altitude
-		[coordsDict setValue:coord.latitude  forKey:@"l"];  //latitude
-		[coordsDict setValue:coord.longitude forKey:@"n"];  //longitude
-		[coordsDict setValue:coord.speed     forKey:@"s"];  //speed
-		[coordsDict setValue:coord.hAccuracy forKey:@"h"];  //haccuracy
-		[coordsDict setValue:coord.vAccuracy forKey:@"v"];  //vaccuracy
-		
-		NSString *newDateString = [outputFormatter stringFromDate:coord.recorded];
-		[coordsDict setValue:newDateString forKey:@"r"];    //recorded timestamp
-		[tripDict setValue:coordsDict forKey:newDateString];
-	}
+    
+    // create a tripDict entry for each coord
+    while (coord = [enumerator nextObject])
+    {
+        NSMutableDictionary *coordsDict = [NSMutableDictionary dictionaryWithCapacity:7];
+        [coordsDict setValue:coord.altitude  forKey:@"a"];  //altitude
+        [coordsDict setValue:coord.latitude  forKey:@"l"];  //latitude
+        [coordsDict setValue:coord.longitude forKey:@"n"];  //longitude
+        [coordsDict setValue:coord.speed     forKey:@"s"];  //speed
+        [coordsDict setValue:coord.hAccuracy forKey:@"h"];  //haccuracy
+        [coordsDict setValue:coord.vAccuracy forKey:@"v"];  //vaccuracy
+        
+        NSString *newDateString = [outputFormatter stringFromDate:coord.recorded];
+        [coordsDict setValue:newDateString forKey:@"r"];    //recorded timestamp
+        [tripDict setValue:coordsDict forKey:newDateString];
+    }
 #elif kSaveProtocolVersion == kSaveProtocolVersion_2
-	NSLog(@"saving using protocol version 2");
-	
-	// create a tripDict entry for each coord
-	while (coord = [enumerator nextObject])
-	{
-		NSMutableDictionary *coordsDict = [NSMutableDictionary dictionaryWithCapacity:7];
-		[coordsDict setValue:coord.altitude  forKey:@"alt"];
-		[coordsDict setValue:coord.latitude  forKey:@"lat"];
-		[coordsDict setValue:coord.longitude forKey:@"lon"];
-		[coordsDict setValue:coord.speed     forKey:@"spd"];
-		[coordsDict setValue:coord.hAccuracy forKey:@"hac"];
-		[coordsDict setValue:coord.vAccuracy forKey:@"vac"];
-		
-		NSString *newDateString = [outputFormatter stringFromDate:coord.recorded];
-		[coordsDict setValue:newDateString forKey:@"rec"];
-		[tripDict setValue:coordsDict forKey:newDateString];
-	}
+    NSLog(@"saving using protocol version 2");
+    
+    // create a tripDict entry for each coord
+    while (coord = [enumerator nextObject])
+    {
+        NSMutableDictionary *coordsDict = [NSMutableDictionary dictionaryWithCapacity:7];
+        [coordsDict setValue:coord.altitude  forKey:@"alt"];
+        [coordsDict setValue:coord.latitude  forKey:@"lat"];
+        [coordsDict setValue:coord.longitude forKey:@"lon"];
+        [coordsDict setValue:coord.speed     forKey:@"spd"];
+        [coordsDict setValue:coord.hAccuracy forKey:@"hac"];
+        [coordsDict setValue:coord.vAccuracy forKey:@"vac"];
+        
+        NSString *newDateString = [outputFormatter stringFromDate:coord.recorded];
+        [coordsDict setValue:newDateString forKey:@"rec"];
+        [tripDict setValue:coordsDict forKey:newDateString];
+    }
 #else
-	NSLog(@"saving using protocol version 1");
-	
-	// create a tripDict entry for each coord
-	while (coord = [enumerator nextObject])
-	{
-		NSMutableDictionary *coordsDict = [NSMutableDictionary dictionaryWithCapacity:7];
-		[coordsDict setValue:coord.altitude  forKey:@"altitude"];
-		[coordsDict setValue:coord.latitude  forKey:@"latitude"];
-		[coordsDict setValue:coord.longitude forKey:@"longitude"];
-		[coordsDict setValue:coord.speed     forKey:@"speed"];
-		[coordsDict setValue:coord.hAccuracy forKey:@"hAccuracy"];
-		[coordsDict setValue:coord.vAccuracy forKey:@"vAccuracy"];
-		
-		NSString *newDateString = [outputFormatter stringFromDate:coord.recorded];
-		[coordsDict setValue:newDateString forKey:@"recorded"];		
-		[tripDict setValue:coordsDict forKey:newDateString];
-	}    
+    NSLog(@"saving using protocol version 1");
+    
+    // create a tripDict entry for each coord
+    while (coord = [enumerator nextObject])
+    {
+        NSMutableDictionary *coordsDict = [NSMutableDictionary dictionaryWithCapacity:7];
+        [coordsDict setValue:coord.altitude  forKey:@"altitude"];
+        [coordsDict setValue:coord.latitude  forKey:@"latitude"];
+        [coordsDict setValue:coord.longitude forKey:@"longitude"];
+        [coordsDict setValue:coord.speed     forKey:@"speed"];
+        [coordsDict setValue:coord.hAccuracy forKey:@"hAccuracy"];
+        [coordsDict setValue:coord.vAccuracy forKey:@"vAccuracy"];
+        
+        NSString *newDateString = [outputFormatter stringFromDate:coord.recorded];
+        [coordsDict setValue:newDateString forKey:@"recorded"];
+        [tripDict setValue:coordsDict forKey:newDateString];
+    }
 #endif
-	// get trip purpose
-	NSString *purpose;
-	if ( trip.purpose )
-		purpose = trip.purpose;
-	else
-		purpose = @"unknown";
-	
-	// get trip notes
-	NSString *notes = @"";
-	if ( trip.notes )
-		notes = trip.notes;
-	
-	// get start date
-	NSString *start = [outputFormatter stringFromDate:trip.start];
-	NSLog(@"start: %@", start);
-
-	// encode user data
-	NSDictionary *userDict = [self encodeUserData];
+    // get trip purpose
+    NSString *purpose;
+    if ( trip.purpose )
+        purpose = trip.purpose;
+    else
+        purpose = @"unknown";
+    
+    // get trip notes
+    NSString *notes = @"";
+    if ( trip.notes )
+        notes = trip.notes;
+    
+    // get start date
+    NSString *start = [outputFormatter stringFromDate:trip.start];
+    NSLog(@"start: %@", start);
+    
+    // encode user data
+    NSDictionary *userDict = [self encodeUserData];
     
     // JSON encode user data and trip data, return to strings
     NSError *writeError = nil;
     // JSON encode user data
     NSData *userJsonData = [NSJSONSerialization dataWithJSONObject:userDict options:0 error:&writeError];
-    NSString *userJson = [[[NSString alloc] initWithData:userJsonData encoding:NSUTF8StringEncoding] autorelease];
+    NSString *userJson = [[NSString alloc] initWithData:userJsonData encoding:NSUTF8StringEncoding];
     NSLog(@"user data %@", userJson);
     
     // JSON encode the trip data
     NSData *tripJsonData = [NSJSONSerialization dataWithJSONObject:tripDict options:0 error:&writeError];
-    NSString *tripJson = [[[NSString alloc] initWithData:tripJsonData encoding:NSUTF8StringEncoding] autorelease];
+    NSString *tripJson = [[NSString alloc] initWithData:tripJsonData encoding:NSUTF8StringEncoding];
     //NSLog(@"trip data %@", tripJson);
     
-//    if([userDict.])
+    //    if([userDict.])
     
-	// NOTE: device hash added by SaveRequest initWithPostVars
-	NSDictionary *postVars = [NSDictionary dictionaryWithObjectsAndKeys:
-							  tripJson, @"coords",
-							  purpose, @"purpose",
-							  notes, @"notes",
-							  start, @"start",
-							  userJson, @"user",
+    // NOTE: device hash added by SaveRequest initWithPostVars
+    NSDictionary *postVars = [NSDictionary dictionaryWithObjectsAndKeys:
+                              tripJson, @"coords",
+                              purpose, @"purpose",
+                              notes, @"notes",
+                              start, @"start",
+                              userJson, @"user",
                               
-							  [NSString stringWithFormat:@"%d", kSaveProtocolVersion], @"version",
-							  nil];
+                              [NSString stringWithFormat:@"%d", kSaveProtocolVersion], @"version",
+                              nil];
     
     // Firebase upload - testing
+<<<<<<< HEAD
     Firebase *ref = [[[Firebase alloc] initWithUrl:@"https://cyclephilly.firebaseio.com/trips/"] autorelease];
+=======
+    Firebase *ref = [[Firebase alloc] initWithUrl:kFireDomain];
+>>>>>>> master
     Firebase *post1Ref = [ref childByAutoId];
     [post1Ref setValue:postVars withCompletionBlock:^(NSError *error, Firebase *ref) {
         if(error){
             // bad news
-//            [uploadingView loadingComplete:kServerError delayInterval:1.5];
+            //            [uploadingView loadingComplete:kServerError delayInterval:1.5];
             NSLog(@"Firebase fail");
         } else{
             // great!
-//            [uploadingView loadingComplete:kSuccessTitle delayInterval:.7];
+            //            [uploadingView loadingComplete:kSuccessTitle delayInterval:.7];
             NSLog(@"Firebase success");
         }
     }];
     
     
-	// create save request - deprecating
-	SaveRequest *saveRequest = [[[SaveRequest alloc] initWithPostVars:postVars with:3 image:NULL] autorelease];
-	
-	// create the connection with the request and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:[saveRequest request] delegate:self];
-	// create loading view to indicate trip is being uploaded
+    // create save request - deprecating
+    SaveRequest *saveRequest = [[SaveRequest alloc] initWithPostVars:postVars with:3 image:NULL];
+    
+    // create the connection with the request and start loading the data
+    NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:[saveRequest request] delegate:self];
+    // create loading view to indicate trip is being uploaded
     //uploadingView = [[LoadingView loadingViewInView:parent.parentViewController.view messageString:kSavingTitle] retain];
-
+    
     //switch to map w/ trip view
     [(RecordTripViewController *)parent displayUploadedTripMap];
     
     //TODO: get screenshot and store.
-
+    
     if ( theConnection )
-     {
-         receivedData=[[NSMutableData data] retain];
-     }
-     else
-     {
-         // inform the user that the download could not be made
-     
-     }
+    {
+        receivedData= [NSMutableData data];
+    }
+    else
+    {
+        // inform the user that the download could not be made
+        
+    }
     
 }
 
@@ -772,10 +869,8 @@
   didFailWithError:(NSError *)error
 {
     // release the connection, and the data object	
-    [connection release];
 	
     // receivedData is declared as a method instance elsewhere
-    [receivedData release];
     
     // TODO: is this really adequate...?
     [uploadingView loadingComplete:kConnectionError delayInterval:1.5];
@@ -800,14 +895,12 @@
 {
 	// do something with the data
     NSLog(@"+++++++DEBUG: Received %lu bytes of data", (unsigned long)[receivedData length]);
-	NSLog(@"%@", [[[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding] autorelease] );
+	NSLog(@"%@", [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding] );
 
     // release the connection, and the data object
-    [connection release];
-    [receivedData release];
     
     // create new for next upload
-    receivedData=[[NSMutableData data] retain];
+    receivedData=[NSMutableData data];
 }
 
 
@@ -856,8 +949,8 @@
 	NSLog(@"createTrip");
 	
 	// Create and configure a new instance of the Trip entity
-	trip = (Trip *)[[NSEntityDescription insertNewObjectForEntityForName:@"Trip" 
-												  inManagedObjectContext:managedObjectContext] retain];
+	trip = (Trip *)[NSEntityDescription insertNewObjectForEntityForName:@"Trip" 
+												  inManagedObjectContext:managedObjectContext];
 	[trip setStart:[NSDate date]];
 	
 	NSError *error;
@@ -875,8 +968,8 @@
 	NSLog(@"createTrip: %@", purpose);
 	
 	// Create and configure a new instance of the Trip entity
-	trip = (Trip *)[[NSEntityDescription insertNewObjectForEntityForName:@"Trip" 
-												  inManagedObjectContext:managedObjectContext] retain];
+	trip = (Trip *)[NSEntityDescription insertNewObjectForEntityForName:@"Trip" 
+												  inManagedObjectContext:managedObjectContext];
 	
 	[trip setPurpose:purpose];
 	[trip setStart:[NSDate date]];
@@ -1013,8 +1106,6 @@
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:NO];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 	[request setSortDescriptors:sortDescriptors];
-	[sortDescriptors release];
-	[sortDescriptor release];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"saved = nil"];
 	[request setPredicate:predicate];
@@ -1023,11 +1114,11 @@
 	NSInteger count = [managedObjectContext countForFetchRequest:request error:&error];
 	NSLog(@"countUnSavedTrips = %ld", (long)count);
 	
-	[request release];
 	return count;
 }
 
 // count trips that have been saved but not uploaded
+/*
 - (long)countUnSyncedTrips
 {
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -1038,8 +1129,6 @@
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:NO];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 	[request setSortDescriptors:sortDescriptors];
-	[sortDescriptors release];
-	[sortDescriptor release];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"saved != nil AND uploaded = nil"];
 	[request setPredicate:predicate];
@@ -1048,10 +1137,10 @@
 	NSInteger count = [managedObjectContext countForFetchRequest:request error:&error];
 	NSLog(@"countUnSyncedTrips = %ld", (long)count);
 	
-	[request release];
 	return count;
 }
-
+*/
+ 
 // count trips that have been saved but have zero distance
 - (long)countZeroDistanceTrips
 {
@@ -1063,8 +1152,6 @@
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:NO];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 	[request setSortDescriptors:sortDescriptors];
-	[sortDescriptors release];
-	[sortDescriptor release];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"saved != nil AND distance < 0.1"];
 	[request setPredicate:predicate];
@@ -1073,7 +1160,6 @@
 	NSInteger count = [managedObjectContext countForFetchRequest:request error:&error];
 	NSLog(@"countZeroDistanceTrips = %ld", (long)count);
 	
-	[request release];
 	return count;
 }
 
@@ -1088,8 +1174,6 @@
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:NO];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 	[request setSortDescriptors:sortDescriptors];
-	[sortDescriptors release];
-	[sortDescriptor release];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"saved = nil"];
 	[request setPredicate:predicate];
@@ -1110,8 +1194,6 @@
 		success = [self loadTrip:[mutableFetchResults objectAtIndex:0]];
 	}
 	
-	[mutableFetchResults release];
-	[request release];
 	return success;
 }
 
@@ -1134,7 +1216,7 @@
 	if ( [filteredCoords count] )
 	{
 		// sort filtered coords by recorded date
-		NSSortDescriptor *sortByDate	= [[[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:YES] autorelease];
+		NSSortDescriptor *sortByDate	= [[NSSortDescriptor alloc] initWithKey:@"recorded" ascending:YES];
 		NSArray		*sortDescriptors	= [NSArray arrayWithObjects:sortByDate, nil];
 		NSArray		*sortedCoords		= [filteredCoords sortedArrayUsingDescriptors:sortDescriptors];
 		
@@ -1165,8 +1247,6 @@
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"start" ascending:NO];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
 	[request setSortDescriptors:sortDescriptors];
-	[sortDescriptors release];
-	[sortDescriptor release];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"saved != nil AND distance < 0.1"];
 	[request setPredicate:predicate];
@@ -1196,46 +1276,16 @@
 		break;
 	}
 	
-	[mutableFetchResults release];
-	[request release];
 	
 	return count;
 }
 
 -(void)dealloc
 {
-    self.activityDelegate = nil;
-    self.alertDelegate = nil;
-    self.activityIndicator = nil;
-    self.uploadingView = nil;
-    self.parent = nil;
-    self.saving = nil;
-    self.tripNotes = nil;
-    self.tripNotesText = nil;
     self.dirty = nil;
-    self.trip = nil;
-    self.coords = nil;
-    self.managedObjectContext = nil;
-    self.receivedData = nil;
     
-    [saving release];
-    [tripNotes release];
-    [tripNotesText release];
-    [trip release];
-    [coords release];
-    [managedObjectContext release];
-    [receivedData release];
-    [_activityDelegate release];
-    [_alertDelegate release];
-    [_activityIndicator release];
-    [uploadingView release];
-    [parent release];
     
-    [unSavedTrips release];
-    [unSyncedTrips release];
-    [zeroDistanceTrips release];
     
-    [super dealloc];
 }
 
 

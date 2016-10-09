@@ -84,6 +84,7 @@
     TripDetailViewController *tripDetailViewController = [[TripDetailViewController alloc] initWithNibName:@"TripDetailViewController" bundle:nil];
     tripDetailViewController.delegate = self.delegate;
     
+<<<<<<< HEAD
     [self presentViewController:tripDetailViewController animated:YES completion:nil];
     
 }
@@ -106,5 +107,11 @@
     
     [super dealloc];
 }
+=======
+    //[self presentModalViewController:tripDetailViewController animated:YES];
+    [self presentViewController:tripDetailViewController  animated:YES completion:nil];
+}
+
+>>>>>>> master
 
 @end

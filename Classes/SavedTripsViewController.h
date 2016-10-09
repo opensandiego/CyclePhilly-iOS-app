@@ -44,7 +44,7 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 8/10/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 #import <CoreLocation/CoreLocation.h>
@@ -60,30 +60,30 @@
 @class Trip;
 @class TripManager;
 
-@interface SavedTripsViewController : UITableViewController 
-	<TripPurposeDelegate,
-	UIActionSheetDelegate,
-	UIAlertViewDelegate,
-	UINavigationControllerDelegate>
+@interface SavedTripsViewController : UITableViewController
+<TripPurposeDelegate,
+UIActionSheetDelegate,
+UIAlertViewDelegate,
+UINavigationControllerDelegate>
 {
-	NSMutableArray *trips;
+    NSMutableArray *trips;
     NSManagedObjectContext *managedObjectContext;
-	
-	id <RecordingInProgressDelegate> delegate;
-	TripManager *tripManager;
-	Trip *selectedTrip;
-	
-	LoadingView *loading;
+    
+    id <RecordingInProgressDelegate> delegate;
+    TripManager *tripManager;
+    Trip *selectedTrip;
+    
+    LoadingView *loading;
     
     NSInteger pickerCategory;
 }
 
-@property (nonatomic, retain) NSMutableArray *trips;
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSMutableArray *trips;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
-@property (nonatomic, retain) id <RecordingInProgressDelegate> delegate;
-@property (nonatomic, retain) TripManager *tripManager;
-@property (nonatomic, retain) Trip *selectedTrip;
+@property (nonatomic, strong) id <RecordingInProgressDelegate> delegate;
+@property (nonatomic, strong) TripManager *tripManager;
+@property (nonatomic, strong) Trip *selectedTrip;
 
 - (void)initTripManager:(TripManager*)manager;
 

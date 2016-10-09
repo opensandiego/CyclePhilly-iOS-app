@@ -44,7 +44,7 @@
 //
 //  Copyright 2009-2010 SFCTA. All rights reserved.
 //  Written by Matt Paul <mattpaul@mopimp.com> on 9/28/09.
-//	For more information on the project, 
+//	For more information on the project,
 //	e-mail Billy Charlton at the SFCTA <billy.charlton@sfcta.org>
 
 #import <UIKit/UIKit.h>
@@ -56,11 +56,11 @@
 
 @interface PickerViewController : UIViewController <UIPickerViewDelegate>
 {
-	id <TripPurposeDelegate> delegate;
-	UIPickerView			*customPickerView;
-	CustomPickerDataSource	*customPickerDataSource;
+    id <TripPurposeDelegate> delegate;
+    UIPickerView			*customPickerView;
+    CustomPickerDataSource	*customPickerDataSource;
     
-    UITextView				*description;
+    UITextView				*descriptionView;
     NSInteger pickerCategory;
     NSInteger pickedNotedType;
     IBOutlet UINavigationBar *navBarItself;
@@ -73,7 +73,11 @@
 @property (nonatomic, retain) IBOutlet UIPickerView *customPickerView;
 @property (nonatomic, retain) CustomPickerDataSource *customPickerDataSource;
 
+<<<<<<< HEAD
 @property (atomic, retain) UITextView *descriptionText;
+=======
+@property (nonatomic, retain) UITextView *descriptionView;
+>>>>>>> master
 
 @property (nonatomic, retain) IBOutlet UILabel *descriptionLabel;
 

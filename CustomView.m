@@ -79,21 +79,33 @@ const CGFloat kViewHeight = 44;
 
 - (void)drawRect:(CGRect)rect
 {
+<<<<<<< HEAD
 	// draw the image and title using their draw methods
 	CGFloat yCoord = (self.bounds.size.height - self.image.size.height) / 2;
 	CGPoint point = CGPointMake(10.0, yCoord);
 	[self.image drawAtPoint:point];
+=======
+    // draw the image and title using their draw methods
+    CGFloat yCoord = (self.bounds.size.height - self.image.size.height) / 2;
+    CGPoint point = CGPointMake(10.0, yCoord);
+    [self.image drawAtPoint:point];
+>>>>>>> master
     
     CGRect drawRect = CGRectMake(10.0 + self.image.size.width, (self.bounds.size.height - MAIN_FONT_SIZE) / 2, self.bounds.size.width, self.image.size.height);
     
     NSDictionary *textAttributes = @{NSFontAttributeName: [UIFont systemFontOfSize:MAIN_FONT_SIZE]};
     
     // Create string drawing context
+<<<<<<< HEAD
     NSStringDrawingContext *drawingContext = [[[NSStringDrawingContext alloc] init] autorelease];
+=======
+    NSStringDrawingContext *drawingContext = [[NSStringDrawingContext alloc] init];
+>>>>>>> master
     drawingContext.minimumScaleFactor = MIN_MAIN_FONT_SIZE / MAIN_FONT_SIZE;
     
     [self.title drawWithRect:drawRect
                      options:NSStringDrawingUsesLineFragmentOrigin
+<<<<<<< HEAD
                      attributes:textAttributes
                      context:drawingContext];
     
@@ -105,14 +117,20 @@ const CGFloat kViewHeight = 44;
 	//				actualFontSize:NULL
 	//				lineBreakMode:NSLineBreakByTruncatingTail
 	//				baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+=======
+                  attributes:textAttributes
+                     context:drawingContext];
+    
+    // deprecated
+    //[self.title drawAtPoint:point
+    //				forWidth:self.bounds.size.width
+    //				withFont:[UIFont systemFontOfSize:MAIN_FONT_SIZE]
+    //				minFontSize:MIN_MAIN_FONT_SIZE
+    //				actualFontSize:NULL
+    //				lineBreakMode:NSLineBreakByTruncatingTail
+    //				baselineAdjustment:UIBaselineAdjustmentAlignBaselines];
+>>>>>>> master
 }
 
-- (void)dealloc
-{
-	[title release];
-	[image release];
-	
-	[super dealloc];
-}
 
 @end
